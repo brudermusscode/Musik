@@ -20,12 +20,24 @@ $db   = _env("MYSQL_DATABASE");
  */
 // TODO: Implement basic mysql migration system.
 if (file_get_contents(_root() . "/sql/last_migration") !== "009_create_1st_user.sql") :
+
+  /**
+   * Use a seperate try for just connecting as it might take some
+   * time to establish it when mysql is still botting up. So you
+   * know to just reload the page in some seconds.
+   */
   try {
 
     /**
      * @var PDO
      */
     $pdo = new PDO("mysql:host=$host", $user, $pass);
+  } catch (\PDOException $e) {
+    echo "Konnte noch keine Verbindung herstellen. Versuch es nochmal in ein paar Sekunden!<br><br>";
+    echo $e->getMessage();
+  }
+
+  try {
 
     /**
      * Create the database.
@@ -59,17 +71,21 @@ if (file_get_contents(_root() . "/sql/last_migration") !== "009_create_1st_user.
      */
     $pdo->commit();
 
+
     /**
      * Set the last migration's file name to the last_migration so
      * this script won't run a second time.
      */
-    file_put_contents("$sql_dir/last_migration", $file_name);
+    $last_migration_file_path =  "$sql_dir/last_migration";
+    file_put_contents($last_migration_file_path, $file_name);
 
-    unset($pdo);
+    unset($pdo, $last_migration_file_path);
   } catch (\PDOException $e) {
 
-    if ($pdo->inTransaction()) {
-      $pdo->rollBack();
+    if (isset($pdo)) {
+      if ($pdo->inTransaction())
+        $pdo->rollBack();
+
       unset($pdo);
     }
 

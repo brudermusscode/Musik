@@ -5,9 +5,13 @@ echo "[+] Erstmal alle Ordner erstellen …"
 mkdir -p public/data/user/1/{tracks,art,portraits,videos}
 mkdir -p storage/logs
 chmod a+rw -R storage public sql
-cp .env.example .env
-touch sql/last_migration
 
+touch sql/last_migration
+chmod a+rw sql/last_migration
+
+cp .env.example .env
+
+# Install composer and set it up.
 if ! command -v composer >/dev/null 2>&1; then
     echo "[+] Installiere composer in »~/.local/bin« …"
 

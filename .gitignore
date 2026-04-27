@@ -12,7 +12,6 @@
 /compose.yml
 /Dockerfile
 /docker/dev
-/setup-remove.sh
 /xbundler.*
 /storage
 /sql/last_migration
