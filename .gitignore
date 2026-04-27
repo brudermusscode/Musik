@@ -15,4 +15,5 @@
 /setup-remove.sh
 /xbundler.*
 /storage
+/sql/last_migration
 !**/*/.empty
