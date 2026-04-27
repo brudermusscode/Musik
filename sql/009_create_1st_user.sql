@@ -1,0 +1,1 @@
+INSERT INTO users (display_name, updated_at) VALUES ("Bruder", NULL);

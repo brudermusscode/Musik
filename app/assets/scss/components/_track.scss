@@ -1,0 +1,360 @@
+@use "../framework/var.sizes" as *;
+@use "../framework/var.utils" as *;
+@use "../abstract" as *;
+
+song {
+  position: relative;
+  transition: $trans-cubic;
+  width: 100%;
+
+  // ? Album
+  &[in-album] {
+    [content] {
+      padding-block: 6px;
+      padding-right: 8px;
+      padding-left: 12px;
+
+      &:hover {
+        padding-right: 12px;
+      }
+    }
+
+    &[active] {
+      [content] {
+        padding-block: 14px;
+        padding-right: 14px;
+      }
+    }
+
+    &[paused] {
+      [content] {
+        padding-block: 12px;
+        padding-right: 16px;
+        padding-left: 12px;
+      }
+    }
+  }
+
+  // ? Playlist
+  &:not([in-album]) {
+    [content] {
+      padding-block: 4px;
+      padding-right: 8px;
+
+      &:hover {
+        padding-right: 12px;
+      }
+    }
+
+    &[active]:not([display-only]) {
+      [content] {
+        padding-block: 10px;
+        padding-right: 14px;
+        padding-left: 10px;
+      }
+
+      album-art picture {
+        border-radius: 50%;
+        position: relative;
+        border: 2px solid $light;
+        height: 62px;
+        width: 62px;
+        margin-left: -8px;
+        margin-right: -8px;
+        animation: rotate 6s linear infinite;
+
+        @keyframes rotate {
+          from {
+            rotate: 0deg;
+          }
+
+          to {
+            rotate: 360deg;
+          }
+        }
+
+        mi {
+          font-size: 52px;
+          left: 50%;
+          bottom: 50%;
+          translate: -50% 50%;
+        }
+
+        &::before {
+          content: "";
+          display: block;
+          position: absolute;
+          border: 2px solid $light;
+          background: $dark;
+          border-radius: 50%;
+          height: 10px;
+          width: 10px;
+          top: 50%;
+          left: 50%;
+          translate: -50% -50%;
+          z-index: 2;
+        }
+      }
+    }
+
+    &[paused] {
+      [content] {
+        padding-block: 12px;
+        padding-right: 18px;
+        padding-left: 12px;
+      }
+    }
+  }
+
+  // ? General
+  [content] {
+    padding-left: 12px;
+    border-radius: 12px;
+    transition:
+      $trans-cubic,
+      border 0s linear;
+    cursor: pointer;
+
+    &:hover {
+      background: $slighterer-light;
+    }
+
+    &:active {
+      scale: 0.99;
+    }
+
+    [artist] {
+      opacity: 0.6;
+    }
+
+    [status-icon] {
+      display: none;
+    }
+
+    album-art {
+      picture {
+        mi {
+          position: absolute;
+          bottom: -10px;
+          left: -6px;
+          font-size: 42px;
+        }
+      }
+    }
+  }
+
+  &[active] {
+    [content] {
+      background: $slighter-light;
+      border: 2px dotted $green;
+
+      [status-icon]::before {
+        content: "pause";
+      }
+    }
+  }
+
+  &[paused] {
+    [content] {
+      background: $slighterer-light;
+
+      &:hover {
+        background: $slighter-light;
+      }
+
+      [status-icon]::before {
+        content: "resume";
+      }
+    }
+  }
+
+  &[paused],
+  &[active] {
+    [content] {
+      padding-block: 12px;
+      padding-left: 10px;
+      border-radius: 16px;
+
+      [right-info] {
+        display: none;
+      }
+
+      [status-icon] {
+        display: block;
+        height: 1.8em;
+        width: 1.8em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        background: $slight-dark;
+      }
+    }
+  }
+
+  &[moving] {
+    position: fixed;
+    width: 700px;
+    pointer-events: none;
+  }
+
+  &[moving-temporary] {
+    background: $slight-light;
+    border: 2px dotted $secondary;
+    border-radius: 12px;
+  }
+
+  // Simple view in add-to or else.
+  &[simple] [content] {
+    background: $slighter-light;
+    border-radius: 16px;
+    padding: 4px;
+    padding-right: 12px;
+    pointer-events: none;
+    line-height: 0.6;
+  }
+}
+
+[tracks] {
+  &[add-to] {
+    &:is(:empty) {
+      display: flex !important;
+      justify-content: space-between !important;
+      flex-direction: row;
+
+      &::before {
+        content: "";
+        display: block;
+        width: 80%;
+        height: 18px;
+        border-radius: 12px;
+        background: $slight-light;
+      }
+
+      &::after {
+        content: "";
+        display: block;
+        width: 18%;
+        height: 18px;
+        border-radius: 12px;
+        background: $slight-light;
+      }
+    }
+
+    [option] {
+      position: relative;
+      padding-inline: 12px;
+      padding-block: 8px;
+      border-radius: 12px;
+      transition: $trans-cubic;
+      cursor: pointer;
+
+      &:hover {
+        scale: 1.008;
+        background: $slight-light;
+      }
+
+      [status-icon] {
+        &::before {
+          content: "music_note_add";
+          font-size: 22px;
+        }
+      }
+
+      &[active] {
+        background: $tertiary;
+        color: $tertiary-text;
+
+        [status-icon] {
+          &::before {
+            content: "check";
+          }
+        }
+      }
+    }
+
+    [play-track] {
+      background: $primary;
+      color: $primary-text;
+
+      mi::before {
+        content: "play_arrow";
+      }
+    }
+
+    [track] {
+      &[active] {
+        [play-track] {
+          background: $light;
+          color: $dark;
+
+          mi::before {
+            content: "pause";
+          }
+        }
+      }
+
+      &[paused] {
+        [play-track] {
+          background: $secondary;
+          color: $secondary-text;
+
+          mi::before {
+            content: "resume";
+          }
+        }
+      }
+    }
+  }
+
+  &[play-only] {
+    display: flex;
+    flex-direction: column;
+    gap: $gap-smoler;
+
+    [track] {
+      [option] {
+        padding: 4px;
+        padding-right: 12px;
+        border-radius: 16px;
+        cursor: pointer;
+
+        &:hover {
+          background: $slight-light;
+        }
+
+        &:active {
+          background: $slighter-light;
+          scale: 0.99;
+        }
+
+        [status-icon] {
+          &::before {
+            content: "play_circle";
+          }
+        }
+      }
+
+      &[active] {
+        [option] {
+          background: $primary;
+          color: $primary-text;
+
+          [status-icon]::before {
+            content: "pause";
+          }
+        }
+      }
+
+      &[paused] {
+        [option] {
+          background: $slight-light;
+
+          [status-icon]::before {
+            content: "resume";
+          }
+        }
+      }
+    }
+  }
+}

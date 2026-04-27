@@ -1,0 +1,59 @@
+@use "../abstract" as *;
+
+body {
+  color: $text;
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+
+  &[theme="dark"] {
+    background-blur {
+      background: rgba(0, 0, 0, 0.54);
+    }
+  }
+
+  &[theme="light"] {
+    background-blur {
+      background: rgba(255, 255, 255, 0.12);
+      // background: rgba(0, 0, 0, 0.08);
+    }
+  }
+}
+
+background-blur {
+  z-index: -10;
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(126px);
+}
+
+[disable-user-selection] {
+  user-select: none;
+}
+
+main {
+  max-width: calc($content-width + 2 * $main-distance);
+  margin: 0 auto;
+  padding-inline: $main-distance;
+  padding-top: $bruder-distance;
+  padding-bottom: $player-height + $main-distance * 3;
+}
+
+[outlined] {
+  box-shadow: none;
+  border: 1px solid $light;
+
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+[window] {
+  @extend .window;
+}

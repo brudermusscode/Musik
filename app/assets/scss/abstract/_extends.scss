@@ -1,0 +1,29 @@
+@use "./var.sizes" as *;
+@use "./var.colors" as *;
+
+$window-blur: blur(18px);
+$window-overflow-content: 12px;
+$window-border-radius: 32px;
+
+.window {
+  background: rgba(36, 36, 36, 0.38);
+  backdrop-filter: $window-blur;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: $window-border-radius;
+}
+
+.window-width {
+  width: 100%;
+  max-width: calc($content-width + $window-overflow-content);
+}
+
+.floating-full {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  flex: 1;
+}

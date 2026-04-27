@@ -1,0 +1,73 @@
+@use "../framework/var.utils" as *;
+
+[animation="fade-in"] {
+  animation: fade-in 0.2s linear forwards;
+}
+
+[animation="fade-in-slow"] {
+  animation: fade-in 1.2s linear forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+[animation="zoom-in"] {
+  animation: zoom-in 0.2s $cubic forwards;
+
+  @keyframes zoom-in {
+    from {
+      scale: 0.99;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+[animation="shine"] {
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: white;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 4%,
+      rgba(255, 255, 255, 0.24) 26%,
+      rgba(255, 255, 255, 0.42) 40%,
+      rgba(255, 255, 255, 0.42) 55%,
+      rgba(255, 255, 255, 0.24) 72%,
+      rgba(255, 255, 255, 0) 96%
+    );
+
+    transform-origin: top left;
+    transform: skewX(-45deg) translateX(-100%);
+    animation: shine-wave 6s infinite;
+  }
+
+  @keyframes shine-wave {
+    0% {
+      transform: skewX(-45deg) translateX(-140%);
+    }
+    60% {
+      transform: skewX(-45deg) translateX(-140%);
+    }
+    80% {
+      transform: skewX(-45deg) translateX(140%);
+    }
+    100% {
+      transform: skewX(-45deg) translateX(-140%);
+    }
+  }
+}

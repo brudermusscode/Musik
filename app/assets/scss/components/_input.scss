@@ -1,0 +1,35 @@
+@use "../framework/var.utils" as *;
+@use "../framework/var.sizes" as *;
+@use "../abstract" as *;
+
+input {
+  outline: none;
+  border: none;
+  background: white;
+  font-size: 18px;
+
+  &[floating] {
+    position: sticky;
+    top: -32px;
+    z-index: 10;
+    box-shadow: 0 0px 12px 0px $hover-dark;
+    text-align: center;
+    border-radius: 12px;
+    border: none;
+    padding-inline: 18px;
+    padding-block: 18px;
+  }
+
+  &[crazy] {
+    background: transparent;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.24);
+    padding-block: 12px;
+    font-size: 32px;
+    font-weight: 600;
+    color: white;
+
+    &:focus {
+      border-bottom: 2px solid white;
+    }
+  }
+}

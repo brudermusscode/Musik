@@ -1,0 +1,10 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Weißer runder Hintergrund -->
+  <circle cx="100" cy="100" r="68" fill="#fff"/>
+
+
+  <!-- Soundwaves -->
+  <path d="M70 94 Q100 76 130 94" stroke="#0D0D0D" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <path d="M75 112 Q100 96 125 112" stroke="#0D0D0D" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M80 128 Q100 114 120 128" stroke="#0D0D0D" stroke-width="8" fill="none" stroke-linecap="round"/>
+</svg>

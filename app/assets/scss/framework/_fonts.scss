@@ -1,0 +1,97 @@
+@use "var.sizes" as *;
+
+[text] {
+  font-size: $font-size-std;
+
+  &[smolest] {
+    font-size: $font-size-smolest;
+  }
+
+  &[smolerer] {
+    font-size: $font-size-smolerer;
+  }
+
+  &[smoler] {
+    font-size: $font-size-smoler;
+  }
+
+  &[smol] {
+    font-size: $font-size-smol;
+  }
+
+  &[smolplus] {
+    font-size: $font-size-spec;
+  }
+
+  &[std] {
+    font-size: $font-size-std;
+  }
+
+  &[stdplus] {
+    font-size: $font-size-std-plus;
+  }
+
+  &[midler] {
+    font-size: $font-size-midler;
+  }
+
+  &[mid] {
+    font-size: $font-size-mid;
+  }
+
+  &[midplus] {
+    font-size: $font-size-mid-plus;
+  }
+
+  &[wide] {
+    font-size: $font-size-wide;
+  }
+
+  &[wider] {
+    font-size: $font-size-wider;
+  }
+
+  &[widerer] {
+    font-size: $font-size-widerer;
+  }
+
+  &[widest] {
+    font-size: $font-size-widest;
+  }
+
+  &[widester] {
+    font-size: $font-size-widester;
+  }
+
+  &[widestest] {
+    font-size: $font-size-widestest;
+  }
+
+  &[slim] {
+    font-weight: 300;
+  }
+
+  &[regular] {
+    font-weight: 400;
+  }
+
+  &[medium] {
+    font-weight: 500;
+  }
+
+  &[semibold] {
+    font-weight: 600;
+  }
+
+  &[bold] {
+    font-weight: 800;
+  }
+
+  &[black] {
+    font-weight: 900;
+  }
+}
+
+[lh1] {
+  line-height: 1;
+}

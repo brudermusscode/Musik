@@ -1,0 +1,148 @@
+@use "var.utils" as *;
+@use "var.colors" as *;
+@use "sass:color";
+
+// * Material circular (default)
+loader {
+  content: "";
+  display: block;
+  position: relative;
+  width: 58px;
+
+  &[visible="false"] {
+    display: none;
+  }
+
+  &:before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+  }
+
+  .circular {
+    -webkit-animation: rotate 2s linear infinite;
+    animation: rotate 2s linear infinite;
+    height: 100%;
+    -webkit-transform-origin: center center;
+    -ms-transform-origin: center center;
+    transform-origin: center center;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    .path {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+      -webkit-animation: dash 1.5s ease-in-out infinite;
+      animation: dash 1.5s ease-in-out infinite;
+      stroke-linecap: round;
+      stroke: $framework_loader;
+    }
+  }
+}
+
+@-webkit-keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124;
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124;
+  }
+}
+
+[data-react="scroll:reached-end"] {
+  .path-loader {
+    position: relative;
+    transform: none;
+    left: auto;
+    right: auto;
+    top: auto;
+  }
+
+  &[show-loader] {
+    .path-loader {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+// * Material dots bouncing
+.loading-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .ball {
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 11px;
+    margin: 0 10px;
+
+    animation: 2s bounce ease infinite;
+
+    &.blue {
+      background-color: #fe6c3b;
+    }
+
+    &.red {
+      background-color: #facc52;
+      animation-delay: 0.25s;
+    }
+
+    &.yellow {
+      background-color: #1bb1bf;
+      animation-delay: 0.5s;
+    }
+
+    &.green {
+      background-color: #9b32f6;
+      animation-delay: 0.75s;
+    }
+  }
+}
+
+@keyframes bounce {
+  50% {
+    transform: translateY(25px);
+  }
+}

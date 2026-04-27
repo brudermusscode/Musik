@@ -1,0 +1,285 @@
+@use "var.utils" as *;
+@use "var.sizes" as *;
+@use "var.colors" as *;
+@use "../abstract" as *;
+
+// ! This file should not be edited as it contains styling for
+// ! basic framework functions like exceptions and can be
+// ! overwritten with coming updates.
+
+:root {
+  // Allow keyword animation manipulation like height 0 to height auto :DDDDD
+  // Not yet supported in Firefox sadly
+  interpolate-size: allow-keywords;
+
+  // Theme
+  --mio-theme-elevation-1:
+    0px 1px 2px 0px rgb(0 0 0 / 30%), 0px 1px 3px 1px rgb(0 0 0 / 15%);
+  --mio-theme-elevation-2:
+    0px 1px 2px 0px rgb(0 0 0 / 30%), 0px 2px 6px 2px rgb(0 0 0 / 15%);
+  --mio-theme-elevation-3:
+    0px 1px 3px 0px rgb(0 0 0 / 30%), 0px 4px 8px 3px rgb(0 0 0 / 15%);
+}
+
+// Material Symbols
+mi {
+  content: "";
+  font-variation-settings: "FILL" 1;
+  font-family: "Material Symbols";
+  font-style: normal;
+  font-weight: 400;
+  font-size: $font-size-std;
+  word-wrap: normal;
+  -moz-osx-font-smoothing: grayscale;
+  direction: ltr;
+  display: inline-block;
+  vertical-align: top;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &[smolest] {
+    font-size: $font-size-smolest;
+  }
+
+  &[smoler] {
+    font-size: $font-size-smoler;
+  }
+
+  &[smol] {
+    font-size: $font-size-smol;
+  }
+
+  &[std] {
+    font-size: $font-size-std;
+  }
+
+  &[stdplus] {
+    font-size: $font-size-std-plus;
+  }
+
+  &[midler] {
+    font-size: $font-size-midler;
+  }
+
+  &[mid] {
+    font-size: $font-size-mid;
+  }
+
+  &[midplus] {
+    font-size: $font-size-mid-plus;
+  }
+
+  &[wide] {
+    font-size: $font-size-wide;
+  }
+
+  &[wider] {
+    font-size: $font-size-wider;
+  }
+
+  &[widest] {
+    font-size: $font-size-widest;
+  }
+
+  &[semibold] {
+    font-weight: 600;
+  }
+
+  &[bold] {
+    font-weight: 800;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  outline: 0;
+  font-style: inherit;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  font-family: "Material", sans-serif;
+  transition: all 0.1s linear;
+
+  &,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  position: relative;
+  letter-spacing: -0.01em;
+  font-weight: 300;
+  line-height: 1.12;
+  font-size: 1.2em;
+  -webkit-font-smoothing: antialiased;
+  background: $framework_bg;
+  color: $framework_text;
+  min-height: 100svh;
+
+  *::placeholder,
+  *::placeholder:focus,
+  *::placeholder:active {
+    font-family: "Material", sans-serif;
+    opacity: 1;
+    letter-spacing: -0.04em;
+    font-weight: 400;
+  }
+
+  &[toggled] {
+    &[toggled="true"] {
+      overflow: hidden;
+
+      &:before {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+
+  &[initialized="true"] {
+    cookie-banner {
+      bottom: 0;
+    }
+  }
+}
+
+a,
+a:hover,
+a:active,
+a:focus {
+  color: rgb(221, 74, 221);
+  text-decoration: none;
+  border: 0;
+  outline: 0;
+  color: inherit;
+}
+
+exception-container {
+  content: "";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 2147483647;
+  backdrop-filter: blur(10px);
+  color: #ffdad9;
+  font-size: 100%;
+  overflow: hidden;
+
+  inside {
+    overflow: scroll;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    padding-block: 82px;
+
+    // TODO: Change align-items when scrollable.
+  }
+
+  container {
+    content: "";
+    display: block;
+    min-width: 600px;
+    max-width: 800px;
+    position: relative;
+    z-index: 1;
+
+    .inner {
+      background: #ffecee;
+      color: #de4832;
+      box-shadow: var(--mio-theme-elevation-1);
+    }
+
+    .bottom {
+      background: #fe725e;
+      color: #ffecee;
+      padding-inline: 24px 6px;
+      padding-block: 6px;
+    }
+
+    .line {
+      height: 2.4em;
+      min-width: 2.4em;
+      padding-inline: 18px 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #feebed;
+      color: #800b09;
+      border-radius: 32px;
+    }
+  }
+
+  exception-image {
+    position: fixed;
+    opacity: 0.4;
+    bottom: -6.3em;
+    left: 2.4em;
+    height: 600px;
+    width: 600px;
+    z-index: 0;
+  }
+}
+
+page-loader {
+  display: block;
+  content: "";
+  position: fixed;
+  z-index: $endless-z-index + 100;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  overflow: auto;
+  overflow-x: hidden;
+
+  &[loading] {
+    transition: all 0.2s linear;
+    background: $hover-dark;
+    z-index: $endless-z-index + 100;
+  }
+
+  &[visible] {
+    &[visible="false"] {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    &[visible="true"] {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+error-page {
+  display: block;
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100svh;
+  width: 100vw;
+  z-index: $endless-z-index + 7;
+}

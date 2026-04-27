@@ -1,0 +1,37 @@
+{
+  "name": "brudermusscode/unspotify",
+  "description": "So gefällt mir meine Musik",
+  "type": "project",
+  "authors": [
+    {
+      "name": "brudermusscode",
+      "email": "justin@heia.kim"
+    }
+  ],
+  "require": {
+    "illuminate/database": "^11.41",
+    "phpmailer/phpmailer": "^6.9",
+    "geoip2/geoip2": "^3.1",
+    "foroco/php-browser-detection": "^2.8",
+    "laravel/serializable-closure": "^2.0",
+    "paragonie/constant_time_encoding": "^3.0",
+    "dev-kraken/env-validator": "^1.0",
+    "falahati/php-mp3": "dev-master",
+    "james-heinrich/getid3": "^1.9",
+    "guzzlehttp/guzzle": "^7.10",
+    "intervention/image": "^4.0"
+  },
+  "autoload": {
+    "files": [
+      "app/build/functions.php"
+    ],
+    "psr-4": {
+      "Bruder\\": "app/build/",
+      "Bruder\\Bin\\Classes\\": "bin/classes/",
+      "Bruder\\Controller\\": "app/controllers/",
+      "Bruder\\Model\\": "app/models/",
+      "Bruder\\Job\\": "app/jobs/",
+      "Bruder\\Trait\\": "app/traits/"
+    }
+  }
+}

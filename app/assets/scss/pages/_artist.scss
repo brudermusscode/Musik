@@ -1,0 +1,108 @@
+@use "../framework/var.utils" as *;
+@use "../framework/var.sizes" as *;
+@use "../framework/classes" as *;
+@use "../abstract" as *;
+
+page {
+  display: flex;
+  flex-direction: column;
+  gap: $gap-smol-plus;
+
+  top-banner {
+    display: block;
+    border-radius: 32px;
+    padding: $cover-from-border-padding;
+    padding-left: 3px;
+    position: fixed;
+    top: $bruder-distance;
+    z-index: 10;
+    width: $content-width;
+    transition: $trans-cubic;
+
+    @extend .window;
+  }
+
+  &[artist] {
+    padding-top: 272px;
+    display: flex;
+    flex-direction: column;
+    gap: $gap-mid;
+
+    top-banner {
+      [art] {
+        $topbanner-height: 12em;
+
+        overflow: hidden;
+        border-radius: 28px;
+        height: $topbanner-height;
+        min-height: $topbanner-height;
+        width: $topbanner-height;
+        min-width: $topbanner-height;
+        transition: $trans-cubic;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+        background-color: $slight-dark;
+
+        mi {
+          margin-left: -24px;
+          margin-bottom: -46px;
+          font-size: 200px;
+        }
+      }
+
+      [metadata] {
+        position: relative;
+        flex: 1;
+        padding: 2px;
+        padding-inline: 24px 8px;
+        padding-block: 8px 24px;
+        border-radius: 0 24px 24px 0;
+
+        [album-name] {
+          transition: none;
+          padding-right: 16px;
+        }
+      }
+
+      &[scrolled="true"] {
+        padding: 8px;
+        top: 16px;
+
+        [art] {
+          $topbanner-height: 4.2em;
+
+          height: $topbanner-height;
+          min-height: $topbanner-height;
+          width: $topbanner-height;
+          min-width: $topbanner-height;
+
+          [top-menu] {
+            display: none;
+          }
+        }
+
+        [metadata] {
+          padding-inline: 24px;
+          padding-block: 0;
+          display: flex;
+          justify-content: center;
+
+          & > div:nth-of-type(2) {
+            gap: $gap-smoler !important;
+          }
+
+          & > div:first-of-type {
+            display: none;
+          }
+
+          [album-name] {
+            font-size: 24px !important;
+
+            @extend [trimt];
+          }
+        }
+      }
+    }
+  }
+}

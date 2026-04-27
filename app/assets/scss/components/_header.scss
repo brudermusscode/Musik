@@ -1,0 +1,92 @@
+@use "../framework/var.utils" as *;
+@use "../framework/var.sizes" as *;
+@use "../framework/classes" as *;
+@use "../abstract" as *;
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $bruder-height + 32px;
+  z-index: 99;
+  padding: $main-distance;
+  padding-inline: $main-distance * 3 $main-distance * 6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media screen and (max-width: 1000px) {
+    padding-inline: $main-distance + 6px $main-distance * 2 + 6px;
+  }
+}
+
+logo {
+  picture {
+    height: 3.8em;
+    width: 3.8em;
+  }
+}
+
+theme-switcher {
+  $theme-switcher-size: 48px;
+
+  display: block;
+  height: $theme-switcher-size;
+  width: $theme-switcher-size;
+  border-radius: 50%;
+  background: $slight-light;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  // Light mode
+  &:hover {
+    background: $slighter-light;
+
+    mi {
+      margin-top: 8px;
+    }
+  }
+
+  mi {
+    background: $yellow;
+    color: $dark;
+    font-size: 38px;
+    border-radius: 50%;
+    height: $theme-switcher-size;
+    width: $theme-switcher-size;
+    margin-top: 0px;
+    transition: $trans-cubic;
+
+    &:before {
+      display: block;
+      content: "sentiment_excited";
+    }
+  }
+
+  // Dark mode
+  &[active] {
+    background: $slighter-light;
+
+    &:hover {
+      background: $slight-light;
+
+      mi {
+        margin-top: 32px;
+      }
+    }
+
+    mi {
+      background: $orange;
+      margin-top: 40px;
+
+      &:before {
+        display: block;
+        content: "sentiment_calm";
+      }
+    }
+  }
+}

@@ -1,0 +1,255 @@
+@use "../framework/var.sizes" as *;
+@use "../framework/var.utils" as *;
+@use "../abstract" as *;
+
+popup-close {
+  position: fixed;
+  height: $bruder-height + 12px;
+  width: $bruder-height + 12px;
+  top: 0;
+  right: 0;
+  border-radius: 0 0 0 64px;
+  transition: $trans-cubic;
+  padding: 18px 18px 24px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--mio-theme-elevation-1);
+
+  @extend .window;
+
+  &:hover {
+    background: $slight-light;
+    scale: 1.03;
+    box-shadow: var(--mio-theme-elevation-2);
+  }
+
+  mi {
+    font-size: 32px;
+  }
+}
+
+popup-container {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    background: $primary;
+    opacity: 0.2;
+    display: none;
+    height: 100%;
+    width: 100%;
+    border-radius: 42px;
+    z-index: 0;
+    animation: before 1s $cubic forwards;
+
+    @keyframes before {
+      from {
+        top: 0;
+        left: 0;
+      }
+
+      to {
+        top: -32px;
+        left: -24px;
+      }
+    }
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    background: $secondary;
+    opacity: 0.2;
+    height: 100%;
+    width: 100%;
+    display: none;
+    border-radius: 42px;
+    z-index: 0;
+    animation: after 1s $cubic forwards;
+
+    @keyframes after {
+      from {
+        top: 0;
+        left: 0;
+      }
+
+      to {
+        top: 42px;
+        left: 18px;
+      }
+    }
+  }
+
+  popup-container__content {
+    border-radius: 42px;
+    max-width: 500px;
+    width: 100vw;
+    max-height: calc(100svh - 94px);
+    display: flex;
+    flex-direction: column;
+    gap: $gap-std;
+    position: relative;
+    z-index: 24;
+    overflow: auto;
+    animation: zoom-in 0.6s $cubic forwards;
+
+    @keyframes zoom-in {
+      from {
+        scale: 0.98;
+      }
+
+      to {
+        scale: 1;
+      }
+    }
+
+    @extend .window;
+
+    &[smol] {
+      max-width: 300px;
+    }
+
+    &[smolplus] {
+      max-width: 400px;
+    }
+
+    &[std] {
+      max-width: 500px;
+    }
+
+    &[stdplus] {
+      max-width: 600px;
+    }
+
+    &[midler] {
+      max-width: 650px;
+    }
+
+    &[mid] {
+      max-width: 700px;
+    }
+
+    &[wide] {
+      max-width: 900px;
+    }
+  }
+}
+
+image-select {
+  border: 2px dotted $secondary;
+  color: $secondary;
+  border-radius: 24px;
+  height: 200px;
+  width: 200px;
+  margin: 0 auto;
+  font-size: 82px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: $trans-cubic;
+
+  &:hover {
+    height: 180px;
+    width: 180px;
+    margin-block: 10px;
+  }
+}
+
+[select-album-cover] {
+  picture {
+    position: relative;
+    background: $slight-light;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:not([filled]) {
+      img {
+        display: none;
+      }
+    }
+
+    &[filled] {
+      mi[cover] {
+        display: none;
+      }
+    }
+
+    img {
+      border: none;
+      outline: none;
+    }
+
+    mi[cover] {
+      font-size: 224px;
+      position: absolute;
+      bottom: -20%;
+      left: -20%;
+      opacity: 0.8;
+
+      &:not([color]) {
+        color: $primary;
+      }
+    }
+
+    mbutton {
+      z-index: 1;
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+    }
+  }
+}
+
+select-media {
+  display: block;
+  width: auto;
+  padding-top: 50%;
+  border: 2px dotted $tertiary;
+  border-radius: 22px;
+  position: relative;
+  margin: 42px;
+  margin-bottom: 0;
+  cursor: pointer;
+
+  &[filled] {
+    width: auto;
+    height: auto;
+    padding: $cover-from-border-padding;
+    padding-inline: 2 * $cover-from-border-padding;
+    border: none;
+    margin: 0;
+
+    & > div {
+      display: none;
+    }
+  }
+
+  & > div {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: 0;
+  }
+
+  picture,
+  video {
+    z-index: 2;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    border-radius: 38px;
+  }
+}

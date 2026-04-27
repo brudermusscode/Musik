@@ -1,0 +1,70 @@
+@use "var.utils" as *;
+@use "var.colors" as *;
+@use "../abstract" as *;
+@use "mixins" as *;
+
+overlay {
+  display: block;
+  position: fixed;
+  z-index: $endless-z-index - 1;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  overflow: auto;
+  overflow-x: hidden;
+  background: rgba(0, 0, 0, 0.68);
+
+  &[container] {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 0 + 116;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &[page] {
+    loader {
+      margin: 0;
+
+      @include align-center-screen();
+    }
+  }
+
+  &[loading-app] {
+    visibility: visible;
+    opacity: 1;
+    z-index: $endless-z-index + 1;
+    background: $hover-dark;
+
+    [logo-icon],
+    [logo-text] {
+      transition: $trans-cubic;
+    }
+  }
+
+  &[visible] {
+    &[visible="false"] {
+      opacity: 0;
+    }
+
+    &[visible="true"] {
+      opacity: 1;
+    }
+  }
+}
+
+[close-overlay] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+  opacity: 0;
+  cursor: pointer;
+}

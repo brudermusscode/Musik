@@ -1,0 +1,5 @@
+@use "../abstract" as *;
+
+exception-container {
+  background-color: $dark;
+}

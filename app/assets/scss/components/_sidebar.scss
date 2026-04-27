@@ -1,0 +1,509 @@
+@use "../framework/var.utils" as *;
+@use "../framework/var.sizes" as *;
+@use "../abstract" as *;
+
+sidebar {
+  display: block;
+  position: fixed;
+  height: auto;
+  z-index: 100;
+
+  &[right],
+  &[left] {
+    top: $bruder-distance;
+    width: calc((100% - $content-width) / 2 - $window-overflow-content / 2);
+    min-width: 285px;
+    display: flex;
+    flex-direction: column;
+    gap: $gap-smol;
+    transition: $trans-cubic;
+
+    section {
+      border-radius: 12px;
+      margin-inline: $main-distance;
+      transition: $trans-cubic;
+
+      @extend .window;
+    }
+  }
+
+  &[right] {
+    right: 0;
+
+    section {
+      border-radius: 20px;
+      padding: $cover-from-border-padding;
+      overflow: auto;
+      max-height: calc(100vh - $bruder-height - 6 * $main-distance);
+    }
+
+    @media screen and (max-width: 1000px) {
+      right: 0px;
+      right: -290px;
+      min-width: 380px;
+
+      &:hover {
+        right: 0;
+      }
+    }
+
+    current-track {
+      cover {
+        [hint] {
+          opacity: 0.8;
+
+          action-row {
+            transition: $trans-cubic;
+            display: block;
+            opacity: 0;
+          }
+        }
+      }
+
+      &:hover {
+        cover [hint] {
+          opacity: 1;
+
+          action-row {
+            opacity: 1;
+          }
+        }
+      }
+
+      &[has-video] {
+        cover {
+          position: relative;
+          display: block;
+          width: 100%;
+          max-height: 560px;
+          margin-bottom: -5.4em;
+          border-radius: 16px;
+          overflow: hidden;
+          z-index: 0;
+
+          &:before {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 2;
+            display: block;
+            content: "";
+            background: #000000;
+            background: linear-gradient(
+              0deg,
+              rgba(0, 0, 0, 1) 0%,
+              rgba(0, 0, 0, 0) 100%
+            );
+          }
+
+          video {
+            width: 100%;
+          }
+        }
+
+        [track-metadata] {
+          position: relative;
+          z-index: 2;
+          padding-bottom: 24px;
+        }
+      }
+
+      &:not([has-video]) {
+        cover {
+          position: relative;
+          display: block;
+          width: 100%;
+          padding-top: 100%;
+
+          picture {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            border-radius: 18px;
+            background-color: $slight-light;
+            overflow: hidden;
+
+            mi {
+              font-size: 300px;
+              position: absolute;
+              bottom: -84px;
+              left: -62px;
+            }
+
+            img {
+              border-radius: 16px;
+            }
+          }
+        }
+      }
+
+      [track-metadata] {
+        padding-inline: 18px;
+        padding-block: 10px 8px;
+      }
+
+      [artist] {
+        cover-art {
+          display: block;
+          position: relative;
+
+          [metadata] {
+            position: absolute;
+            bottom: 0;
+            z-index: 3;
+            padding: 18px 24px;
+          }
+
+          picture {
+            position: relative;
+            width: 100%;
+            height: auto;
+            max-height: 360px;
+            border-radius: 16px;
+            border: 1px solid $hover-dark;
+            overflow: hidden;
+
+            &:before {
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              height: 60%;
+              width: 100%;
+              z-index: 2;
+              display: block;
+              content: "";
+              background: #000000;
+              background: linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 1) 0%,
+                rgba(0, 0, 0, 0) 100%
+              );
+            }
+
+            img {
+              object-fit: cover;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &[left] {
+    left: 0;
+
+    @media screen and (max-width: 1000px) {
+      left: 0px;
+      left: -290px;
+      min-width: 380px;
+
+      &:hover {
+        left: 0;
+      }
+    }
+
+    section {
+      &:first-of-type {
+        border-radius: 20px 20px 12px 12px;
+      }
+
+      &:last-of-type {
+        border-radius: 12px 12px 20px 20px;
+      }
+
+      &:hover {
+        scale: 1.01;
+      }
+    }
+
+    pages {
+      display: flex;
+      gap: $gap-smoler;
+      flex-direction: column;
+      padding: 6px;
+
+      a {
+        &:first-of-type {
+          option {
+            border-radius: 16px 16px 8px 8px;
+          }
+        }
+
+        option {
+          border-radius: 8px;
+        }
+      }
+
+      option {
+        display: block;
+        padding-block: 12px;
+        padding-inline: 12px 24px;
+        border-radius: 16px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: $gap-smol-plus;
+        font-size: 18px;
+        font-weight: 500;
+
+        &:hover {
+          background: $slighterer-light;
+        }
+      }
+
+      a[active] {
+        option {
+          background: $slighter-light;
+
+          [title] {
+            color: $yellow;
+            font-weight: 800;
+          }
+
+          mi {
+            color: $text;
+            font-weight: 800;
+          }
+        }
+      }
+    }
+
+    library {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: $gap-smoler;
+      max-height: calc(100vh - $bruder-distance - 124px);
+      overflow: auto;
+      padding: 6px;
+      scrollbar-width: none;
+
+      library-view {
+        [view] {
+          &[active] {
+            background: $slighter-light;
+            color: $tertiary;
+
+            mi {
+              font-weight: 800;
+            }
+          }
+        }
+      }
+
+      bookmarks {
+        display: flex;
+        flex-direction: column;
+        gap: $gap-smoler;
+      }
+
+      cover {
+        $playlist-cover-size: 3em;
+
+        display: block;
+        position: relative;
+        height: $playlist-cover-size;
+        width: $playlist-cover-size;
+
+        & > div {
+          display: flex;
+          flex-wrap: wrap;
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+          border-radius: 13px;
+          border: 1px solid $slight-light;
+          overflow: hidden;
+        }
+
+        &[single] {
+          picture {
+            background-color: $slighterer-dark;
+            border-radius: 12px;
+
+            mi {
+              display: block;
+              position: absolute;
+              bottom: -16px;
+              left: -8px;
+              height: 100%;
+              width: 100%;
+              font-size: 48px;
+            }
+          }
+        }
+
+        picture {
+          position: relative;
+          height: $playlist-cover-size;
+          width: $playlist-cover-size;
+          min-width: $playlist-cover-size;
+          min-height: $playlist-cover-size;
+        }
+
+        &[no-custom-art] {
+          &:not([no-custom-art="1"]),
+          &:not([no-custom-art="2"]),
+          &:not([no-custom-art="3"]) {
+            picture {
+              flex-basis: 50%;
+              padding-top: 50%;
+              height: initial;
+              min-height: initial;
+              min-width: initial;
+
+              img {
+                object-fit: cover;
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+              }
+            }
+          }
+
+          &[no-custom-art="1"] {
+            picture {
+              width: $playlist-cover-size;
+              flex-basis: 100%;
+            }
+          }
+
+          &[no-custom-art="2"] {
+            picture {
+              flex-basis: 50%;
+            }
+          }
+
+          &[no-custom-art="3"] {
+            picture {
+              flex-basis: 50%;
+
+              &:nth-of-type(3) {
+                flex-basis: 100%;
+              }
+            }
+          }
+        }
+      }
+
+      &[view="grid"] {
+        cover {
+          width: 100%;
+          padding-top: 100%;
+
+          &[single] {
+            & > div {
+              justify-content: stretch;
+              align-items: stretch;
+
+              picture {
+                width: 100%;
+                padding-top: 100%;
+
+                img {
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  height: 100%;
+                  width: 100%;
+                }
+
+                mi {
+                  bottom: -64px;
+                  left: -22px;
+                  font-size: 120px;
+                }
+              }
+            }
+          }
+        }
+
+        bookmarks {
+          display: flex;
+          gap: $gap-smoler;
+          flex-wrap: wrap;
+          flex-direction: row;
+        }
+
+        a {
+          position: relative;
+          flex-basis: calc(50% - $gap-smolest);
+          max-width: calc(50% - $gap-smolest);
+        }
+
+        option {
+          padding: 4px;
+          border-radius: 16px;
+
+          [metadata] {
+            padding-block: 4px;
+            padding-inline: 8px;
+            line-height: 0.6;
+
+            [title] {
+              font-size: $font-size-smol;
+            }
+          }
+        }
+      }
+
+      &[view="list"] {
+        a {
+          position: relative;
+          max-width: 100%;
+        }
+
+        option {
+          padding: 4px;
+          padding-right: 16px;
+          border-radius: 16px;
+          display: flex;
+          align-items: center;
+          gap: $gap-smol-plus;
+          cursor: pointer;
+
+          [metadata] {
+            margin-top: -4px;
+          }
+        }
+      }
+
+      option {
+        &:hover {
+          background: $slighterer-light;
+        }
+
+        [title] {
+          font-weight: 600;
+        }
+
+        [metadata] {
+          line-height: 0.6;
+        }
+      }
+
+      a[active] {
+        option {
+          background: $slighter-light;
+
+          [title] {
+            color: $tertiary;
+            font-weight: 800;
+          }
+
+          mi {
+            font-weight: 800;
+          }
+        }
+      }
+    }
+  }
+}

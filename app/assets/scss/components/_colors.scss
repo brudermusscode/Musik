@@ -1,0 +1,53 @@
+@use "../abstract" as *;
+
+[color="primary"] {
+  color: $primary;
+}
+
+[color="primary-text"] {
+  color: $primary-text;
+}
+
+[color="secondary"] {
+  color: $secondary;
+}
+
+[color="secondary-text"] {
+  color: $secondary-text;
+}
+
+[color="tertiary"] {
+  color: $tertiary;
+}
+
+[color="tertiary-text"] {
+  color: $tertiary-text;
+}
+
+[color="quadro"] {
+  color: $quadro;
+}
+
+[color="quadro-text"] {
+  color: $quadro-text;
+}
+
+[color="light"] {
+  color: $light;
+}
+
+[color="dark"] {
+  color: $dark;
+}
+
+[color="green"] {
+  color: $green;
+}
+
+[color="light-red"] {
+  color: $light-red;
+}
+
+[color="red"] {
+  color: $red;
+}

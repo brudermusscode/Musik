@@ -1,0 +1,73 @@
+@use "../abstract" as *;
+
+[background="primary"] {
+  background-color: $primary;
+}
+
+[background="secondary"] {
+  background-color: $secondary;
+}
+
+[background="tertiary"] {
+  background-color: $tertiary;
+}
+
+[background="quadro"] {
+  background-color: $quadro;
+}
+
+[background="hover-light"] {
+  background-color: $hover-light;
+}
+
+[background="slight-light"] {
+  background-color: $slight-light;
+}
+
+[background="slighter-light"] {
+  background-color: $slighter-light;
+}
+
+[background="slighterer-light"] {
+  background-color: $slighterer-light;
+}
+
+[background="slightest-light"] {
+  background-color: $slightest-light;
+}
+
+[background="hover-dark"] {
+  background-color: $hover-dark;
+}
+
+[background="slight-dark"] {
+  background-color: $slight-dark;
+}
+
+[background="slighter-dark"] {
+  background-color: $slighter-dark;
+}
+
+[background="slighterer-dark"] {
+  background-color: $slighterer-dark;
+}
+
+[background="slightest-dark"] {
+  background-color: $slightest-dark;
+}
+
+[background="light"] {
+  background-color: $light;
+}
+
+[background="dark"] {
+  background-color: $dark;
+}
+
+[background="green"] {
+  background-color: $green;
+}
+
+[background="red"] {
+  background-color: $red;
+}

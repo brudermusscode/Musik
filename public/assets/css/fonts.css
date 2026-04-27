@@ -1,0 +1,211 @@
+@font-face {
+  font-variation-settings: "FILL" 1;
+  font-family: "Material Symbols";
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: block;
+  src: url(/assets/fonts/material-symbols-rounded.woff2) format("woff");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Material;
+  font-style: normal;
+  font-weight: 300;
+  src: url(/assets/fonts/JosefinSans-VariableFont_wght.ttf) format("truetype");
+  unicode-range:
+    u+0102-0103, u+0110-0111, u+0128-0129, u+0168-0169, u+01a0-01a1,
+    u+01af-01b0, u+1ea0-1ef9, u+20ab;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Material;
+  font-style: normal;
+  font-weight: 300;
+  src: url(/assets/fonts/JosefinSans-VariableFont_wght.ttf) format("truetype");
+  unicode-range:
+    u+0100-024f, u+0259, u+1e??, u+2020, u+20a0-20ab, u+20ad-20cf, u+2113,
+    u+2c60-2c7f, u+a720-a7ff;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Material;
+  font-style: normal;
+  font-weight: 300;
+  src: url(/assets/fonts/JosefinSans-VariableFont_wght.ttf) format("truetype");
+  unicode-range:
+    u+00??, u+0131, u+0152-0153, u+02bb-02bc, u+02c6, u+02da, u+02dc,
+    u+2000-206f, u+2074, u+20ac, u+2122, u+2191, u+2193, u+2212, u+2215, u+feff,
+    u+fffd;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Material;
+  font-style: normal;
+  font-weight: 400;
+  src: url(/assets/fonts/JosefinSans-VariableFont_wght.ttf) format("truetype");
+  unicode-range:
+    u+0102-0103, u+0110-0111, u+0128-0129, u+0168-0169, u+01a0-01a1,
+    u+01af-01b0, u+1ea0-1ef9, u+20ab;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Material;
+  font-style: normal;
+  font-weight: 400;
+  src: url(/assets/fonts/JosefinSans-VariableFont_wght.ttf) format("truetype");
+  unicode-range:
+    u+0100-024f, u+0259, u+1e??, u+2020, u+20a0-20ab, u+20ad-20cf, u+2113,
+    u+2c60-2c7f, u+a720-a7ff;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Material;
+  font-style: normal;
+  font-weight: 400;
+  src: url(/assets/fonts/JosefinSans-VariableFont_wght.ttf) format("truetype");
+  unicode-range:
+    u+00??, u+0131, u+0152-0153, u+02bb-02bc, u+02c6, u+02da, u+02dc,
+    u+2000-206f, u+2074, u+20ac, u+2122, u+2191, u+2193, u+2212, u+2215, u+feff,
+    u+fffd;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Material;
+  font-style: normal;
+  font-weight: 500;
+  src: url(/assets/fonts/JosefinSans-VariableFont_wght.ttf) format("truetype");
+  unicode-range:
+    u+0102-0103, u+0110-0111, u+0128-0129, u+0168-0169, u+01a0-01a1,
+    u+01af-01b0, u+1ea0-1ef9, u+20ab;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Material;
+  font-style: normal;
+  font-weight: 500;
+  src: url(/assets/fonts/JosefinSans-VariableFont_wght.ttf) format("truetype");
+  unicode-range:
+    u+0100-024f, u+0259, u+1e??, u+2020, u+20a0-20ab, u+20ad-20cf, u+2113,
+    u+2c60-2c7f, u+a720-a7ff;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Material;
+  font-style: normal;
+  font-weight: 500;
+  src: url(/assets/fonts/JosefinSans-VariableFont_wght.ttf) format("truetype");
+  unicode-range:
+    u+00??, u+0131, u+0152-0153, u+02bb-02bc, u+02c6, u+02da, u+02dc,
+    u+2000-206f, u+2074, u+20ac, u+2122, u+2191, u+2193, u+2212, u+2215, u+feff,
+    u+fffd;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Material;
+  font-style: normal;
+  font-weight: 600;
+  src: url(/assets/fonts/JosefinSans-VariableFont_wght.ttf) format("truetype");
+  unicode-range:
+    u+0102-0103, u+0110-0111, u+0128-0129, u+0168-0169, u+01a0-01a1,
+    u+01af-01b0, u+1ea0-1ef9, u+20ab;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Material;
+  font-style: normal;
+  font-weight: 600;
+  src: url(/assets/fonts/JosefinSans-VariableFont_wght.ttf) format("truetype");
+  unicode-range:
+    u+0100-024f, u+0259, u+1e??, u+2020, u+20a0-20ab, u+20ad-20cf, u+2113,
+    u+2c60-2c7f, u+a720-a7ff;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Material;
+  font-style: normal;
+  font-weight: 600;
+  src: url(/assets/fonts/JosefinSans-VariableFont_wght.ttf) format("truetype");
+  unicode-range:
+    u+00??, u+0131, u+0152-0153, u+02bb-02bc, u+02c6, u+02da, u+02dc,
+    u+2000-206f, u+2074, u+20ac, u+2122, u+2191, u+2193, u+2212, u+2215, u+feff,
+    u+fffd;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Material;
+  font-style: normal;
+  font-weight: 800;
+  src: url(/assets/fonts/JosefinSans-VariableFont_wght.ttf) format("truetype");
+  unicode-range:
+    u+0102-0103, u+0110-0111, u+0128-0129, u+0168-0169, u+01a0-01a1,
+    u+01af-01b0, u+1ea0-1ef9, u+20ab;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Material;
+  font-style: normal;
+  font-weight: 800;
+  src: url(/assets/fonts/JosefinSans-VariableFont_wght.ttf) format("truetype");
+  unicode-range:
+    u+0100-024f, u+0259, u+1e??, u+2020, u+20a0-20ab, u+20ad-20cf, u+2113,
+    u+2c60-2c7f, u+a720-a7ff;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Material;
+  font-style: normal;
+  font-weight: 800;
+  src: url(/assets/fonts/JosefinSans-VariableFont_wght.ttf) format("truetype");
+  unicode-range:
+    u+00??, u+0131, u+0152-0153, u+02bb-02bc, u+02c6, u+02da, u+02dc,
+    u+2000-206f, u+2074, u+20ac, u+2122, u+2191, u+2193, u+2212, u+2215, u+feff,
+    u+fffd;
+}
+@font-face {
+  font-display: swap;
+  font-family: Material;
+  font-style: normal;
+  font-weight: 900;
+  src: url(/assets/fonts/JosefinSans-VariableFont_wght.ttf) format("truetype");
+  unicode-range:
+    u+0102-0103, u+0110-0111, u+0128-0129, u+0168-0169, u+01a0-01a1,
+    u+01af-01b0, u+1ea0-1ef9, u+20ab;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Material;
+  font-style: normal;
+  font-weight: 900;
+  src: url(/assets/fonts/JosefinSans-VariableFont_wght.ttf) format("truetype");
+  unicode-range:
+    u+0100-024f, u+0259, u+1e??, u+2020, u+20a0-20ab, u+20ad-20cf, u+2113,
+    u+2c60-2c7f, u+a720-a7ff;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Material;
+  font-style: normal;
+  font-weight: 900;
+  src: url(/assets/fonts/JosefinSans-VariableFont_wght.ttf) format("truetype");
+  unicode-range:
+    u+00??, u+0131, u+0152-0153, u+02bb-02bc, u+02c6, u+02da, u+02dc,
+    u+2000-206f, u+2074, u+20ac, u+2122, u+2191, u+2193, u+2212, u+2215, u+feff,
+    u+fffd;
+}

@@ -1,0 +1,99 @@
+[fl] {
+  display: flex;
+
+  &[fldirrow] {
+    flex-direction: row;
+
+    &[flreverse] {
+      flex-direction: row-reverse;
+    }
+  }
+
+  &[fldircol] {
+    flex-direction: column;
+
+    &[flreverse] {
+      flex-direction: column-reverse;
+    }
+  }
+
+  &[alic] {
+    align-items: center;
+  }
+
+  &[aliend] {
+    align-items: flex-end;
+  }
+
+  &[alistart] {
+    align-items: flex-start;
+  }
+
+  &[alistretch] {
+    align-items: stretch;
+  }
+
+  &[flbetween] {
+    justify-content: space-between;
+  }
+
+  &[jucc] {
+    justify-content: center;
+  }
+
+  &[jucend] {
+    justify-content: flex-end;
+  }
+
+  &[jucstart] {
+    justify-content: flex-start;
+  }
+
+  &[jucsb] {
+    justify-content: space-between;
+  }
+
+  &[jucsev] {
+    justify-content: space-evenly;
+  }
+
+  &[flex-wrap] {
+    flex-wrap: wrap;
+
+    &[flex-wrap="reverse"] {
+      flex-wrap: wrap-reverse;
+    }
+
+    &[flex-wrap="nowrap"] {
+      flex-wrap: nowrap;
+    }
+  }
+}
+
+[flcol] {
+  display: flex;
+  flex-direction: column;
+}
+
+[flcenter] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+[flcolcent] {
+  @extend [flcenter];
+
+  flex-direction: column;
+}
+
+[fltr],
+[flex-truncate] {
+  min-width: 0;
+  flex: 1;
+}
+
+[flexone],
+[flone] {
+  flex: 1;
+}

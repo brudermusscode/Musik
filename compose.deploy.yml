@@ -1,0 +1,71 @@
+volumes:
+  unspotify-mysql-data:
+
+networks:
+  default:
+    name: unspotify
+
+x-web: &x-web # <<: *x-env
+  build:
+    context: .
+    dockerfile: Dockerfile.deploy
+  restart: on-failure
+  tty: true
+
+services:
+  php:
+    build:
+      context: ./docker/deploy/php
+      dockerfile: Dockerfile
+    volumes:
+      - .:/data
+
+  web:
+    <<: *x-web
+    volumes_from:
+      - php
+    ports:
+      - ${WEB_PORT}:80
+    command: ["nginx"]
+    depends_on:
+      - php
+
+  mysql:
+    image: mysql:8.0
+    command: >
+      --max_connections=${MYSQL_MAX_CONNECTIONS}
+      --sql_mode=${MYSQL_SQL_MODE}
+      --autocommit=${MYSQL_AUTOCOMMIT}
+    restart: unless-stopped
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: ${MYSQL_ALLOW_EMPTY_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_MAX_CONNECTIONS: ${MYSQL_MAX_CONNECTIONS}
+    # expose:
+    # - ${MYSQL_PORT}
+    volumes:
+      - unspotify-mysql-data:/var/lib/mysql
+
+  phpmyadmin:
+    container_name: unspotify-phpmyadmin
+    image: phpmyadmin:latest
+    restart: unless-stopped
+    environment:
+      PMA_HOST: ${MYSQL_HOST}
+      PMA_USER: ${MYSQL_USER}
+      PMA_PORT: 3306
+      PMA_PASSWORD: ""
+      UPLOAD_LIMIT: ${PMA_UPLOAD_LIMIT}
+      PMA_ARBITRARY: 1
+    ports:
+      - ${PMA_PORT}:80
+
+  # redis:
+  #   image: redis/redis-stack:latest
+  #   environment:
+  #     - REDIS_ARGS=--requirepass ${REDIS_PASSWORD} --save 20 1
+  #   restart: always
+  #   ports:
+  #     - 6379:6379
+  #   volumes:
+  #     - bueld-redis-data:/var/lib/redis-data

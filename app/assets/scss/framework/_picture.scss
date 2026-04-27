@@ -1,0 +1,124 @@
+picture {
+  display: block;
+  border: none;
+  outline: none;
+  position: relative;
+
+  &[circled] img {
+    border-radius: 50%;
+  }
+
+  &[smolest] {
+    height: 0.4em;
+    min-height: 0.4em;
+    width: 0.4em;
+    min-width: 0.4em;
+  }
+
+  &[smoler] {
+    height: 0.8em;
+    min-height: 0.8em;
+    width: 0.8em;
+    min-width: 0.8em;
+  }
+
+  &[smol] {
+    height: 1.2em;
+    min-height: 1.2em;
+    width: 1.2em;
+    min-width: 1.2em;
+  }
+
+  &[smolplus] {
+    height: 1.6em;
+    min-height: 1.6em;
+    width: 1.6em;
+    min-width: 1.6em;
+  }
+
+  &[std] {
+    height: 2.4em;
+    width: 2.4em;
+    min-width: 2.4em;
+    min-height: 2.4em;
+    max-width: 2.4em;
+    max-height: 2.4em;
+  }
+
+  &[midler] {
+    height: 2.8em;
+    min-height: 2.8em;
+    width: 2.8em;
+    min-width: 2.8em;
+  }
+
+  &[mid] {
+    height: 3.2em;
+    min-height: 3.2em;
+    width: 3.2em;
+    min-width: 3.2em;
+  }
+
+  &[midplus] {
+    height: 5.2em;
+    min-height: 5.2em;
+    width: 5.2em;
+    min-width: 5.2em;
+  }
+
+  &[wide] {
+    height: 6.2em;
+    min-height: 6.2em;
+    width: 6.2em;
+    min-width: 6.2em;
+  }
+
+  &[wider] {
+    height: 8.2em;
+    min-height: 8.2em;
+    width: 8.2em;
+    min-width: 8.2em;
+  }
+
+  &[widerer] {
+    height: 10.2em;
+    min-height: 10.2em;
+    width: 10.2em;
+    min-width: 10.2em;
+  }
+
+  &[widest] {
+    height: 14.2em;
+    min-height: 14.2em;
+    width: 14.2em;
+    min-width: 14.2em;
+  }
+
+  &[full] {
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    min-width: 100%;
+  }
+
+  img {
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    object-fit: cover;
+
+    &[placeholder] {
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      left: 0;
+    }
+
+    position: relative;
+    z-index: 1;
+
+    &[loaded="true"] {
+      opacity: 1;
+    }
+  }
+}
