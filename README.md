@@ -3,7 +3,7 @@
 **Musik, Bruder!** ist dein bester Freund, wenn du selbst einiges an lokaler
 Musik besitzt und keine Lust mehr hast, Spotify jeden Monat 10 Euro zu spendieren.
 
-<video src="https://www.heia.kim/MusikBruder/preview (compressed).mp4" autoplay loop></video>
+![preview image](https://raw.githubusercontent.com/brudermusscode/MusikBruder/deploy/preview.gif)
 
 <br>
 
