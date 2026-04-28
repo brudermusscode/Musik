@@ -78,6 +78,7 @@ echo -e "\n✅ Alles cool!"
 # Set working dir.
 cd $WORK_DIR
 
+# Only for testing locally.
 # cd musikbruder && docker compose -f compose.deploy.yml down --volume && cd .. && rm -rf musikbruder
 
 echo -en "\n🍎"
@@ -172,18 +173,12 @@ composer dump-autoload
 
 # + Start docker container.
 sleep 0.2
-echo -e "\n$LILA♻️  Bruder starten$NOCO"
+echo -e "\n$LILA♻️  Bruder bauen & starten…$NOCO"
 
+docker compose -f compose.deploy.yml build --no-cache
 docker compose -f compose.deploy.yml up -d
 
 
 # # Done!
 sleep 0.2
 echo -e "\n$GREEN🤝 Fertig! Geh zu http://localhost:6789 - Deine Musik kannst du in ~/.local/share/musikbruder/public/data/user/1/tracks packen ❤️"
-
-
-
-
-
-# cd ..
-# rm -rf musikbruder
