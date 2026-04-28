@@ -2,7 +2,8 @@
 
 **Musik, Bruder!** ist dein bester Freund, wenn du selbst einiges an lokaler
 Musik besitzt und keine Lust mehr hast, Spotify jeden Monat 10 Euro zu spendieren.
-<br><br>
+
+<br>
 
 <p align="center">…………… 🫴 ……………</p>
 
@@ -25,8 +26,8 @@ aktuellste Version des Setups in diesem Repo!
 
 Ab gehts. Dein Freund ist unter `http://localhost:6789`
 erreichbar.
-<br><br>
 
+<br>
 <p align="center">…………… ❓ ……………</p>
 
 #### **Wo ist die App gespeichert?**
@@ -48,7 +49,7 @@ immer deine Musik gespeichert hast). Das geht so:
 ln -s ~/Music ~/.local/share/musikbruder/public/data/user/1/tracks
 ```
 
-<br><br>
+<br>
 
 <p align="center">…………… 🍃 ……………</p>
 
