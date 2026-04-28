@@ -171,14 +171,26 @@ fi
 composer dump-autoload
 
 
-# + Start docker container.
+# + Build docker-container.
 sleep 0.2
-echo -e "\n$LILA♻️  Bruder bauen & starten…$NOCO"
+echo -e "\n$LILA♻️  Bruder bauen…$NOCO"
 
 docker compose -f compose.deploy.yml build --no-cache
+
+
+# + Start the app.
+sleep 0.2
+echo -e "\n$LILA♻️  App starten…$NOCO"
 docker compose -f compose.deploy.yml up -d
 
+URL="http://localhost:6789"
 
 # # Done!
 sleep 0.2
-echo -e "\n$GREEN🤝 Fertig! Geh zu http://localhost:6789 - Deine Musik kannst du in ~/.local/share/musikbruder/public/data/user/1/tracks packen ❤️"
+if command -v xdg-open >/dev/null 2>&1; then
+  xdg-open "$URL"
+else
+  echo -e "\nxdg-open fehlt leider, sont hätte sich das Fenster nun automatisch geöffnet 🥸"
+fi
+
+echo -e "\n$GREEN🤝 Fertig! Geh zu $URL - Deine Musik kannst du in ~/.local/share/musikbruder/public/data/user/1/tracks packen ❤️"

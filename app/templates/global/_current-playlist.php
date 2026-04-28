@@ -1,5 +1,6 @@
 <?php
 
+use Bruder\Model\Album;
 use Bruder\Model\Playlist;
 use Illuminate\Support\Collection;
 
@@ -110,26 +111,26 @@ if ($PreviousPlaylist || $NextPlaylist)
       <div left-content fl fldircol gap=smol>
         <p text smol bold ttup slight pinline4>Machen</p>
 
-        <mbutton material size=wide icon-only background=secondary color=tertiary-text
+        <mbutton has-tooltip=right material size=wide icon-only background=<?= Playlist::COLOR ?> color=dark
           close-bruder request-get="playlist:new">
-          <mi>library_add</mi>
+          <mi><?= Playlist::ICON ?></mi>
+          <div ttooltip>Playlist erstellen</div>
         </mbutton>
 
-        <mbutton material size=wide icon-only background=secondary color=tertiary-text
+        <mbutton has-tooltip=right material size=wide icon-only background=<?= Album::COLOR ?> color=dark
           close-bruder request-get="album:new">
-          <mi>control_point_duplicate</mi>
+          <mi><?= Album::ICON ?></mi>
+          <div ttooltip>Album erstellen</div>
         </mbutton>
       </div>
 
       <div right-content data-react="<?= $track_explore_action ?>" tracks play-only flone>
         <div posrel pinline24 fl fldircol gap=smol>
           <p text smol bold ttup slight pinline4>jobs</p>
-          <job-button background=slight-light hoverable fl alic jucc gap=smol+ rounded pinline24 pblock36
-            execute-job="sync-albums">
-            <mi midler>album</mi>
-            <div loader class="loader-3"><span></span></div>
-            Sync albums & cover art
-          </job-button>
+          <p text regular background=slighter-light rounded jucc alic pblock42 fl fldircol gap=smol+>
+            <mi midplus>handyman</mi>
+            Aktuell keine Jobs eingebaut
+          </p>
         </div>
       </div>
     </div>
