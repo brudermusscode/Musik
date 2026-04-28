@@ -1,9 +1,9 @@
-## Musik, Bruder! - Dein Freund für deine Musik
+# Musik, Bruder! - Dein Freund für deine Musik
 
 **Musik, Bruder!** ist dein bester Freund, wenn du selbst einiges an lokaler
 Musik besitzt und keine Lust mehr hast, Spotify jeden Monat 10 Euro zu spendieren.
 
-![preview image](https://raw.githubusercontent.com/brudermusscode/MusikBruder/deploy/preview.gif)
+https://github.com/user-attachments/assets/a451f78d-d819-4bec-8dd2-4c5f7b30a982
 
 <br>
 
