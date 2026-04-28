@@ -65,7 +65,7 @@ bruder {
   width: 445px;
   max-width: calc($content-width + 32px);
   overflow: hidden;
-  z-index: 100;
+  z-index: 99;
   cursor: pointer;
 
   &[scrolled="true"] {

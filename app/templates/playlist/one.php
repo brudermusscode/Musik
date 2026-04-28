@@ -59,7 +59,7 @@ else :
     <playlist-action-bar fl aliend jucsb gap pinline4>
       <div fl alic gap=smol>
 
-        <picture playlist-cover>
+        <picture playlist-cover disabled>
           <mi>art_track</mi>
         </picture>
 
@@ -68,7 +68,7 @@ else :
           <p text smoler regular ttup>Tracks</p>
         </div>
         <div tag background=slight-light>
-          <p text midler bold>????</p>
+          <p text midler bold><?= $Playlist->tracks->sum("listens") ?></p>
           <p text smoler regular ttup>Mal Gehört</p>
         </div>
       </div>
@@ -76,13 +76,15 @@ else :
         <mbutton dno material icon-only background=red color=light-red>
           <mi>emoji_symbols</mi>
         </mbutton>
-        <mbutton <?= $add_new_tracks_button ?> material icon-only background=slight-light hoverable>
+        <mbutton <?= $add_new_tracks_button ?> has-tooltip=bottom material icon-only background=slight-light hoverable>
           <mi>list_alt_add</mi>
+          <div ttooltip>Musik rein hier</div>
         </mbutton>
         <form request-do="playlist:delete" redirect="/" update-library responder=simple>
           <input type=hidden name=id value="<?= $Playlist->id ?>" />
-          <mbutton submit-closest material icon-only background=red color=light-red no-hover-shadow>
+          <mbutton submit-closest has-tooltip=bottom material icon-only background=red color=light no-hover-shadow>
             <mi>delete_forever</mi>
+            <div ttooltip>Lösch dich</div>
           </mbutton>
         </form>
         <p pr18 pl12 pblock12 background=slighter-light rounded=wide text smol fl alic gap=smol>

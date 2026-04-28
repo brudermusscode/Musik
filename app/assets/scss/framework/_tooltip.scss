@@ -1,5 +1,6 @@
 @use "var.utils" as *;
 @use "var.colors" as *;
+@use "../abstract" as *;
 
 [has-tooltip] {
   transition: $trans-cubic;
@@ -20,8 +21,8 @@
     box-shadow: inherit;
     border-radius: 8px;
     white-space: nowrap !important;
-    background: $framework_dark;
-    color: $framework_light;
+    background: $light;
+    color: $dark;
   }
 
   &:active {

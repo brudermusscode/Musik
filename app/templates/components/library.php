@@ -3,6 +3,7 @@
 use Illuminate\Support\Collection;
 use Bruder\Http\Request;
 use Bruder\Model\Bookmark;
+use Bruder\Model\Playlist;
 
 include _root() . "/config/get_requirements.php";
 
@@ -13,7 +14,7 @@ include _root() . "/config/get_requirements.php";
 /**
  * @var Collection<Bookmark>
  */
-$Bookmarks = Bookmark::with(["album", "playlist"])
+$Bookmarks = Bookmark::with(["album", "playlist", "artist"])
   ->orderBy("view_index", "DESC")
   ->get();
 
@@ -22,7 +23,28 @@ $Bookmarks = Bookmark::with(["album", "playlist"])
  */
 ob_start();
 
-foreach ($Bookmarks as $key => $Bookmark) :
+
+/**
+ * + No Bookmatks.
+ */
+if (!$Bookmarks->count()) : ?>
+
+  <div request-get="playlist:new" pr18 pl52 pblock14 hoverable rounded=std
+    background=slight-dark ovhid posrel>
+    <mi color=<?= Playlist::COLOR ?>
+      style="position:absolute;bottom:-12px;left:-12px;font-size:52px;"><?= Playlist::ICON ?></mi>
+    <div fl alic flone gap=smol jucsb>
+      <p text smol semibold trimt>Playlist erstellen</p>
+      <mi>arrow_forward</mi>
+    </div>
+  </div>
+
+<?php endif;
+
+/**
+ * + Show Bookmarks
+ */
+foreach ($Bookmarks ?? [] as $key => $Bookmark) :
 
   /**
    * @var Bookmark $Bookmark

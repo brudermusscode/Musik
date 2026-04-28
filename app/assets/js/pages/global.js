@@ -282,6 +282,10 @@ $(function () {
       open_bruder();
   });
 
+  $(document).on("click", "[open-bruder]", function (e) {
+    open_bruder();
+  });
+
   $(window).on("scroll", function (e) {
     bulk_close_contextmenu();
     close_bruder();
@@ -291,7 +295,8 @@ $(function () {
     if (!e.target.closest("[has-menu] menu")) bulk_close_contextmenu();
     if (
       (!e.target.closest("bruder") || e.target.closest("[close-bruder]")) &&
-      !e.target.closest("player")
+      !e.target.closest("player") &&
+      !e.target.closest("[open-bruder]")
     )
       close_bruder();
   });

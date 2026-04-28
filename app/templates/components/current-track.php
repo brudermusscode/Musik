@@ -92,7 +92,7 @@ ob_start(); ?>
           <?php if ($CurrentTrack?->art_link()) : ?>
             <img src="<?= $CurrentTrack->art_link() ?>" />
           <?php else : ?>
-            <mi color=secondary>genres</mi>
+            <mi color=<?= Track::COLOR ?>>genres</mi>
           <?php endif ?>
         </picture>
       <?php endif ?>
@@ -113,10 +113,9 @@ ob_start(); ?>
       ?>
 
       <p text <?= $title_size ?> bold trimt><?= $CurrentTrack->title ?></p>
-      <a href="/artist/<?= $CurrentTrack->artistt->id ?>">
-        <p text smol ttup regular fl alic gap=smoler background=slighter-light hoverable
-          rounded=smol pl4 pr10 pblock4>
-          <mi midler color=secondary>artist</mi>
+      <a href="/artist/<?= $CurrentTrack->artistt->id ?>" fl alic gap=smoler hoverable background=slighter-light rounded=smol pl6 pr10 pblock4 maxw100>
+        <mi text std color=<?= Artist::COLOR ?>><?= Artist::ICON ?></mi>
+        <p text smol ttup regular style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
           <?= $CurrentTrack->artistt->name ?>
         </p>
       </a>
@@ -195,9 +194,20 @@ ob_start(); ?>
      * + No Track
      */
   else: ?>
-    <div background=slighter-light pblock42 rounded fl alic jucc gap=smol+ color=red>
-      <mi mid>music_off</mi>
-      <p text bold ttup>Kein Track</p>
+    <div background=slight-dark p42 rounded fl fldircol alistart gap=smol+>
+      <mi mid mb6 style=height:2.4em;width:2.4em; circled background=slighterer-light fl alic jucc>music_off</mi>
+      <p text bold ttup>Nichts gespielt</p>
+      <p text>Einfach was abspielen Bruder, dann wird hier alles zu dem Track angezeigt.</p>
+    </div>
+
+    <div open-bruder mt6 pr18 pl52 pblock14 hoverable rounded=std
+      background=slight-dark ovhid posrel>
+      <mi color=<?= Track::COLOR ?>
+        style="position:absolute;bottom:-12px;left:-12px;font-size:52px;"><?= Track::ICON ?></mi>
+      <div fl alic flone gap=smol jucsb>
+        <p text smol semibold trimt>Tracks durchsuchen</p>
+        <mi>arrow_forward</mi>
+      </div>
     </div>
   <?php endif; ?>
 
