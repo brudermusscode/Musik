@@ -1,3 +1,6 @@
+> [!CAUTION]
+> Preview-Version! An vielen Stellen wird's vermutlich Fehler geben.
+
 # Musik, Bruder! - Dein Freund für deine Musik
 
 **Musik, Bruder!** ist dein bester Freund, wenn du selbst einiges an lokaler
@@ -32,13 +35,13 @@ erreichbar.
 <br>
 <p align="center">…………… ❓ ……………</p>
 
-#### **Wo ist die App gespeichert?**
+### **Wo ist die App gespeichert?**
 
 Das Setup-Script sollte, wenn alles glatt gelaufen ist, alles in
 `~/.local/share/musikbruder` gespeichert haben.
 <br>
 
-#### **Meine Musik? Wohin?**
+### **Meine Musik? Wohin?**
 
 Deine Musik kannst du in
 `~/.local/share/musikbruder/public/data/user/1/tracks` kopieren.
