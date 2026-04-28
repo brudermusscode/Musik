@@ -63,7 +63,7 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
 
 <body toggled="true" initialized="false" mobile="false"
   theme="<?= Cookie::get("__theme") === "light" ? "light" : "dark" ?>"
-  style="background-image: url(/assets/images/colors2.jpg);">
+  style="background-image: url(/assets/images/colors.svg);">
 
   <background-blur></background-blur>
 

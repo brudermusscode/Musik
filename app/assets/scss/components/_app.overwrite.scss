@@ -10,13 +10,13 @@ body {
 
   &[theme="dark"] {
     background-blur {
-      background: rgba(0, 0, 0, 0.54);
+      background: rgba(0, 0, 0, 0.64);
     }
   }
 
   &[theme="light"] {
     background-blur {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.08);
       // background: rgba(0, 0, 0, 0.08);
     }
   }
@@ -30,7 +30,7 @@ background-blur {
   left: 0;
   height: 100%;
   width: 100%;
-  backdrop-filter: blur(126px);
+  backdrop-filter: blur(64px);
 }
 
 [disable-user-selection] {
