@@ -43,18 +43,11 @@ sich doch auch einiges an Fehlern ein. Deswegen solltest Du damit
 rechnen, das nicht immer alles glatt läuft! Das ist der Preis, den
 wir statt den 10 Euro monatlich zahlen.
 
-<p align="center">…………… 📂 ……………</p>
-
-### Structure
-
-A simple overview of the structure. What files in those
-directories actually do, you need to find out on your own!
-
 <p align="center">…………… 👀 ……………</p>
 
-```
-Mit viel ☕, höchst verfügbarer ❤️ und einem großen 🍆 gebaut! Ich übernehme keine Verantwortung für Over-Engineering und/oder schlechte Performance 😘.
-```
+Mit viel ☕, höchst verfügbarer ❤️ und einem großen 🍆 gebaut!
+Ich übernehme keine Verantwortung für Over-Engineering und/oder
+schlechte Performance 😘.
 
 <br>
 

@@ -30,7 +30,7 @@ RUN echo "deb [signed-by=/etc/apt/keyrings/nginx.gpg] \
     http://nginx.org/packages/ubuntu $(lsb_release -cs) nginx" \
     > /etc/apt/sources.list.d/nginx.list
 
-# Install everything we need for the app.
+# Install everything we need.
 RUN apt update -q && \
     apt install -y \
     nginx \
@@ -59,4 +59,4 @@ RUN chown www-data -R public storage
 
 EXPOSE 80
 
-ENTRYPOINT ["/data/docker/deploy/entrypoint.sh"]
+ENTRYPOINT ["/data/docker/dev/entrypoint.sh"]

@@ -3,6 +3,7 @@
 /.env
 /bin
 /.git
+/deploy.sh
 /public/data
 /config/keys/*
 /*-lock.*
@@ -10,7 +11,6 @@
 /package.json
 /.vscode
 /compose.yml
-/Dockerfile
 /docker/dev
 /xbundler.*
 /storage

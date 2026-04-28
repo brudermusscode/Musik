@@ -1,7 +1,117 @@
 #!/bin/sh
 
+# [ -d "$HOME/.local/share" ] || {
+#   echo "~/.local/share gibt's nicht!"
+#   exit 1
+# }
+
+PINK="\033[38;5;205m"
+GREEN="\033[32m"
+YELLOW="\033[33m"
+LILA="\033[35m"
+GREY="\033[2;37m"
+NOCO="\033[0m"
+
+WORK_DIR="${XDG_DATA_HOME:-$HOME/.local/share}"
+BIN_DIR="${XDG_DATA_HOME:-$HOME/.local/bin}"
+
+echo -e "\n$PINK/////   //////   //      ////    /////  //////"
+sleep 0.05
+echo -e "//  //  //   //  //  //  //  //  //     //   //"
+sleep 0.05
+echo -e "/////   /////    //  //  //  //  ////   /////  "
+sleep 0.05
+echo -e "//  //  //  //   //  //  //  //  //     //  // "
+sleep 0.05
+echo -e "////    //   //   ////   ////    /////  //   //"
+sleep 0.05
+echo -e "Dein Bruder der Musik$NOCO\n"
+sleep 0.05
+
+read -p "⌨️  Hast du Bock? ja/* " you_in
+
+if [ "$you_in" != "ja" ]; then
+  echo -e "\n$YELLOW Alles klar Bruder, vielleicht ein andermal!$NOCO\n"
+  exit 1
+fi
+
+echo -e "\n$LILA😍  Nice, dann las los gehen jetzt…$NOCO"
+
+# Ensure the .local/share dir exists by creating it. This won't
+# output anything if it already exists.
+mkdir -p "$WORK_DIR"
+mkdir -p "$BIN_DIR"
+
+
+
+
+# ? -------------------------- Check all dependencies.
+sleep 0.2
+echo -e "\n$LILA🍌  Erstmal gucken, ob alles installiert ist…$NOCO"
+
+# ! PHP installed?
+command -v php >/dev/null 2>&1 || {
+  echo -e "Sorry Bruder, aber du musst PHP installieren. Wie? Das findest du auf https://www.php.net/manual/en/install.unix.php\n Danach kannst du es nochmal versuchen!"
+  exit 1
+}
+
+# + Install composer if not exists
+if ! command -v composer >/dev/null 2>&1; then
+  echo -e "$GREEN♻️  Installiere composer in »~/.local/bin«$NOCO"
+
+  curl -sS https://getcomposer.org/installer | php
+  mv composer.phar $WORK_DIR/composer
+fi
+
+# Set working dir.
+cd $WORK_DIR
+
+
+echo -en "\n🍎"
+sleep 0.2
+echo -n "🍊"
+sleep 0.2
+echo -n "🍉"
+sleep 0.2
+echo -n "🍇"
+sleep 0.2
+echo -n "🍋"
+sleep 0.2
+echo -n "🍑"
+sleep 0.2
+echo -n "🥭"
+sleep 0.2
+echo -n "🥐"
+sleep 0.2
+echo -n "🧀"
+sleep 0.2
+echo -n "🍓"
+sleep 0.2
+echo -n "."
+sleep 0.2
+echo -n "."
+sleep 0.2
+echo -n "."
+sleep 0.2
+echo -en "🎌\n"
+sleep 0.2
+
+
+
+# ? ------------------------------ Now we can start!
+sleep 0.2
+echo -e "\n$LILA♻️  App von GitHub klonieren…$NOCO"
+
+# Clone the git repository here and cd into it, so we set the new
+# working directory.
+git clone https://github.com/brudermusscode/UnSpotify.git musikbruder
+cd musikbruder
+
+
+sleep 0.2
+echo -e "\n$LILA♻️  Alle Relevanzen erstellen…$NOCO"
+
 # Create assets file structure.
-echo "[+] Erstmal alle Ordner erstellen …"
 mkdir -p public/data/user/1/{tracks,art,portraits,videos}
 mkdir -p public/data/user/1/tracks/deleted
 mkdir -p storage/logs
@@ -12,18 +122,48 @@ chmod a+rw sql/last_migration
 
 cp .env.example .env
 
-# Install composer and set it up.
-if ! command -v composer >/dev/null 2>&1; then
-    echo "[+] Installiere composer in »~/.local/bin« …"
 
-    curl -sS https://getcomposer.org/installer | php
-    mv composer.phar .local/bin/composer
+sleep 0.2
+echo -e "\n$LILA♻️  Nun alle composer Relevanzen…$NOCO"
+
+
+# Install composer & dump autoload.
+if command -v tput >/dev/null 2>&1; then
+  # reserve 5 empty lines for the cursor to move up and delete. This
+  # makes the live window log possible without deleting 5 lines of
+  # output from commands before.
+  printf '\n%.0s' {1..5}
+  composer install 2>&1 | while IFS= read -r line; do
+    buffer+=("$line")
+    if [ "${#buffer[@]}" -gt 5 ]; then
+        buffer=("${buffer[@]:1}")
+    fi
+
+    # move cursor up 5 lines without clearing history
+    tput sc
+    tput cuu 5 2>/dev/null
+
+    printf "$GREY\033[2K%s\n" "${buffer[@]}"
+
+    tput rc
+  done
+else
+  composer install
 fi
-
-echo "[+] Jetzt composer Relevanzen …"
-composer install
 composer dump-autoload
+
+
+sleep 0.2
+echo -e "\n$LILA♻️  Bruder starten$NOCO"
 
 docker compose -f compose.deploy.yml up -d
 
-echo "[!] Fertig! Geh zu http://localhost:6789"
+sleep 0.2
+echo -e "\n$GREEN🤝 Fertig! Geh zu http://localhost:6789 - Deine Musik kannst du in ~/.local/share/musikbruder/public/data/user/1/tracks packen ❤️"
+
+
+
+
+
+cd ..
+rm -rf musikbruder
