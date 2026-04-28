@@ -177,8 +177,8 @@ ob_start(); ?>
           </a>
         <?php elseif ($CurrentArtist) : ?>
           <div request-get="artist:edit" data-id=<?= $CurrentArtist->id ?> pr18 pl52 pblock14 hoverable rounded=std background=slight-dark ovhid posrel>
-            <mi color=quadro
-              style="position:absolute;bottom:-12px;left:-12px;font-size:52px;">artist</mi>
+            <mi color=<?= Artist::COLOR ?>
+              style="position:absolute;bottom:-12px;left:-12px;font-size:52px;"><?= Artist::ICON ?></mi>
             <div fl alic flone gap=smol jucsb>
               <p text smol semibold trimt>Künstler bearbeiten</p>
               <mi>arrow_forward</mi>
