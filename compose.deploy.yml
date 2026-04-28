@@ -1,5 +1,5 @@
 volumes:
-  unspotify-mysql-data:
+  musikbruder-mysql-data:
 
 networks:
   default:
@@ -44,16 +44,15 @@ services:
     # expose:
     # - ${MYSQL_PORT}
     volumes:
-      - unspotify-mysql-data:/var/lib/mysql
+      - musikbruder-mysql-data:/var/lib/mysql
 
   phpmyadmin:
-    container_name: unspotify-phpmyadmin
     image: phpmyadmin:latest
     restart: unless-stopped
     environment:
       PMA_HOST: ${MYSQL_HOST}
       PMA_USER: ${MYSQL_USER}
-      PMA_PORT: 3306
+      PMA_PORT: ${MYSQL_PORT}
       PMA_PASSWORD: ""
       UPLOAD_LIMIT: ${PMA_UPLOAD_LIMIT}
       PMA_ARBITRARY: 1

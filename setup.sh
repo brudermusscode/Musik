@@ -43,9 +43,7 @@ mkdir -p "$WORK_DIR"
 mkdir -p "$BIN_DIR"
 
 
-
-
-# ? -------------------------- Check all dependencies.
+# + Check dependencies.
 sleep 0.2
 echo -e "\n$LILA🍌 Erstmal gucken, ob alles installiert ist … $NOCO"
 
@@ -73,11 +71,14 @@ sleep 0.2
 echo -en "·"
 
 sleep 0.2
-echo -e "\n ✅ Alles cool!"
+echo -e "\n✅ Alles cool!"
+
+
 
 # Set working dir.
 cd $WORK_DIR
 
+# cd musikbruder && docker compose -f compose.deploy.yml down --volume && cd .. && rm -rf musikbruder
 
 echo -en "\n🍎"
 sleep 0.2
@@ -110,7 +111,7 @@ sleep 0.2
 
 
 
-# ? ------------------------------ Now we can start!
+# + Clone GitHub
 sleep 0.2
 echo -e "\n$LILA♻️  App von GitHub klonieren…$NOCO"
 
@@ -120,6 +121,7 @@ git clone https://github.com/brudermusscode/UnSpotify.git musikbruder
 cd musikbruder
 
 
+# + Dependency directories and files.
 sleep 0.2
 echo -e "\n$LILA♻️  Alle Relevanzen erstellen…$NOCO"
 
@@ -134,7 +136,10 @@ chmod a+rw sql/last_migration
 
 cp .env.example .env
 
+echo -e "✅ Alles cool!"
 
+
+# + Composer
 sleep 0.2
 echo -e "\n$LILA♻️  Nun alle composer Relevanzen…$NOCO"
 
@@ -165,11 +170,14 @@ fi
 composer dump-autoload
 
 
+# + Start docker container.
 sleep 0.2
 echo -e "\n$LILA♻️  Bruder starten$NOCO"
 
 docker compose -f compose.deploy.yml up -d
 
+
+# # Done!
 sleep 0.2
 echo -e "\n$GREEN🤝 Fertig! Geh zu http://localhost:6789 - Deine Musik kannst du in ~/.local/share/musikbruder/public/data/user/1/tracks packen ❤️"
 
