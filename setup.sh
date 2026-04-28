@@ -3,6 +3,7 @@
 # Create assets file structure.
 echo "[+] Erstmal alle Ordner erstellen …"
 mkdir -p public/data/user/1/{tracks,art,portraits,videos}
+mkdir -p public/data/user/1/tracks/deleted
 mkdir -p storage/logs
 chmod a+rw -R storage public sql
 

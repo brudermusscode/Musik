@@ -21,9 +21,6 @@ RUN apt update -q && \
     unzip \
     nodejs
 
-# PHP.
-# RUN add-apt-repository ppa:ondrej/php
-
 # nginx. Why ondrej, why we need this instead of your ppa :(
 RUN mkdir -p /etc/apt/keyrings && \
     curl -fsSL https://nginx.org/keys/nginx_signing.key \
@@ -57,21 +54,6 @@ RUN rm -f /var/log/nginx/access.log /var/log/nginx/error.log && \
 WORKDIR /data
 
 COPY . .
-
-# Install composer & dependencies without dev
-RUN curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/composer \
-    && chmod 755 /usr/local/bin/composer \
-    && composer install --no-dev --no-scripts
-
-RUN composer dump-autoload
-
-# Create dependency directories for uploaded content
-RUN mkdir -p \
-    public/data/user/1/tracks \
-    public/data/user/1/art \
-    public/data/user/1/portraits \
-    public/data/user/1/videos
 
 RUN chown www-data -R public storage
 
