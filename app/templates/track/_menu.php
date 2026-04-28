@@ -15,11 +15,6 @@
           Als nächstes spielen
         </option>
 
-        <option request-get="track:add-to" data-id="<?= $Track->id ?>" has-sub>
-          <mi>sticker_add</mi>
-          Hinzufügen
-        </option>
-
         <?php if ($in_playlist || $in_album) : ?>
           <option data-action="<?= $in_playlist ? "playlist:track:delete" : "album:track:delete" ?>"
             data-track-id="<?= $Track->id ?>"
@@ -63,6 +58,19 @@
             Künstler
           </option>
         </a>
+      </section>
+
+      <section>
+        <option request-get="track:add-to" data-id="<?= $Track->id ?>" has-sub>
+          <mi>sticker_add</mi>
+          Hinzufügen
+        </option>
+
+        <option request="track:delete" data-id="<?= $Track->id ?>"
+          shadow-submit update-current-track reload color=light-red has-sub>
+          <mi>emoji_symbols</mi>
+          Tschüss
+        </option>
       </section>
     </div>
   </inr>

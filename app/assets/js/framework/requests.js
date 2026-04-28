@@ -3,7 +3,75 @@ import * as Frontend from "./frontend";
 import * as Page from "./page";
 import * as Global from "../pages/global";
 
+/**
+ * Any attribute that can be attached to a form to manipulate the
+ * behaviour of submitting a form.
+ *
+ * @var array
+ */
+const SUBMIT_FORM_ATTRIBUTES = [
+  "request",
+  "request-do",
+  "submit-closest",
+  "method",
+  "responder",
+  "no-scroll-top",
+  "toggle-button-active",
+  "redirect",
+  "reload",
+  "full-reload",
+  "close-overlays",
+  "on-success",
+  "update-library",
+  "update-current-track",
+  "interchange-action",
+];
+
 $(function () {
+  /**
+   * Shadow submitting a form. It basically mimics the
+   * functionality of form[request="…"] when submitted, but as a
+   * button, where the dataset entries are being converted to
+   * hidden inputs.
+   */
+  $(document).on("click", "[request], [request-do]", function () {
+    if (!this.closest("[shadow-submit]")) return;
+
+    let form = document.createElement("form");
+    let button = document.createElement("mbutton");
+
+    button.setAttribute("submit-closest", true);
+    form.prepend(button);
+
+    /**
+     * Create an input inside the form for every dataset entry.
+     */
+    for (const [key, value] of Object.entries(this.dataset)) {
+      form.insertAdjacentHTML(
+        "afterbegin",
+        `<input type=hidden name=${key} value="${value}" />`,
+      );
+    }
+
+    /**
+     * Append all attributes from this element to the form.
+     */
+    for (const attribute of this.attributes) {
+      if (!SUBMIT_FORM_ATTRIBUTES.includes(attribute.name)) continue;
+
+      form.setAttribute(attribute.name, attribute.value);
+    }
+
+    document.body.prepend(form);
+
+    // # Submit the form!
+    button.click();
+
+    form.remove();
+
+    return;
+  });
+
   $(document).on("submit", "[request], [request-do]", function (e) {
     e.preventDefault();
 

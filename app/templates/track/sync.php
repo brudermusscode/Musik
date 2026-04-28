@@ -47,10 +47,9 @@ $files = scandir($DIR__to_scan);
 foreach ($files as $key => $file_name) {
 
   /**
-   * Remove common unix system file paths like . and .. which
-   * do not represent files.
+   * Unset directories.
    */
-  if (in_array($file_name, [".", ".."])) {
+  if (is_dir("$DIR__to_scan/$file_name")) {
     unset($files[$key]);
     continue;
   }
