@@ -14,7 +14,7 @@ Um deinen besten Freund der Musik zu installieren, gib einfach
 folgenden Befehl in dein Terminal ein:
 
 ```bash
-bash <(curl -fsSL https://www.heia.kim/MusikBruder/setup)
+bash <(curl -fsSL https://www.heia.kim/MusikBruder/setup.sh)
 ```
 
 Was das Script macht, kannst du in diesem Repo in der Datei
