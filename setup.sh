@@ -35,7 +35,7 @@ if [ "$you_in" != "ja" ]; then
   exit 1
 fi
 
-echo -e "\n$LILA😍  Nice, dann las los gehen jetzt…$NOCO"
+echo -e "\n$LILA😍 Nice, dann las los gehen jetzt…$NOCO"
 
 # Ensure the .local/share dir exists by creating it. This won't
 # output anything if it already exists.
@@ -47,21 +47,33 @@ mkdir -p "$BIN_DIR"
 
 # ? -------------------------- Check all dependencies.
 sleep 0.2
-echo -e "\n$LILA🍌  Erstmal gucken, ob alles installiert ist…$NOCO"
+echo -e "\n$LILA🍌 Erstmal gucken, ob alles installiert ist … $NOCO"
+
+sleep 0.2
+echo -en "·"
 
 # ! PHP installed?
 command -v php >/dev/null 2>&1 || {
-  echo -e "Sorry Bruder, aber du musst PHP installieren. Wie? Das findest du auf https://www.php.net/manual/en/install.unix.php\n Danach kannst du es nochmal versuchen!"
+  echo -e "\n$YELLOW💔 Sorry Bruder, aber du musst PHP installieren. Das findest du auf https://www.php.net/manual/en/install.unix.php - Versuch es danach nochmal!$NOCO"
   exit 1
 }
 
+sleep 0.2
+echo -en "·"
+
 # + Install composer if not exists
 if ! command -v composer >/dev/null 2>&1; then
-  echo -e "$GREEN♻️  Installiere composer in »~/.local/bin«$NOCO"
+  echo -e "\n$YELLOW♻️  Installiere composer in »~/.local/bin«$NOCO"
 
   curl -sS https://getcomposer.org/installer | php
   mv composer.phar $WORK_DIR/composer
 fi
+
+sleep 0.2
+echo -en "·"
+
+sleep 0.2
+echo -e "\n ✅ Alles cool!"
 
 # Set working dir.
 cd $WORK_DIR
@@ -165,5 +177,5 @@ echo -e "\n$GREEN🤝 Fertig! Geh zu http://localhost:6789 - Deine Musik kannst 
 
 
 
-cd ..
-rm -rf musikbruder
+# cd ..
+# rm -rf musikbruder
