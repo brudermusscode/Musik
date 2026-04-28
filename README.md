@@ -1,18 +1,12 @@
-## UnSpotify - Dein Freund für Musik
+## Musik, Bruder! - Dein Freund für deine Musik
 
-**UnSpotify** ist dein bester Freund, wenn du selbst einiges an lokaler
-Musik besitzt und keine Lust mehr hast, Spotify jeden Monat 10
-Euro zu spendieren.
+**Musik, Bruder!** ist dein bester Freund, wenn du selbst einiges an lokaler
+Musik besitzt und keine Lust mehr hast, Spotify jeden Monat 10 Euro zu spendieren.
+<br>
 
 <p align="center">…………… 🫴 ……………</p>
 
 ## Setup - Step (〰️) by Step (〰️)
-
-### 〰️ **? · Ordner einstellen** ¬
-
-Gib `cd ~` in dein Terminal ein, um in deine `/home`-directory zu
-gelangen. Hier solltest du für das Setup bleiben, wenn du kein
-`sudo` für das Setup verwenden willst.
 
 ### 〰️ **1 · Setup ausführen** ¬
 
@@ -20,35 +14,58 @@ Um deinen besten Freund der Musik zu installieren, gib einfach
 folgenden Befehl in dein Terminal ein:
 
 ```bash
-curl -fsSL https://www.heia.kim/MusikBruder/setup | bash
+bash <(curl -fsSL https://www.heia.kim/MusikBruder/setup)
 ```
 
-Was das script macht, kannst du in diesem Repo in der Datei
-`setup.sh` einsehen. Kurz: Das GitHub-Repo wird in `unspotify/`
-kopiert und alle Relevanzen wie Asset-Ordner werden erstellt.
+Was das Script macht, kannst du in diesem Repo in der Datei
+`setup.sh` einsehen. Die Datei auf `www.heia.kim` ist immer die
+aktuellste Version des Setups in diesem Repo!
 
 ### 〰️ **9 · Fertig** ¬
 
 Ab gehts. Dein Freund ist unter `http://localhost:6789`
-erreichbar. Deine Musik kannst du in `unspotify/public/data/user/1/tracks` hochladen. Deine Musik wird
-automatisch bei jedem Seiten-Reload synchronisiert.
+erreichbar.
+<br>
 
-<p align="center">…………… 🤏 ……………</p>
+<p align="center">…………… ❓ ……………</p>
 
-### Philosophy
+#### **Wo ist die App gespeichert? **
+
+Das Setup-Script sollte, wenn alles glatt gelaufen ist, alles in
+`~/.local/share/musikbruder` gespeichert haben.
+<br>
+
+#### **Meine Musik? Wohin? **
+
+Deine Musik kannst du in
+`~/.local/share/musikbruder/public/data/user/1/tracks` kopieren.
+Neue Songs werden immer automatisch bei jedem Seiten-Reload
+synchronisiert. Um alles einfacher zu machen, kannst du auch einen
+Symlink zu deinem lokalen Musik-Ordner erstellen (oder wo du auch
+immer deine Musik gespeichert hast). Das geht so:
+
+```BASH
+ln -s ~/Music ~/.local/share/musikbruder/public/data/user/1/tracks
+```
+
+<br>
+<p align="center">…………… 🍃 ……………</p>
+
+### Philosophie
 
 Ich arbeite gerne und viel an diesem Projekt, aber so lange die
 Abende voll Erfüllung und Zufriedenheit auch werden, so schleichen
 sich doch auch einiges an Fehlern ein. Deswegen solltest Du damit
 rechnen, das nicht immer alles glatt läuft! Das ist der Preis, den
 wir statt den 10 Euro monatlich zahlen.
+<br>
 
 <p align="center">…………… 👀 ……………</p>
 
-Mit viel ☕, höchst verfügbarer ❤️ und einem großen 🍆 gebaut!
+<p align="center">Mit viel ☕, höchst verfügbarer ❤️ und einem großen 🍆 gebaut!
 Ich übernehme keine Verantwortung für Over-Engineering und/oder
-schlechte Performance 😘.
+schlechte Performance 😘.</p>
 
 <br>
 
-<p align="center" style="font-weight:bold">2026 &copy; Justin Seidel. All rights reserved.</p>
+<p align="center" style="font-weight:bold">2026 &copy; Justin Seidel. Alle Rechte vorbehalten.</p>

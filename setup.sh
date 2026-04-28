@@ -25,10 +25,10 @@ echo -e "//  //  //  //   //  //  //  //  //     //  // "
 sleep 0.05
 echo -e "////    //   //   ////   ////    /////  //   //"
 sleep 0.05
-echo -e "Dein Bruder der Musik$NOCO\n"
+echo -e "Dein Bruder der Musik (I use Arch btw)$NOCO\n"
 sleep 0.05
 
-read -p "⌨️  Hast du Bock? ja/* " you_in
+read -p "⌨️  Hast du Bock? ja/* " you_in < /dev/tty
 
 if [ "$you_in" != "ja" ]; then
   echo -e "\n$YELLOW Alles klar Bruder, vielleicht ein andermal!$NOCO\n"
