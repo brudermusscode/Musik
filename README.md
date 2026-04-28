@@ -3,6 +3,8 @@
 **Musik, Bruder!** ist dein bester Freund, wenn du selbst einiges an lokaler
 Musik besitzt und keine Lust mehr hast, Spotify jeden Monat 10 Euro zu spendieren.
 
+![Web Image](https://www.heia.kim/MusikBruder/preview.gif)
+
 <br>
 
 <p align="center">…………… 🫴 ……………</p>
