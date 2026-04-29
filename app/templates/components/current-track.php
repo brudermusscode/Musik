@@ -58,70 +58,72 @@ $has_video = $CurrentTrack?->video;
  */
 ob_start(); ?>
 
-<current-track <?= $has_video ? "has-video" : "" ?>>
+<current-track <?= $has_video ? "has-video" : "" ?> fl fldircol gap>
 
   <?php if ($CurrentTrack) : ?>
 
-    <cover <?= $has_video ? "animation=fade-in-slow" : "animation=zoom-in" ?>>
-      <div hint fl jucsb alic pinline10 pblock8 posabs style="top:0;left:0;z-index:2;width:100%;">
-        <p pinline12 pblock8 text smoler semibold ttup background=hover-dark rounded=smolplus>Läuft gerade</p>
+    <div fl fldircol gap=smol>
+      <cover <?= $has_video ? "animation=fade-in-slow" : "animation=zoom-in" ?>>
+        <div hint fl jucsb alic pinline10 pblock8 posabs style="top:0;left:0;z-index:2;width:100%;">
+          <p pinline12 pblock8 text smoler semibold ttup background=hover-dark rounded=smolplus>Läuft gerade</p>
 
-        <action-row fl alic gap=smoler>
-          <?php if (!$has_video) : ?>
-            <mbutton request-get="track:edit" data-id="<?= $CurrentTrack->id ?>" material size=std icon-only background=hover-dark has-tooltip=bottom>
-              <mi>arrow_upload_progress</mi>
-              <div ttooltip>Video</div>
-            </mbutton>
-          <?php else : ?>
-            <form request="track:update" update-current-track responder=simple>
-              <input type=hidden name=id value=<?= $CurrentTrack->id ?> />
-              <input type=hidden name=video value="delete" />
-              <mbutton submit-closest material size=std icon-only background=hover-dark has-tooltip=bottom>
-                <mi>reset_image</mi>
-                <div ttooltip>Video löschen</div>
+          <action-row fl alic gap=smoler>
+            <?php if (!$has_video) : ?>
+              <mbutton request-get="track:edit" data-id="<?= $CurrentTrack->id ?>" material size=std icon-only background=hover-dark has-tooltip=bottom>
+                <mi>arrow_upload_progress</mi>
+                <div ttooltip>Video</div>
               </mbutton>
-            </form>
-          <?php endif ?>
-        </action-row>
+            <?php else : ?>
+              <form request="track:update" update-current-track responder=simple>
+                <input type=hidden name=id value=<?= $CurrentTrack->id ?> />
+                <input type=hidden name=video value="delete" />
+                <mbutton submit-closest material size=std icon-only background=hover-dark has-tooltip=bottom>
+                  <mi>reset_image</mi>
+                  <div ttooltip>Video löschen</div>
+                </mbutton>
+              </form>
+            <?php endif ?>
+          </action-row>
+        </div>
+
+        <?php if ($CurrentTrack->video) : ?>
+          <video src="<?= $CurrentTrack->video_link() ?>" autoplay loop></video>
+        <?php else : ?>
+          <picture>
+            <?php if ($CurrentTrack?->art_link()) : ?>
+              <img src="<?= $CurrentTrack->art_link() ?>" />
+            <?php else : ?>
+              <mi color=<?= Track::COLOR ?>>genres</mi>
+            <?php endif ?>
+          </picture>
+        <?php endif ?>
+      </cover>
+
+      <div track-metadata fl fldircol gap=smolest alistart
+        <?= $has_video ? "animation=fade-in-slow" : "animation=fade-in" ?>>
+
+        <?php
+
+        $title = $CurrentTrack->title;
+        $title_size = match (true) {
+          strlen($title) >= 22 => "stdplus",
+          strlen($title) >= 12 => "midler",
+          default => "wide",
+        };
+
+        ?>
+
+        <p text <?= $title_size ?> bold trimt><?= $CurrentTrack->title ?></p>
+        <a href="/artist/<?= $CurrentTrack->artistt->id ?>" fl alic gap=smoler hoverable background=slighter-light rounded=smol pl6 pr10 pblock4 maxw100>
+          <mi text std color=<?= Artist::COLOR ?>><?= Artist::ICON ?></mi>
+          <p text smol ttup regular style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+            <?= $CurrentTrack->artistt->name ?>
+          </p>
+        </a>
       </div>
-
-      <?php if ($CurrentTrack->video) : ?>
-        <video src="<?= $CurrentTrack->video_link() ?>" autoplay loop></video>
-      <?php else : ?>
-        <picture>
-          <?php if ($CurrentTrack?->art_link()) : ?>
-            <img src="<?= $CurrentTrack->art_link() ?>" />
-          <?php else : ?>
-            <mi color=<?= Track::COLOR ?>>genres</mi>
-          <?php endif ?>
-        </picture>
-      <?php endif ?>
-    </cover>
-
-    <div track-metadata fl fldircol gap=smolest alistart
-      <?= $has_video ? "animation=fade-in-slow" : "animation=fade-in" ?>>
-
-      <?php
-
-      $title = $CurrentTrack->title;
-      $title_size = match (true) {
-        strlen($title) >= 22 => "stdplus",
-        strlen($title) >= 12 => "midler",
-        default => "wide",
-      };
-
-      ?>
-
-      <p text <?= $title_size ?> bold trimt><?= $CurrentTrack->title ?></p>
-      <a href="/artist/<?= $CurrentTrack->artistt->id ?>" fl alic gap=smoler hoverable background=slighter-light rounded=smol pl6 pr10 pblock4 maxw100>
-        <mi text std color=<?= Artist::COLOR ?>><?= Artist::ICON ?></mi>
-        <p text smol ttup regular style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-          <?= $CurrentTrack->artistt->name ?>
-        </p>
-      </a>
     </div>
 
-    <div fl fldircol gap pinline18 pblock18>
+    <div pinline24 fl fldircol gap=midler>
       <?php if ($Relation && $track_relates) : ?>
         <div fl fldircol gap=smol>
           <p pinline4 text smoler semibold ttup>Läuft in</p>

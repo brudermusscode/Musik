@@ -114,14 +114,19 @@ class Controller
         /**
          * Sanitize all values recursively.
          */
-        foreach ($post_params as $key => $value)
+        foreach ($post_params as $key => $value) {
+            $value = trim($value);
+
             if (is_array($value))
                 $serializedParams[$key] = Arr::sanitize_special_chars($value);
             else
                 $serializedParams[$key] =
-                    is_numeric($value) && !str_starts_with($value, "0")
+                    is_numeric($value)
+                    && is_numeric($value[0])
+                    && !str_starts_with($value, "0")
                     ? (int) $value
                     : filter_var($value, FILTER_SANITIZE_SPECIAL_CHARS);
+        }
 
         /**
          * Append the current user to make it available in any controller.

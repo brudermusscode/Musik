@@ -48,6 +48,8 @@ sidebar {
     }
 
     current-track {
+      padding-bottom: 24px;
+
       cover {
         [hint] {
           opacity: 0.8;
@@ -161,10 +163,9 @@ sidebar {
           picture {
             position: relative;
             width: 100%;
-            height: auto;
             max-height: 360px;
             border-radius: 16px;
-            border: 1px solid $hover-dark;
+            // border: 1px solid $hover-dark;
             overflow: hidden;
 
             &:before {
@@ -179,13 +180,14 @@ sidebar {
               background: #000000;
               background: linear-gradient(
                 0deg,
-                rgba(0, 0, 0, 1) 0%,
+                rgba(0, 0, 0, 0.64) 0%,
                 rgba(0, 0, 0, 0) 100%
               );
             }
 
             img {
               object-fit: cover;
+              vertical-align: middle;
             }
           }
         }
