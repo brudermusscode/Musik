@@ -22,7 +22,7 @@ https://github.com/user-attachments/assets/a451f78d-d819-4bec-8dd2-4c5f7b30a982
 ### 〰️ **1 · Abhängigkeiten installieren** ¬
 
 Ein paar Dinge müssen auf deinem `Linux`-System vorhanden sein,
-damit du durchstarten kannst. Hierzu zählen `php` 8.5 und `tput`.
+damit du durchstarten kannst. Hierzu zählen `php` 8.5 und `ncurses`.
 Wie man das installiert, musst du selbst herausfinden 💋
 
 ### 〰️ **2 · Setup ausführen** ¬
