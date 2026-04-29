@@ -65,7 +65,7 @@ sleep 0.2
 echo -en "·"
 
 # + Install composer if not exists
-if command -v composer >/dev/null 2>&1; then
+if ! command -v composer >/dev/null 2>&1; then
   sleep 0.2
   echo -e "\n$YELLOW♻️  Installiere composer in »~/.local/bin«$NOCO"
 
@@ -74,8 +74,6 @@ if command -v composer >/dev/null 2>&1; then
   mv composer.phar $BIN_DIR/composer
   echo -e "Good went!"
 fi
-
-exit 1;
 
 sleep 0.2
 echo -en "·"
@@ -89,7 +87,7 @@ echo -e "\n✅ Alles cool!"
 cd $WORK_DIR
 
 # Only for testing locally.
-# cd musikbruder && docker compose -f compose.deploy.yml down --volume && cd .. && rm -rf musikbruder
+# cd musikbruder && docker compose -f compose.deploy.yml down --volumes && cd .. && rm -rf musikbruder
 
 echo -en "\n🍎"
 sleep 0.2

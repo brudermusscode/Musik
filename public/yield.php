@@ -32,8 +32,7 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
 <head>
   <link rel="canonical" href="<?= $canonical ?>" />
   <link rel="home" href="<?php echo HOME_URL; ?>" />
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-  <link rel="apple-touch-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="/favicon.svg" />
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
