@@ -56,16 +56,26 @@ command -v php >/dev/null 2>&1 || {
   exit 1
 }
 
+# ! tput (ncurses) installed?
+command -v tput >/dev/null 2>&1 || {
+  echo -e "\n$GREY ncurses ist nicht installiert, Terminal-Output sieht nicht so schön aus aber wird funktionieren.$NOCO"
+}
+
 sleep 0.2
 echo -en "·"
 
 # + Install composer if not exists
-if ! command -v composer >/dev/null 2>&1; then
+if command -v composer >/dev/null 2>&1; then
+  sleep 0.2
   echo -e "\n$YELLOW♻️  Installiere composer in »~/.local/bin«$NOCO"
 
   curl -sS https://getcomposer.org/installer | php
-  mv composer.phar $WORK_DIR/composer
+  echo -e "Moving composer to »~/.local/bin«"
+  mv composer.phar $BIN_DIR/composer
+  echo -e "Good went!"
 fi
+
+exit 1;
 
 sleep 0.2
 echo -en "·"

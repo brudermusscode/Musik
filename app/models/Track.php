@@ -85,6 +85,49 @@ class Track extends Bruder
   }
 
   /**
+   * @return string
+   */
+  public function remove()
+  {
+    /**
+     * Move the actual file to tracks/deleted/.
+     */
+    $path = _root() . "/public/data/user/1/tracks";
+    $full_path = "$path/$this->file_name";
+
+
+    $this->db_transaction();
+
+    try {
+      if (file_exists($full_path)) {
+
+        /**
+         * Serialize the file name by exploding it by a slash to
+         * get the file name without the sub directory names.
+         */
+        $file_name = explode("/", $this->file_name);
+        $file_name = array_last($file_name);
+
+        /**
+         * Rename will move the file to the deleted directory.
+         */
+        rename($full_path, "$path/deleted/" . $file_name);
+      }
+
+      $this->album_track()->delete();
+      $this->playlist_tracks()->delete();
+      $this->delete();
+      $this->db_commit();
+      return success();
+    } catch (\Exception $e) {
+      $this->db_rollback();
+      return error($e->getMessage());
+    }
+
+    return success();
+  }
+
+  /**
    * Uploads a new file with a random alpha string as name and
    * encodes it as webp.
    *
@@ -148,13 +191,11 @@ class Track extends Bruder
    * @param string $path
    * @return string
    */
-  public static function hhhhhhi89999999999999999999pcreate_from_file(array $file_paths)
+  public static function hhhhhhi89999999999999999999pcreate_from_file(array $files)
   {
 
-    /**
-     * @var string
-     */
     $log_path = ROOT . "/storage/logs/track_sync.log";
+    $base_path = self::base_path();
 
     /**
      * @var Request
@@ -169,29 +210,32 @@ class Track extends Bruder
 
     try {
 
-      /**
-       * @var array
-       */
       $error = [];
-
-      /**
-       * @var string
-       */
       $new = 0;
 
-      foreach ($file_paths as $path) :
+      foreach ($files as $path) :
 
         /**
-         * File exists?
+         * The full path to the file going from root directory.
+         * @var string
          */
-        if (!file_exists($path)) {
+        $file_path = "$base_path/$path";
+
+        // ! File doesn't exist?
+        if (!file_exists($file_path)) {
           array_push($error, "$path::doesn't exist");
 
           continue;
         }
 
+        // ! Is directory?
+        if (is_dir($file_path))
+          continue;
+
         /**
-         * Serialize the file name.
+         * Serialize the file name. The array of files contains
+         * either only file names or a path going from the tracks
+         * directory which are obviously seperated by a slash.
          */
         $file_name = explode("/", $path);
         $file_name = array_last($file_name);
@@ -199,17 +243,24 @@ class Track extends Bruder
         /**
          * Check if the file exists already.
          */
-        if (Track::where("file_name", $file_name)->first())
+        if (Track::where("file_name", $path)->first())
           continue;
 
         /**
+         * r = read
+         * b = binary
+         *
          * @var MpegAudio
          */
-        if (!($file = fopen($path, "rb"))) {
+        if (!($file = fopen($file_path, "rb"))) {
           array_push($error, "$path::can't open requested file.");
 
           continue;
         }
+
+        /**
+         * @var resource $file
+         */
 
         /**
          * @var string
@@ -314,7 +365,9 @@ class Track extends Bruder
          * @var Track
          */
         $Track = new Track;
-        $Track->file_name = $file_name;
+
+        # Adding the path as it contains the sub folder.
+        $Track->file_name = $path;
         $Track->artist = $return_data["info"]["artist"][0] ?? null;
         $Track->title = $return_data["info"]["title"][0] ?? null;
         $Track->genre = $return_data["info"]["genre"][0] ?? null;
@@ -357,6 +410,14 @@ class Track extends Bruder
 
       return $Request->error($e->getMessage(), $e);
     }
+  }
+
+  /**
+   * @return string
+   */
+  public static function base_path()
+  {
+    return _root() . "/public/data/user/1/tracks";
   }
 
   /**

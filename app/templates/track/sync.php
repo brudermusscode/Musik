@@ -1,6 +1,7 @@
 <?php
 
 // TODO: Add new album or add to existing album automatically.
+// TODO: Go deeper than track root directory to sync new tracks.
 
 /**
  * Loading the app will trigger a "sync new music" job.
@@ -34,28 +35,68 @@ file_put_contents(
  * @var string
  */
 $DIR__to_scan = ROOT . "/public/data/user/1/tracks";
+$ignore_dirs = ["deleted", ".", ".."];
+$files = [];
 
 /**
  * @var array
  */
-$files = scandir($DIR__to_scan);
-
 
 /**
- * Build new array with full file path isntead of just the filename.
+ * @return ?array
  */
-foreach ($files as $key => $file_name) {
+function scan_dir_and_add_files_to_array(string $path_to_dir, array $ignore_names, ?string $prefix = null)
+{
 
-  /**
-   * Unset directories.
-   */
-  if (is_dir("$DIR__to_scan/$file_name")) {
-    unset($files[$key]);
-    continue;
+  $files = scandir($path_to_dir);
+  $array = [];
+
+  foreach ($files as $key => $file) {
+
+    /**
+     * @var array $files
+     * @var string $file
+     * @var int $key
+     */
+
+    $full_path = "$path_to_dir/$file";
+
+    /**
+     * If any file from files is in the ignore_names array, unset
+     * them from the files and continue.
+     */
+    if (in_array($file, $ignore_names)) {
+      unset($files[$key]);
+      continue;
+    }
+
+    /**
+     * Run this function again, if the path is a directory.
+     */
+    if (is_dir($full_path)) {
+
+      $files2 = scan_dir_and_add_files_to_array($full_path, $ignore_names, prefix: $file);
+
+      foreach ($files2 ?? [] as $file2)
+        $array[] = $file2;
+
+      /**
+       * Remove the lingering folder which is not a file.
+       */
+      unset($array[$key]);
+      continue;
+    }
+
+    /**
+     * Append the file to the returner array.
+     */
+    $array[] = $prefix ? "$prefix/$file" : $file;
   }
 
-  $files[$key] = "$DIR__to_scan/$file_name";
+  return $array ?: null;
 }
+
+$files = scan_dir_and_add_files_to_array($DIR__to_scan, $ignore_dirs);
 
 /**
  * Try adding the files.

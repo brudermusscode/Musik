@@ -25,9 +25,9 @@ class TracksController extends Controller
     /**
      * @var ?Track
      */
-    $Object = Track::findOrReturn($this->params->id, "No Track");
+    $Track = Track::findOrReturn($this->params->id, "No Track");
 
-    return $Object->edit($this->params);
+    return $Track->edit($this->params);
   }
 
   /**
@@ -46,32 +46,8 @@ class TracksController extends Controller
     /**
      * @var ?Track
      */
-    $Object = Track::findOrReturn($this->params->id, "Kein Track");
+    $Track = Track::findOrReturn($this->params->id, "Kein Track");
 
-
-    /**
-     * Move the actual file to tracks/deleted/.
-     */
-    $path = _root() . "/public/data/user/1/tracks";
-    $full_path = "$path/$Object->file_name";
-
-
-    $Object->db_transaction();
-
-    try {
-      if (file_exists($full_path))
-        rename($full_path, "$path/deleted/$Object->file_name");
-
-      $Object->album_track()->delete();
-      $Object->playlist_tracks()->delete();
-      $Object->delete();
-      $Object->db_commit();
-      return success();
-    } catch (\Exception $e) {
-      $Object->db_rollback();
-      return error($e->getMessage());
-    }
-
-    return success("Aaaaaaaaaaaaaah shadow submitted brooooo");
+    return $Track->remove();
   }
 }
