@@ -39,7 +39,7 @@ sidebar {
 
     @media screen and (max-width: 1000px) {
       right: 0px;
-      right: -290px;
+      // right: -290px;
       min-width: 380px;
 
       &:hover {
@@ -78,10 +78,22 @@ sidebar {
           display: block;
           width: 100%;
           max-height: 560px;
-          margin-bottom: -5.4em;
+          margin-bottom: -4.8em;
           border-radius: 16px;
           overflow: hidden;
           z-index: 0;
+
+          &[title-size="stdplus"] {
+            margin-bottom: -4.9em;
+          }
+
+          &[title-size="midler"] {
+            margin-bottom: -5.2em;
+          }
+
+          &[title-size="wide"] {
+            margin-bottom: -6.4em;
+          }
 
           &:before {
             position: absolute;
@@ -145,7 +157,10 @@ sidebar {
 
       [track-metadata] {
         padding-inline: 18px;
-        padding-block: 10px 8px;
+
+        [title] {
+          line-height: 1.2;
+        }
       }
 
       [artist] {

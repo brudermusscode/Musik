@@ -17,10 +17,15 @@ class Arr
     foreach ($array as $key => $value)
       if (is_array($value))
         $filtered[$key] = self::sanitize_special_chars($value);
-      else
-        $filtered[$key] = is_numeric($value)
+      else {
+        $value = trim($value);
+        $filtered[$key] =
+          is_numeric($value)
+          && is_numeric($value[0])
+          && !str_starts_with($value, "0")
           ? (int) $value
           : filter_var($value, FILTER_SANITIZE_SPECIAL_CHARS);;
+      }
 
     return $filtered;
   }

@@ -60,10 +60,21 @@ ob_start(); ?>
 
 <current-track <?= $has_video ? "has-video" : "" ?> fl fldircol gap>
 
-  <?php if ($CurrentTrack) : ?>
+  <?php if ($CurrentTrack) :
 
-    <div fl fldircol gap=smol>
-      <cover <?= $has_video ? "animation=fade-in-slow" : "animation=zoom-in" ?>>
+    $title = $CurrentTrack?->title;
+    $title_size = match (true) {
+      strlen($title) >= 22 => "stdplus",
+      strlen($title) >= 10 => "midler",
+      default => "wide",
+    };
+
+  ?>
+
+    <div fl fldircol gap=smol+>
+      <cover
+        title-size=<?= $title_size ?>
+        <?= $has_video ? "animation=fade-in-slow" : "animation=zoom-in" ?>>
         <div hint fl jucsb alic pinline10 pblock8 posabs style="top:0;left:0;z-index:2;width:100%;">
           <p pinline12 pblock8 text smoler semibold ttup background=hover-dark rounded=smolplus>Läuft gerade</p>
 
@@ -101,19 +112,7 @@ ob_start(); ?>
 
       <div track-metadata fl fldircol gap=smolest alistart
         <?= $has_video ? "animation=fade-in-slow" : "animation=fade-in" ?>>
-
-        <?php
-
-        $title = $CurrentTrack->title;
-        $title_size = match (true) {
-          strlen($title) >= 22 => "stdplus",
-          strlen($title) >= 12 => "midler",
-          default => "wide",
-        };
-
-        ?>
-
-        <p text <?= $title_size ?> bold trimt><?= $CurrentTrack->title ?></p>
+        <p title text <?= $title_size ?> bold trimt><?= $CurrentTrack->title ?></p>
         <a href="/artist/<?= $CurrentTrack->artistt->id ?>" fl alic gap=smoler hoverable background=slighter-light rounded=smol pl6 pr10 pblock4 maxw100>
           <mi text std color=<?= Artist::COLOR ?>><?= Artist::ICON ?></mi>
           <p text smol ttup regular style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
@@ -123,7 +122,7 @@ ob_start(); ?>
       </div>
     </div>
 
-    <div pinline24 fl fldircol gap=midler>
+    <div pinline18 fl fldircol gap=midler>
       <?php if ($Relation && $track_relates) : ?>
         <div fl fldircol gap=smol>
           <p pinline4 text smoler semibold ttup>Läuft in</p>
