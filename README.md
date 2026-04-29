@@ -22,29 +22,8 @@ https://github.com/user-attachments/assets/a451f78d-d819-4bec-8dd2-4c5f7b30a982
 ### 〰️ **1 · Abhängigkeiten installieren** ¬
 
 Ein paar Dinge müssen auf deinem `Linux`-System vorhanden sein,
-damit du durchstarten kannst. Hierzu zählen `php` 8.5 und `tput`. So installierst du das:
-
-**Arch (I use Arch btw.)**
-
-```bash
-sudo pacman -Sy ncurses php
-```
-
-Mit **apt**
-
-```bash
-sudo apt install ncurses php
-```
-
-Mit **dnf** oder **yum**
-
-```bash
-sudo dnf install php php-cli ncurses -y
-```
-
-```bash
-sudo yum install php php-cli ncurses -y
-```
+damit du durchstarten kannst. Hierzu zählen `php` 8.5 und `tput`.
+Wie man das installierst musst du selbst herausfinden 💋
 
 ### 〰️ **2 · Setup ausführen** ¬
 
