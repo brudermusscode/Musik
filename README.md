@@ -9,6 +9,8 @@ Euro zu spendieren. Hiermit kannst du deine Musik, eigene Bilder
 für Alben, Künstler und sogar Videos (wie bei Spotify) zu
 einzelnen Tracks hochladen (WOW!)!
 
+Eine kleine Preview gefällig? Bitteschön:
+
 https://github.com/user-attachments/assets/a451f78d-d819-4bec-8dd2-4c5f7b30a982
 
 <br>
@@ -17,7 +19,34 @@ https://github.com/user-attachments/assets/a451f78d-d819-4bec-8dd2-4c5f7b30a982
 
 ## Setup - Step (〰️) by Step (〰️)
 
-### 〰️ **1 · Setup ausführen** ¬
+### 〰️ **1 · Abhängigkeiten installieren** ¬
+
+Ein paar Dinge müssen auf deinem `Linux`-System vorhanden sein,
+damit du durchstarten kannst. Hierzu zählen `php` 8.5 und `tput`. So installierst du das:
+
+**Arch (I use Arch btw.)**
+
+```bash
+sudo pacman -Sy ncurses php
+```
+
+Mit **apt**
+
+```bash
+sudo apt install ncurses php
+```
+
+Mit **dnf** oder **yum**
+
+```bash
+sudo dnf install php php-cli ncurses -y
+```
+
+```bash
+sudo yum install php php-cli ncurses -y
+```
+
+### 〰️ **2 · Setup ausführen** ¬
 
 Um deinen besten Freund der Musik zu installieren, gib einfach
 folgenden Befehl in dein Terminal ein:
