@@ -95,8 +95,7 @@ include __DIR__ . "/_show_active.php";
   <?= $show_menu ? "has-menu" : "" ?>
   <?= $in_album ? "in-album" : "" ?>
   <?= !$track_playable ? "display-only" : "" ?>
-  track="<?= $Track->id ?>"
-  index=<?= $song_playlist_index ?>>
+  track="<?= $Track->id ?>">
 
   <?php
 

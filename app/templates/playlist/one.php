@@ -38,24 +38,6 @@ else :
 
   <page playlist data-type=playlist data-id=<?= $Playlist->id ?>>
 
-    <?php
-
-    /**
-     * Create an array with all tracks as a queue.
-     */
-    $queue_ids = "";
-
-    if ($PlaylistTracks->count()) :
-      foreach ($PlaylistTracks as $PlaylistTrack)
-        $queue_ids .= "," . $PlaylistTrack->track->id;
-
-      /**
-       * Remove the first , from the string.
-       */
-      $queue_ids = ltrim($queue_ids, $queue_ids[0]);
-    endif; ?>
-    <input type=hidden name=playlist-queue-ids value="<?= $queue_ids ?>" />
-
     <playlist-action-bar fl aliend jucsb gap pinline4>
       <div fl alic gap=smol>
 

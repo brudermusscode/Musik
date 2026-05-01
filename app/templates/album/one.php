@@ -35,24 +35,6 @@ else :
   <?php
 
   /**
-   * Create an array with all tracks as a queue.
-   */
-  $queue_ids = "";
-
-  if ($Tracks->count()) :
-    foreach ($Tracks as $Track)
-      $queue_ids .= "," . $Track->id;
-
-    /**
-     * Remove the first , from the string.
-     */
-    $queue_ids = ltrim($queue_ids, $queue_ids[0]);
-  endif; ?>
-  <input type=hidden name=playlist-queue-ids value="<?= $queue_ids ?>" />
-
-  <?php
-
-  /**
    * This will be used to show additional informatin about this
    * album in the right sidebar.
    */ ?>

@@ -132,6 +132,12 @@ export const update_current_track = async (
             Frontend.reload_images();
 
             /**
+             * Set __player attributes for the Relation.
+             */
+            __player.Track.relation.id = relation_id;
+            __player.Track.relation.type = relation_type;
+
+            /**
              * On site load up, resolve here already. No need for
              * setting any new cookies or removing them.
              */
@@ -149,10 +155,11 @@ export const update_current_track = async (
               Cookie.remove("__player_Track_relation_type");
             }
 
-            resolve(1);
-          } else Frontend.ajax_response("error");
+            return resolve(1);
+          }
 
-          resolve(0);
+          Frontend.ajax_response("error");
+          return resolve(0);
         },
       });
     }, 0);

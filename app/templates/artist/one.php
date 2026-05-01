@@ -27,34 +27,16 @@ if (!$Artist) :
 else :
 
   /**
-   * + Playlist banner
-   */
-  include TEMPLATE . "/global/_current-playlist.php"; ?>
-
-  <?php
-
-  /**
    * @var Collection<Track>
    */
   $Tracks = $Artist->tracks->sortByDesc("listens")->take(6);
 
   /**
-   * Create an array with all tracks as a queue.
+   * + Playlist banner
    */
-  $queue_ids = "";
+  include TEMPLATE . "/global/_current-playlist.php"; ?>
 
-  if ($Tracks->count()) :
-    foreach ($Tracks as $Track)
-      $queue_ids .= "," . $Track->id;
-
-    /**
-     * Remove the first , from the string.
-     */
-    $queue_ids = ltrim($queue_ids, $queue_ids[0]);
-  endif; ?>
-  <input type=hidden name=playlist-queue-ids value="<?= $queue_ids ?>" />
-
-  <page artist>
+  <page artist data-type=artist data-id=<?= $Artist->id ?>>
 
     <!--- PROFILE BANNER --->
     <top-banner scroll-manipulated fl jucstart alistretch>

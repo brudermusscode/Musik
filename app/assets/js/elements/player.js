@@ -98,7 +98,7 @@ export const play_track = async (
 
       audio.play();
 
-      if (!priority) __player.Track.queue_index = parseInt(Track.index);
+      // if (!priority) __player.Track.queue_index = parseInt(Track.index);
 
       Player.activate();
 
@@ -620,19 +620,32 @@ export const unmute = () => {
 /**
  * Update the queue based on the currently playing
  */
-export const refresh_playlist_queue = () => {
-  let queue_ids = document.find("input[name='playlist-queue-ids']")?.value;
+export const create_queue = async (type, id, track_id) => {
+  return new Promise((resolve) => {
+    let formdata = new FormData();
+    formdata.append("type", type);
+    formdata.append("id", id);
+    formdata.append("track_id", track_id);
 
-  if (!queue_ids) return;
+    $.ajax({
+      url: "/queue/create",
+      data: formdata,
+      method: "POST",
+      success: function (data) {
+        if (data.status) {
+          __player.queue = data.data.Queue;
+          __player.Track.queue_index = data.data.index;
 
-  let id_split = queue_ids.split(",");
-  let queue = [];
+          console.log(`%c▒ Queue created.`, `color: ${init_color};`);
+          return resolve(1);
+        }
 
-  id_split.forEach((id) => {
-    queue.push(parseInt(id));
+        Frontend.ajax_response("error");
+        console.log(`%c▒ Queue creation failed.`, `color: ${error_color};`);
+        return resolve(0);
+      },
+    });
   });
-
-  __player.queue = queue;
 };
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -647,10 +660,19 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   Cookie.set("__player_active", 0, 2);
 
-  refresh_playlist_queue();
-
   await init_volume();
   await init_current_track();
+
+  /**
+   * On page initialization, create the queue from saved Track and
+   * Relation saved in cookies. Skip, if either of one doesn't exist.
+   */
+  if (__player.Track.id && __player.Track.relation.id)
+    await create_queue(
+      __player.Track.relation.type,
+      __player.Track.relation.id,
+      __player.Track.id,
+    );
 
   console.log(`%c▒ Everything loaded!`, `color: ${success_color};`);
 
@@ -658,6 +680,43 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 $(function () {
+  /**
+   * Clicking the play button!
+   *
+   * @action GET
+   * @controller TracksController
+   * @model Track
+   */
+  $(document).on("click", "[play-track]", async function (e) {
+    let track_id = this.getAttribute("play-track");
+
+    /**
+     * If the same Track saved in __player is clicked, just resume
+     * it and return.
+     */
+    if (track_id == __player.Track.id) {
+      document.find("player [play]")?.click();
+      return;
+    }
+
+    let response = await get_Track(track_id);
+
+    if (!response.status) return Frontend.create_responder(response.error);
+
+    await play_track(response.data.Track, response.data.track_public_url);
+
+    /**
+     * Update the current track with init = false which will
+     * search the closest page element's dataset for an album or
+     * playlist id. Any found? Will be set to cookies for persistence!
+     */
+    let relation_id = this.closest("page")?.dataset.id ?? null;
+    let relation_type = this.closest("page")?.dataset.type ?? null;
+
+    await create_queue(relation_type, relation_id, track_id);
+    await Global.update_current_track(relation_id, relation_type);
+  });
+
   let __cursor_move_timeout_fullscreen_player;
   let __cursor_move_timeout_fullscreen_player_ms = 2000;
 
@@ -685,12 +744,24 @@ $(function () {
         Player.setAttribute("fullscreen", true);
         Player.setAttribute("cursor-moved", true);
 
+        /**
+         * Stop video playback, if a song is currently playing.
+         */
+        if (__player.active)
+          document.find("current-track[has-video] video")?.pause();
+
         __cursor_move_timeout_fullscreen_player = setTimeout(() => {
           this.removeAttribute("cursor-moved");
         }, __cursor_move_timeout_fullscreen_player_ms);
       } else {
         Player.removeAttribute("fullscreen");
         Player.removeAttribute("cursor-moved");
+
+        /**
+         * Start video playback, if a song is currently playing.
+         */
+        if (__player.active)
+          document.find("current-track[has-video] video")?.play();
       }
     },
   );
@@ -709,46 +780,6 @@ $(function () {
       Player.removeAttribute("collapsed");
       show_button.removeAttribute("collapsed");
       Cookie.set("__player_collapsed", 0);
-    }
-  });
-
-  /**
-   * Clicking the play button!
-   *
-   * @action GET
-   * @controller TracksController
-   * @model Track
-   */
-  $(document).on("click", "[play-track]", async function (e) {
-    let track_id = this.getAttribute("play-track");
-    let track_index = this.closest("[index]")?.getAttribute("index");
-
-    if (track_id == __player.Track.id) {
-      document.find("player [play]")?.click();
-    } else {
-      let response = await get_Track(track_id);
-
-      if (!response.status) return Frontend.create_responder(response.error);
-
-      /**
-       * Append the index to the Track object for play_track to
-       * know where the song is at in the playlist.
-       */
-      response.data.Track.index = track_index;
-
-      refresh_playlist_queue();
-
-      await play_track(response.data.Track, response.data.track_public_url);
-
-      /**
-       * Update the current track with init = false which will
-       * search the closest page element's dataset for an album or
-       * playlist id. Any found? Will be set to cookies for persistence!
-       */
-      let relation_id = this.closest("page")?.dataset.id ?? null;
-      let relation_type = this.closest("page")?.dataset.type ?? null;
-
-      Global.update_current_track(relation_id, relation_type);
     }
   });
 
