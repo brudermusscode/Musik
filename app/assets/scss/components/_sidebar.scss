@@ -48,8 +48,6 @@ sidebar {
     }
 
     current-track {
-      padding-bottom: 24px;
-
       cover {
         [hint] {
           opacity: 0.8;
@@ -347,11 +345,11 @@ sidebar {
             mi {
               display: block;
               position: absolute;
-              bottom: -16px;
-              left: -8px;
+              bottom: -18px;
+              left: -6px;
               height: 100%;
               width: 100%;
-              font-size: 48px;
+              font-size: 42px;
             }
           }
         }
@@ -434,7 +432,7 @@ sidebar {
                 }
 
                 mi {
-                  bottom: -64px;
+                  bottom: -48px;
                   left: -22px;
                   font-size: 120px;
                 }

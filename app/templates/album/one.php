@@ -177,7 +177,7 @@ else :
      * + No Tracks
      */
     if (!$Album->tracks->count()) : ?>
-      <div style="border:2px dotted #de54fc;" background=hover-dark m42 fl fldircol jucc alic gap pblock62 rounded=wide>
+      <div style="border:2px dotted #de54fc;" background=hover-dark fl fldircol jucc alic gap pblock62 rounded=wide>
         <div fl fldircol gap=smolest tac>
           <p text midler semibold>Bruder, nichts drin.</p>
           <p text>Such was schönes aus</p>

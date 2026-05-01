@@ -63,7 +63,7 @@ else :
           <mi>art_track</mi>
         </picture>
 
-        <div tag background=secondary color=secondary-text>
+        <div tag background=<?= Playlist::COLOR ?> color=secondary-text>
           <p text midler bold><?= $Playlist->tracks->count(); ?></p>
           <p text smoler regular ttup>Tracks</p>
         </div>
@@ -97,18 +97,17 @@ else :
     <?php
 
     /**
-     * + No Tracks in this Playlist
+     * + No Tracks
      */
     if (!$Playlist->tracks->count()) : ?>
-      <div fl fldircol jucc alic gap pblock62 background=slighterer-light rounded=wide>
+      <div style="border:2px dotted #fff158;" background=hover-dark fl fldircol jucc alic gap pblock62 rounded=wide>
         <div fl fldircol gap=smolest tac>
           <p text midler semibold>Bruder, nichts drin.</p>
-          <p text>Klick auf den Button und such was schönes aus</p>
+          <p text>Such was schönes aus</p>
         </div>
-        <mbutton <?= $add_new_tracks_button ?>
-          material size=wide background=primary color=primary-text has-icon=left>
-          <mi>music_note_add</mi>
-          Add tracks
+        <mbutton request-get="playlist:track:new" data-id="<?= $Playlist->id ?>"
+          material size=mid background=primary color=primary-text icon-only ovhid>
+          <mi style="font-size:52px;position:absolute;bottom:-12px;left:-12px;">list_alt_add</mi>
         </mbutton>
       </div>
     <?php endif; ?>

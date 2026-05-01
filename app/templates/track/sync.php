@@ -80,10 +80,6 @@ function scan_dir_and_add_files_to_array(string $path_to_dir, array $ignore_name
       foreach ($files2 ?? [] as $file2)
         $array[] = $file2;
 
-      /**
-       * Remove the lingering folder which is not a file.
-       */
-      unset($array[$key]);
       continue;
     }
 
@@ -96,6 +92,10 @@ function scan_dir_and_add_files_to_array(string $path_to_dir, array $ignore_name
   return $array ?: null;
 }
 
+/**
+ * Fire off the function!
+ * @return ?array
+ */
 $files = scan_dir_and_add_files_to_array($DIR__to_scan, $ignore_dirs);
 
 /**

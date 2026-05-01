@@ -61,11 +61,11 @@ export const play_track = async (
     let player_art = player_metadata.find("picture");
 
     if (Track.art) {
+      player_art.setAttribute("has-art", true);
       player_art.find("img").setAttribute("src", Track.art);
-      player_art.find("mi").setAttribute("dno", true);
     } else {
+      player_art.removeAttribute("has-art");
       player_art.find("img").removeAttribute("src");
-      player_art.find("mi").removeAttribute("dno");
     }
 
     /**
@@ -658,6 +658,46 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 $(function () {
+  let __cursor_move_timeout_fullscreen_player;
+  let __cursor_move_timeout_fullscreen_player_ms = 2000;
+
+  $(document).on("mousemove click", "player[fullscreen]", function (e) {
+    clearTimeout(__cursor_move_timeout_fullscreen_player);
+
+    if (!this.hasAttribute("cursor-moved"))
+      this.setAttribute("cursor-moved", true);
+
+    __cursor_move_timeout_fullscreen_player = setTimeout(() => {
+      this.removeAttribute("cursor-moved");
+    }, __cursor_move_timeout_fullscreen_player_ms);
+  });
+
+  /**
+   * Resizes the player to the fullscreen version.
+   */
+  $(document).on(
+    "click",
+    "fullscreen-player, fullscreen-player-close",
+    function (e) {
+      clearTimeout(__cursor_move_timeout_fullscreen_player);
+
+      if (!Player.hasAttribute("fullscreen")) {
+        Player.setAttribute("fullscreen", true);
+        Player.setAttribute("cursor-moved", true);
+
+        __cursor_move_timeout_fullscreen_player = setTimeout(() => {
+          this.removeAttribute("cursor-moved");
+        }, __cursor_move_timeout_fullscreen_player_ms);
+      } else {
+        Player.removeAttribute("fullscreen");
+        Player.removeAttribute("cursor-moved");
+      }
+    },
+  );
+
+  /**
+   * Toggles the players visibility.
+   */
   $(document).on("click", "[data-action='player:hide']", function (e) {
     let show_button = document.find("show-player");
 
