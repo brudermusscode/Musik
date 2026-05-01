@@ -22,12 +22,12 @@ use Bruder\Application\Cookie;
 
     <player-metadata>
       <div sizing w100 h100 fl alic jucc>
-        <picture fl alic jucc>
+        <picture>
           <fullscreen-player>
             <mi midplus bold>pan_zoom</mi>
           </fullscreen-player>
           <img />
-          <mi wide>album</mi>
+          <mi wider>genres</mi>
         </picture>
       </div>
       <div fl fldircol alistart>

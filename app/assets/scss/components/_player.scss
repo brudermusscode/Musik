@@ -129,6 +129,13 @@ player {
           fullscreen-player {
             display: none;
           }
+
+          &:not([has-art]) > mi {
+            font-size: 382px;
+            margin-bottom: -92px;
+            margin-left: -82px;
+            color: $primary;
+          }
         }
       }
 
@@ -287,6 +294,9 @@ player {
         border-radius: 19px;
         background: $hover-dark;
         overflow: hidden;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-end;
 
         fullscreen-player {
           position: absolute;
@@ -318,6 +328,8 @@ player {
         &:not([has-art]) {
           & > mi {
             display: block;
+            margin-bottom: -12px;
+            margin-left: -6px;
           }
 
           img {
