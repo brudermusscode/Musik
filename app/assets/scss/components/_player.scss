@@ -36,15 +36,19 @@ player {
   align-items: center;
   bottom: $main-distance;
   z-index: 100;
-  // max-width: $content-width;
-  height: $player-height;
   width: $content-width;
+  height: $player-height;
   left: 50%;
   translate: -50% 0;
   transition:
     width 1.2s $cubic,
     height 0.6s $cubic,
     bottom 0.4s $cubic;
+
+  @media screen and (max-width: calc($content-width + 2*$main-distance)) {
+    width: 100%;
+    padding-inline: $main-distance;
+  }
 
   &[collapsed] {
     bottom: -$player-height - 8px;
@@ -106,12 +110,21 @@ player {
           font-size: 24px;
         }
 
+        [sizing] {
+          height: 100%;
+          width: 100%;
+          transition: none;
+        }
+
         picture {
           height: 480px;
           width: 480px;
           margin: 0 auto;
           box-shadow: var(--mio-theme-elevation-3);
           border-radius: 24px;
+          transition:
+            height 1.4s $cubic,
+            width 1.4s $cubic;
 
           fullscreen-player {
             display: none;
@@ -192,7 +205,6 @@ player {
     // box-shadow: var(--mio-theme-elevation-1);
     border-radius: $player-border-radius;
     padding-inline: 2px 18px;
-    margin-inline: 18px;
     border-top: 1px solid rgba(255, 255, 255, 0.04);
     transition: $trans-cubic;
 
@@ -241,6 +253,7 @@ player {
       align-items: center;
       justify-content: flex-start;
       gap: $gap-smol-plus;
+      flex: 1;
       position: relative;
       z-index: 1;
 
@@ -261,9 +274,16 @@ player {
         }
       }
 
+      $player-cover-size: 74px;
+
+      [sizing] {
+        width: $player-cover-size;
+        height: $player-cover-size;
+      }
+
       picture {
-        height: 74px;
-        width: 74px;
+        height: $player-cover-size;
+        width: $player-cover-size;
         border-radius: 19px;
         background: $hover-dark;
         overflow: hidden;
@@ -284,7 +304,8 @@ player {
           cursor: pointer;
           border-radius: 18px;
           transition:
-            height 0.4s $cubic,
+            opacity 0.4s $cubic,
+            height 0.2s $cubic,
             width 0.4s $cubic;
 
           &:hover {
