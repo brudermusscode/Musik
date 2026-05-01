@@ -134,26 +134,26 @@ export const update_current_track = async (
             /**
              * Set __player attributes for the Relation.
              */
-            __player.Track.relation.id = relation_id;
-            __player.Track.relation.type = relation_type;
+            // __player.Track.relation.id = relation_id;
+            // __player.Track.relation.type = relation_type;
 
             /**
              * On site load up, resolve here already. No need for
              * setting any new cookies or removing them.
              */
-            if (init) return resolve(1);
+            // if (init) return resolve(1);
 
             /**
              * Set cookies for persistence or delete them, if a
              * track was played outside of a list.
              */
-            if (relation_id && relation_type) {
-              Cookie.set("__player_Track_relation_id", relation_id, 365);
-              Cookie.set("__player_Track_relation_type", relation_type, 365);
-            } else {
-              Cookie.remove("__player_Track_relation_id");
-              Cookie.remove("__player_Track_relation_type");
-            }
+            // if (relation_id && relation_type) {
+            //   Cookie.set("__player_Track_relation_id", relation_id, 365);
+            //   Cookie.set("__player_Track_relation_type", relation_type, 365);
+            // } else {
+            //   Cookie.remove("__player_Track_relation_id");
+            //   Cookie.remove("__player_Track_relation_type");
+            // }
 
             return resolve(1);
           }

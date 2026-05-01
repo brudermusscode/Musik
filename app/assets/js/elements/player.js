@@ -771,6 +771,7 @@ $(function () {
       __player.shuffle = cookie_shuffle;
     }
 
+    set_track_relation(false);
     await create_queue(relation_type, relation_id, track_id, cookie_shuffle);
     await Global.update_current_track(relation_id, relation_type);
   });
