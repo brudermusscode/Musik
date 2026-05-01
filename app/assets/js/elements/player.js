@@ -93,12 +93,9 @@ export const play_track = async (
       if (init) return resolve(1);
 
       set_track(Track);
-      set_track_relation();
       kick_duration_track(audio, true);
 
       audio.play();
-
-      // if (!priority) __player.Track.queue_index = parseInt(Track.index);
 
       Player.activate();
 
@@ -142,33 +139,47 @@ export const set_track = (Track) => {
  * either [playlist] or [album] and uses the dataset attributes to
  * set the relation of a played song.
  */
-export const set_track_relation = () => {
-  let relation =
-    document.find("page[playlist]") ?? document.find("page[album]");
+export const set_track_relation = (init = false) => {
   let relation_id = null;
   let relation_type = null;
+
+  /**
+   * Only set relation to the __player object on page startup.
+   */
+  if (init) {
+    relation_id = Cookie.get("__player_Track_relation_id");
+    relation_type = Cookie.get("__player_Track_relation_type");
+    __player.Track.relation = {
+      id: parseInt(relation_id),
+      type: relation_type,
+    };
+
+    return;
+  }
+
+  /**
+   * Set the relations.
+   */
+  relation_type = document.find("page")?.dataset.type ?? null;
+  relation_id = document.find("page")?.dataset.id ?? null;
 
   /**
    * If no relation was found, delete the cookies and set
    * everything related to null.
    */
-  if (!relation) {
+  if (!relation_type || !relation_id) {
+    Cookie.remove("__player_Track_relation_id");
+    Cookie.remove("__player_Track_relation_type");
     __player.Track.relation = {
       id: null,
       type: null,
     };
 
-    Cookie.remove("__player_Track_relation_id");
-    Cookie.remove("__player_Track_relation_type");
-
     return;
   }
 
-  relation_id = relation.dataset.id;
-  relation_type = relation.dataset.type;
-
   __player.Track.relation = {
-    id: relation_id,
+    id: parseInt(relation_id),
     type: relation_type,
   };
 
@@ -489,9 +500,11 @@ export const kick_duration_track = (audio_element, reset = false) => {
 /**
  * Asynchronyously initializes the volume on player startup.
  */
-export const init_volume = async () => {
+export const init_player_state = async () => {
   return new Promise((resolve) => {
     let Player = document.find("player");
+
+    // ? Volume
     let current_volume_cookie = Cookie.get("__player_volume");
 
     console.log(
@@ -516,6 +529,15 @@ export const init_volume = async () => {
      * Set a cookie for persistence.
      */
     Cookie.set("__player_volume", parsed_volume);
+
+    // ? Shuffle
+    if (!Cookie.get("__player_shuffle")) Cookie.set("__player_shuffle", 0);
+    __player.shuffle = parseInt(Cookie.get("__player_shuffle"));
+
+    console.log(
+      `%c▒ Shuffle is ${__player.shuffle ? "enabled" : "disabled"}.`,
+      `color: ${init_color};`,
+    );
 
     return resolve(1);
   });
@@ -618,14 +640,38 @@ export const unmute = () => {
 };
 
 /**
+ * Toggles shuffle mode.
+ */
+export const shuffle = () => {
+  if (Cookie.get("__player_shuffle") == 1) {
+    Cookie.set("__player_shuffle", 0);
+    __player.shuffle = 0;
+
+    return 0;
+  } else {
+    Cookie.set("__player_shuffle", 1);
+    __player.shuffle = 1;
+
+    return 1;
+  }
+};
+
+/**
  * Update the queue based on the currently playing
  */
-export const create_queue = async (type = null, id = null, track_id) => {
+export const create_queue = async (
+  type = null,
+  id = null,
+  track_id,
+  shuffle = false,
+) => {
   return new Promise((resolve) => {
     let formdata = new FormData();
     formdata.append("type", type);
     formdata.append("id", id);
     formdata.append("track_id", track_id);
+
+    if (shuffle) formdata.append("shuffle", true);
 
     $.ajax({
       url: "/queue/create",
@@ -636,7 +682,10 @@ export const create_queue = async (type = null, id = null, track_id) => {
           __player.queue = data.data.Queue;
           __player.Track.queue_index = data.data.index;
 
-          console.log(`%c▒ Queue created.`, `color: ${init_color};`);
+          console.log(
+            `%c▒ Queue created${shuffle ? " shuffled" : ""}.`,
+            `color: ${init_color};`,
+          );
           return resolve(1);
         }
 
@@ -660,7 +709,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   Cookie.set("__player_active", 0, 2);
 
-  await init_volume();
+  set_track_relation(true);
+  await init_player_state();
   await init_current_track();
 
   /**
@@ -672,6 +722,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       __player.Track.relation.type,
       __player.Track.relation.id,
       __player.Track.id,
+      __player.shuffle,
     );
 
   console.log(`%c▒ Everything loaded!`, `color: ${success_color};`);
@@ -711,8 +762,34 @@ $(function () {
     let relation_id = this.closest("page")?.dataset.id ?? null;
     let relation_type = this.closest("page")?.dataset.type ?? null;
 
-    await create_queue(relation_type, relation_id, track_id);
+    // The shuffle will always prioritize the cookie, which will
+    // be set to 0 if not set at all. The __player object will
+    // always take the value of the cookie.
+    let cookie_shuffle = parseInt(Cookie.get("__player_shuffle") ?? "0");
+    if (__player.shuffle !== cookie_shuffle) {
+      Cookie.set("__player_shuffle", cookie_shuffle);
+      __player.shuffle = cookie_shuffle;
+    }
+
+    await create_queue(relation_type, relation_id, track_id, cookie_shuffle);
     await Global.update_current_track(relation_id, relation_type);
+  });
+
+  /**
+   * Toggles shuffle mode by click on a button and shows the
+   * button element based on the returned value of the shuffle() function.
+   */
+  $(document).on("click", "[player-shuffle]", function (e) {
+    let shuff = shuffle();
+
+    if (shuff === 1) this.activate();
+    else this.deactivate();
+
+    let relation_type = __player.Track?.relation?.type ?? null;
+    let relation_id = __player.Track?.relation?.id ?? null;
+    let track_id = __player.Track?.id;
+
+    create_queue(relation_type, relation_id, track_id, shuff);
   });
 
   let __cursor_move_timeout_fullscreen_player;

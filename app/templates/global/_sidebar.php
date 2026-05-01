@@ -11,20 +11,6 @@ use Bruder\Model\Album;
 
 ?>
 
-<header>
-  <logo>
-    <picture>
-      <img src="/logo.svg" />
-    </picture>
-  </logo>
-
-  <div>
-    <theme-switcher <?= Cookie::get("__theme") === "light" ? "" : "active" ?>>
-      <mi></mi>
-    </theme-switcher>
-  </div>
-</header>
-
 <sidebar left>
   <section>
     <pages>

@@ -19,7 +19,7 @@ class QueueController extends Controller
 
     $this->validate_params(
       strict: ["type", "id", "track_id"],
-      optional: [],
+      optional: ["shuffle"],
     );
 
     return (new Queue)->new($this->params);

@@ -83,6 +83,10 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
 
   /**
    * + Header
+   */
+  include TEMPLATE . "/global/_header.php";
+
+  /**
    * + Sidebar
    */
   include TEMPLATE . "/global/_sidebar.php";

@@ -70,6 +70,12 @@ class Queue extends Bruder
     })();
 
     /**
+     * Shuffle please?
+     */
+    if (isset($params->shuffle))
+      shuffle($final["Queue"]);
+
+    /**
      * Append the current's song index in that array which
      * represents the Queue.
      */

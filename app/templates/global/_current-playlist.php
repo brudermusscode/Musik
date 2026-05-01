@@ -56,18 +56,6 @@ if ($PreviousPlaylist || $NextPlaylist)
 
 ?>
 
-<header dno>
-  <div fl fldircol gap=smol alic jucc>
-    <div style="width:200px;height:8px;" background=slighter-light rounded></div>
-    <div style="width:200px;height:8px;" background=slighter-light rounded></div>
-  </div>
-
-  <div fl fldircol gap=smol alic jucc>
-    <div style="width:200px;height:8px;" background=slighter-light rounded></div>
-    <div style="width:200px;height:8px;" background=slighter-light rounded></div>
-  </div>
-</header>
-
 <bruder <?= in_array(CURRENT_PAGE, ["album", "artist"]) ? "scroll-manipulated" : "" ?>>
   <current-playlist fl alic jucc gap>
     <a href="<?= $previous_playlist_href ?? "/" ?>">

@@ -66,6 +66,12 @@ mbutton {
       }
     }
 
+    &:not([background]) {
+      &:hover {
+        background: $slighter-light;
+      }
+    }
+
     &[blur] {
       backdrop-filter: blur(10px);
 

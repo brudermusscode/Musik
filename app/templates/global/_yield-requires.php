@@ -31,6 +31,7 @@
   let __player = {
     active: false,
     volume: null,
+    shuffle: true,
     Track: {
       relation: {
         id: null,
