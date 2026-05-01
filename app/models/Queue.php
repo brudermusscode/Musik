@@ -20,9 +20,12 @@ class Queue extends Bruder
   {
 
     /**
-     * @var ?Album|Playlist|Artist
+     * @var ?Album|Playlist|Artist|Collection<Track>
      */
     $Object = self::fetch($params->type, $params->id);
+
+    if (($Object instanceof Collection) && !($Object->first() instanceof Track))
+      return error("First Object ist kein Track");
 
     /**
      * @var ?Track
@@ -32,13 +35,17 @@ class Queue extends Bruder
     /**
      * ! Track not part of Object
      */
-    if (!$Track || !$Object->tracks->contains($Track))
+    if (
+      !$Track ||
+      ($Object instanceof Collection) && !$Object->contains($Track) ||
+      !($Object instanceof Collection) && !$Object->tracks->contains($Track)
+    )
       return error("Kein Track");
 
     /**
      * @var Collection<Track>
      */
-    $Tracks = $Object->tracks;
+    $Tracks = ($Object instanceof Collection) ? $Object : $Object->tracks;
 
 
     /**
@@ -88,7 +95,7 @@ class Queue extends Bruder
       "artist" => Artist::with(["tracks" => function ($q) {
         $q->orderBy("listens", "DESC");
       }])->find($id),
-      default => null,
+      default => Track::orderBy("id", "DESC")->get(),
     };
   }
 }

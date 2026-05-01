@@ -620,7 +620,7 @@ export const unmute = () => {
 /**
  * Update the queue based on the currently playing
  */
-export const create_queue = async (type, id, track_id) => {
+export const create_queue = async (type = null, id = null, track_id) => {
   return new Promise((resolve) => {
     let formdata = new FormData();
     formdata.append("type", type);
@@ -667,7 +667,7 @@ document.addEventListener("DOMContentLoaded", async function () {
    * On page initialization, create the queue from saved Track and
    * Relation saved in cookies. Skip, if either of one doesn't exist.
    */
-  if (__player.Track.id && __player.Track.relation.id)
+  if (__player.Track.id)
     await create_queue(
       __player.Track.relation.type,
       __player.Track.relation.id,
@@ -680,8 +680,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 $(function () {
+  //
+  //
   /**
-   * Clicking the play button!
+   * Clicking on a Track HTML object!
    *
    * @action GET
    * @controller TracksController
@@ -694,22 +696,18 @@ $(function () {
      * If the same Track saved in __player is clicked, just resume
      * it and return.
      */
-    if (track_id == __player.Track.id) {
-      document.find("player [play]")?.click();
-      return;
-    }
+    if (track_id == __player.Track.id)
+      return document.find("player [play]")?.click();
 
+    // Get the Track.
     let response = await get_Track(track_id);
 
     if (!response.status) return Frontend.create_responder(response.error);
 
+    // ? Play Track
     await play_track(response.data.Track, response.data.track_public_url);
 
-    /**
-     * Update the current track with init = false which will
-     * search the closest page element's dataset for an album or
-     * playlist id. Any found? Will be set to cookies for persistence!
-     */
+    // ? Queue + Current Track
     let relation_id = this.closest("page")?.dataset.id ?? null;
     let relation_type = this.closest("page")?.dataset.type ?? null;
 
@@ -741,6 +739,7 @@ $(function () {
       clearTimeout(__cursor_move_timeout_fullscreen_player);
 
       if (!Player.hasAttribute("fullscreen")) {
+        Global.close_bruder();
         Player.setAttribute("fullscreen", true);
         Player.setAttribute("cursor-moved", true);
 
