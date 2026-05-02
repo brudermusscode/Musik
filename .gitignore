@@ -4,6 +4,7 @@
 /bin
 /.git
 /deploy.sh
+/setup-remove.sh
 /public/data
 /config/keys/*
 /*-lock.*
