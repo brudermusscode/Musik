@@ -10,7 +10,34 @@ GREEN="\033[32m"
 YELLOW="\033[33m"
 LILA="\033[35m"
 GREY="\033[2;37m"
+RED="\033[31m"
 NOCO="\033[0m"
+
+# Run a command completly silent.
+silent() {
+	"$@" >/dev/null 2>&1
+}
+
+# Colored echo.
+cecho() {
+	color=$1
+	shift
+	echo -e "${color}$@${NOCO}"
+}
+
+# Colored inline echo.
+cnecho() {
+	color=$1
+	shift
+	echo -en "${color}$@${NOCO}"
+}
+
+# Colored, indented echo.
+ciecho() {
+	color=$1
+	shift
+	echo -e "$GREY╟$NOCO  ${color}$@${NOCO}"
+}
 
 HOME_DIR=${XDG_DATA_HOME:-$HOME}
 WORK_DIR="$HOME_DIR/.local/share"
@@ -29,65 +56,58 @@ sleep 0.05
 echo -e "Dein Bruder der Musik (I use Arch btw)$NOCO\n"
 sleep 0.05
 
-read -p "⌨️  Hast du Bock? ja/* " you_in < /dev/tty
+read -p "⌨️  Hast du Bock? ja/* " you_in </dev/tty
 
 if [ "$you_in" != "ja" ]; then
-  echo -e "\n$YELLOW Alles klar Bruder, vielleicht ein andermal!$NOCO\n"
-  exit 1
+	cecho "$YELLOW" "✋ Alles klar Bruder, vielleicht ein andermal!"
+	exit 1
 fi
 
-echo -e "\n$LILA😍 Nice, dann las los gehen jetzt…$NOCO"
+cecho "$GREEN" "😍 Nice, dann las los gehen jetzt…"
 
 # Ensure the .local/share dir exists by creating it. This won't
 # output anything if it already exists.
 mkdir -p "$WORK_DIR"
 mkdir -p "$BIN_DIR"
 
-
 # + Check dependencies.
 sleep 0.2
-echo -e "\n$LILA🍌 Erstmal gucken, ob alles installiert ist … $NOCO"
-
-sleep 0.2
-echo -en "·"
+cnecho "$GREY" "·"
 
 # ! PHP installed?
 command -v php >/dev/null 2>&1 || {
-  echo -e "\n$YELLOW💔 Sorry Bruder, aber du musst PHP installieren. Das findest du auf https://www.php.net/manual/en/install.unix.php - Versuch es danach nochmal!$NOCO"
-  exit 1
+	echo -e "\n$YELLOW💔 Sorry Bruder, aber du musst PHP installieren. Das findest du auf https://www.php.net/manual/en/install.unix.php - Versuch es danach nochmal!$NOCO"
+	exit 1
 }
+
+sleep 0.2
+cnecho "$GREY" "·"
 
 # ! tput (ncurses) installed?
 command -v tput >/dev/null 2>&1 || {
-  echo -e "\n$GREY ncurses ist nicht installiert, Terminal-Output sieht nicht so schön aus aber wird funktionieren.$NOCO"
+	echo -e "\n$GREY ncurses ist nicht installiert, Terminal-Output sieht nicht so schön aus aber wird funktionieren.$NOCO"
 }
 
 sleep 0.2
-echo -en "·"
+cnecho "$GREY" "·"
 
 # + Install composer if not exists
 if ! command -v composer >/dev/null 2>&1; then
-  sleep 0.2
-  echo -e "\n$YELLOW♻️  Installiere composer in »~/.local/bin«$NOCO"
+	echo -e "\n$YELLOW♻️  Installiere composer in »~/.local/bin«$NOCO"
 
-  curl -sS https://getcomposer.org/installer | php
-  echo -e "Moving composer to »~/.local/bin«"
-  mv composer.phar $BIN_DIR/composer
-  echo -e "Good went!"
+	curl -sS https://getcomposer.org/installer | php
+	echo -e "Moving composer to »~/.local/bin«"
+	mv composer.phar $BIN_DIR/composer
+	echo -e "Good went!"
 fi
 
 sleep 0.2
-echo -en "·"
-
+cnecho "$GREY" "·"
 sleep 0.2
-echo -e "\n✅ Alles cool!"
-
+echo -n ✅
 
 # Set working dir.
 cd $WORK_DIR
-
-# Only for testing locally.
-# cd musikbruder && docker compose -f compose.deploy.yml down --volumes && cd .. && rm -rf musikbruder
 
 # echo -en "\n🍎"
 # sleep 0.2
@@ -118,115 +138,103 @@ cd $WORK_DIR
 # echo -en "🎌\n"
 # sleep 0.2
 
-
 # TODO: Check for .local being available.
 
-
 # + Clone GitHub
+echo -e "\n"
 sleep 0.2
-echo -e "\n$LILA♻️  App von GitHub klonieren…$NOCO"
+cecho "$LILA" "App runterladen…"
 
-# Clone the git repository here and cd into it, so we set the new
-# working directory.
-if [ ! -d "musikbruder" ]; then
-  git clone https://github.com/brudermusscode/UnSpotify.git musikbruder
+# If the base directory already exists, ask for reinstalling everything.
+if [ -d "musikbruder" ]; then
+	ciecho "$RED" "⬇️  »~/.local/share/musikbruder« existiert schon!"
+	read -p "$(echo -e "${GREY}╟${NOCO}  ⌨️  Alles löschen & neu installieren? ja/* ")" delete </dev/tty
+
+	if [ "$delete" != "ja" ]; then
+		ciecho "$GREEN" "➡️  Alles klar Bruder, vielleicht ein andermal!"
+		exit 1
+	else
+		ciecho "$GREY" "Oha, wird gelöscht…"
+		cd musikbruder
+		docker compose -f compose.deploy.yml down --volumes >/dev/null 2>&1
+		cd ..
+		rm -rf musikbruder
+	fi
 fi
 
+ciecho "$GREY" "Kloniere GitHub Repo…"
+git clone https://github.com/brudermusscode/UnSpotify.git musikbruder >/dev/null 2>&1
 cd musikbruder
-
 
 # + Link Music Directory
 MUSIC_DIR="$HOME/Music"
 MUSIC_DIR_LINKED=false
 
 if [ -d $MUSIC_DIR ]; then
-  echo -e ""
-  read -p "⌨️  Willst du deinen lokalen Musik-Ordner verlinken? ja/* " link_music < /dev/tty
+	read -p "$(echo -e "${GREY}╟${NOCO}  ⌨️  Willst du deinen lokalen Musik-Ordner verlinken? ja/* ")" link_music </dev/tty
 
-  if [ "$link_music" == "ja" ]; then
-    REPLACEMENT="- $MUSIC_DIR:/data/public/data/user/1/tracks";
-    sed -i "s|%MUSIC_DIR_AS_VOLUME%|${REPLACEMENT}|g" compose-dummy
-    mv compose-dummy compose.deploy.yml
-    echo -e "✅ Verlinkt!"
-    MUSIC_DIR_LINKED=true
-  fi
+	if [ "$link_music" == "ja" ]; then
+		REPLACEMENT="- $MUSIC_DIR:/data/public/data/user/1/tracks"
+		sed -i "s|%MUSIC_DIR_AS_VOLUME%|${REPLACEMENT}|g" compose-dummy
+		MUSIC_DIR_LINKED=true
+	else
+		sed -i "s|%MUSIC_DIR_AS_VOLUME%|""|g" compose-dummy
+	fi
+
+	mv compose-dummy compose.deploy.yml
 fi
 
+echo -n "✅"
 
 # + Dependency directories and files.
-sleep 0.2
-echo -e "\n$LILA♻️  Alle Relevanzen erstellen…$NOCO"
+echo -e "\n"
+cecho "$LILA" "Alle Relevanzen erstellen…"
+ciecho "$GREY" "Mach ich Bruder, warte kurz…"
 
-# Create assets file structure.
 mkdir -p public/data/user/1/{tracks,art,portraits,videos}
 mkdir -p public/data/user/1/tracks/deleted
 mkdir -p storage/logs
 chmod a+rw -R storage public sql
-
 touch sql/last_migration
 chmod a+rw sql/last_migration
-
 cp .env.example .env
 
-echo -e "✅ Alles cool!"
-
+echo -n "✅"
 
 # + Composer
-sleep 0.2
-echo -e "\n$LILA♻️  Nun alle composer Relevanzen…$NOCO"
-
-
-# Install composer & dump autoload.
-if command -v tput >/dev/null 2>&1; then
-  # reserve 5 empty lines for the cursor to move up and delete. This
-  # makes the live window log possible without deleting 5 lines of
-  # output from commands before.
-  printf '\n%.0s' {1..5}
-  composer install 2>&1 | while IFS= read -r line; do
-    buffer+=("$line")
-    if [ "${#buffer[@]}" -gt 5 ]; then
-        buffer=("${buffer[@]:1}")
-    fi
-
-    # move cursor up 5 lines without clearing history
-    tput sc
-    tput cuu 5 2>/dev/null
-
-    printf "$GREY\033[2K%s\n" "${buffer[@]}"
-
-    tput rc
-  done
-else
-  composer install
-fi
-composer dump-autoload
-
+echo -e "\n"
+cecho "$LILA" "Composer?"
+ciecho "$GREY" "Ist wichtig, versprochen…"
+composer install >/dev/null 2>&1
+composer dump-autoload >/dev/null 2>&1
+echo -n "✅"
 
 # + Build docker-container.
-sleep 0.2
-echo -e "\n$LILA♻️  Bruder bauen…$NOCO"
-
-docker compose -f compose.deploy.yml build --no-cache
-
+echo -e "\n"
+cecho "$LILA" "Bruder bauen…"
+ciecho "$GREY" "Lehn dich zurück, das kann 1 bisschen dauern 😇…"
+docker compose -f compose.deploy.yml build >/dev/null 2>&1
+echo -n "✅"
 
 # + Start the app.
-sleep 0.2
-echo -e "\n$LILA♻️  App starten…$NOCO"
-docker compose -f compose.deploy.yml up -d
+echo -e "\n"
+cecho "$LILA" "Endspurt…"
+ciecho "$GREY" "Ist gleich fertig…"
+docker compose -f compose.deploy.yml up -d >/dev/null 2>&1
 
 URL="http://localhost:6789"
 
-# # Done!
-sleep 0.2;
 if command -v xdg-open >/dev/null 2>&1; then
-  xdg-open "$URL"
+	xdg-open "$URL"
 else
-  echo -e "\nxdg-open fehlt leider, sont hätte sich das Fenster nun automatisch geöffnet 🥸"
+	ciecho "$GREY" "xdg-open fehlt leider, sont hätte sich das Fenster nun automatisch geöffnet 🥸"
 fi
+echo -n "✅"
 
-sleep 0.2;
+# # DONE
+echo -e "\n"
 if $MUSIC_DIR_LINKED; then
-  echo -e "\n$GREEN🤝 Fertig! Geh zu $URL - Musik kannst du in deinen lokalen Musik-Ordner packen, die wird dann automatisch synchronisiert!";
+	cecho "$GREEN" "🤝 Fertig! Geh zu $URL - Musik wird automatisch aus deinem lokalen Musik-Ordner synchronisiert!"
 else
-  echo -e "\n$GREEN🤝 Fertig! Geh zu $URL ❤️"
+	cecho "$GREEN" "🤝 Fertig! Geh zu $URL ❤️"
 fi

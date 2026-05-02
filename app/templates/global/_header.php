@@ -13,7 +13,7 @@ use Bruder\Application\Cookie;
 
   <div fl alic gap=smol+>
     <mbutton player-repeat
-      repeat=<?= Cookie::get("__player_repeat") ?>
+      repeat=<?= Cookie::get("__player_repeat") ?? "\"\"" ?>
       <?= in_array(Cookie::get("__player_repeat"), ["all", "single"]) ? "active" : "" ?>
       material size=mid icon-only has-tooltip=bottom window>
       <mi></mi>
