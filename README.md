@@ -21,8 +21,8 @@ https://github.com/user-attachments/assets/a451f78d-d819-4bec-8dd2-4c5f7b30a982
 
 ### 〰️ **1 · Abhängigkeiten installieren** ¬
 
-Damit alles sauber installiert werden kann, solltest du `php` auf
-deinem System installiert haben. Wie, darfst du selbst
+Für eine fehlerfreie Installation, solltest du `php` auf
+deinem `Linux`-System installiert haben. Wie, darfst du selbst
 herausfinden 💋
 
 > [!IMPORTANT]
