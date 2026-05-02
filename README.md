@@ -21,9 +21,8 @@ https://github.com/user-attachments/assets/a451f78d-d819-4bec-8dd2-4c5f7b30a982
 
 ### 〰️ **1 · Abhängigkeiten installieren** ¬
 
-Ein paar Dinge müssen auf deinem `Linux`-System vorhanden sein,
-damit du durchstarten kannst. Hierzu zählen `php` 8.5 und `ncurses`.
-Wie man das installiert, musst du selbst herausfinden 💋
+Damit alles sauber installiert werden kann, solltest du `php` auf
+deinem System installiert haben. Wie, darfst du selbst herausfinden 💋
 
 ### 〰️ **2 · Setup ausführen** ¬
 
@@ -36,7 +35,7 @@ bash <(curl -fsSL https://www.heia.kim/MusikBruder/setup.sh)
 
 Was das Script macht, kannst du in diesem Repo in der Datei
 `setup.sh` einsehen. Die Datei auf `www.heia.kim` ist immer die
-aktuellste Version des Setups in diesem Repo!
+aktuellste Version!
 
 ### 〰️ **9 · Fertig** ¬
 
@@ -46,24 +45,24 @@ erreichbar.
 <br>
 <p align="center">…………… ❓ ……………</p>
 
-### **Wo ist die App gespeichert?**
+### **Meine Musik - Wohin?**
 
-Das Setup-Script sollte, wenn alles glatt gelaufen ist, alles in
-`~/.local/share/musikbruder` gespeichert haben.
+Im Setup wirst du gefragt, ob du deine lokale Musik-Bibliothek,
+also den Ordner `~/Music` synchronisieren möchtest. Falls du da
+mit ja geantwortet hast, kannst du deine Musik einfach dort
+belassen und neue auch dort speichern. Ansonsten geht sie in
+`~/.local/share/musikbruder/public/data/user/1/tracks`.
+
+> [!IMPORTANT]
+> Damit alles sauber synchronisiert werden kann, solltest du die
+> Metadaten deiner Musik-Dateien ausfüllen (title, artist, album, …)
+
 <br>
 
-### **Meine Musik? Wohin?**
+### **Wo ist die App gespeichert?**
 
-Deine Musik kannst du in
-`~/.local/share/musikbruder/public/data/user/1/tracks` kopieren.
-Neue Songs werden immer automatisch bei jedem Seiten-Reload
-synchronisiert. Um alles einfacher zu machen, kannst du auch einen
-Symlink zu deinem lokalen Musik-Ordner erstellen (oder wo du auch
-immer deine Musik gespeichert hast). Das geht so:
-
-```BASH
-ln -s ~/Music ~/.local/share/musikbruder/public/data/user/1/tracks
-```
+Das Setup-Script sollte alles in
+`~/.local/share/musikbruder` speichern.
 
 <br>
 
