@@ -22,7 +22,14 @@ https://github.com/user-attachments/assets/a451f78d-d819-4bec-8dd2-4c5f7b30a982
 ### 〰️ **1 · Abhängigkeiten installieren** ¬
 
 Damit alles sauber installiert werden kann, solltest du `php` auf
-deinem System installiert haben. Wie, darfst du selbst herausfinden 💋
+deinem System installiert haben. Wie, darfst du selbst
+herausfinden 💋
+
+> [!IMPORTANT]
+> Damit alles später sauber synchronisiert werden kann, solltest du die
+> Metadaten deiner Musik-Dateien vor dem Ausführen des Setups
+> ausfüllen (title & artist sind wichtig). Ein gutes Tool dafür ist <a
+> href="https://flathub.org/en/apps/org.gnome.EasyTAG">EasyTAG</a>!
 
 ### 〰️ **2 · Setup ausführen** ¬
 
@@ -52,10 +59,7 @@ also den Ordner `~/Music` synchronisieren möchtest. Falls du da
 mit ja geantwortet hast, kannst du deine Musik einfach dort
 belassen und neue auch dort speichern. Ansonsten geht sie in
 `~/.local/share/musikbruder/public/data/user/1/tracks`.
-
-> [!IMPORTANT]
-> Damit alles sauber synchronisiert werden kann, solltest du die
-> Metadaten deiner Musik-Dateien ausfüllen (title, artist, album, …)
+<br>
 
 ### **Wo ist die App gespeichert?**
 
