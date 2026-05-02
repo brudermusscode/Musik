@@ -9,6 +9,10 @@ require_once dirname($_SERVER["DOCUMENT_ROOT"]) . "/config/get_requirements.php"
  */
 $Track = Track::findOrReturn((int) $GLOBALS["route_param_id"]);
 
+// ! Track not found
+if (!file_exists(Track::base_path() . "/" . $Track->file_name))
+  exit(error("Kein Track"));
+
 /**
  * Append artwork.
  */

@@ -12,8 +12,9 @@ LILA="\033[35m"
 GREY="\033[2;37m"
 NOCO="\033[0m"
 
-WORK_DIR="${XDG_DATA_HOME:-$HOME/.local/share}"
-BIN_DIR="${XDG_DATA_HOME:-$HOME/.local/bin}"
+HOME_DIR=${XDG_DATA_HOME:-$HOME}
+WORK_DIR="$HOME_DIR/.local/share"
+BIN_DIR="$HOME_DIR/.local/bin"
 
 echo -e "\n$PINK/////   //////   //      ////    /////  //////"
 sleep 0.05
@@ -82,42 +83,43 @@ sleep 0.2
 echo -e "\n✅ Alles cool!"
 
 
-
 # Set working dir.
 cd $WORK_DIR
 
 # Only for testing locally.
 # cd musikbruder && docker compose -f compose.deploy.yml down --volumes && cd .. && rm -rf musikbruder
 
-echo -en "\n🍎"
-sleep 0.2
-echo -n "🍊"
-sleep 0.2
-echo -n "🍉"
-sleep 0.2
-echo -n "🍇"
-sleep 0.2
-echo -n "🍋"
-sleep 0.2
-echo -n "🍑"
-sleep 0.2
-echo -n "🥭"
-sleep 0.2
-echo -n "🥐"
-sleep 0.2
-echo -n "🧀"
-sleep 0.2
-echo -n "🍓"
-sleep 0.2
-echo -n "."
-sleep 0.2
-echo -n "."
-sleep 0.2
-echo -n "."
-sleep 0.2
-echo -en "🎌\n"
-sleep 0.2
+# echo -en "\n🍎"
+# sleep 0.2
+# echo -n "🍊"
+# sleep 0.2
+# echo -n "🍉"
+# sleep 0.2
+# echo -n "🍇"
+# sleep 0.2
+# echo -n "🍋"
+# sleep 0.2
+# echo -n "🍑"
+# sleep 0.2
+# echo -n "🥭"
+# sleep 0.2
+# echo -n "🥐"
+# sleep 0.2
+# echo -n "🧀"
+# sleep 0.2
+# echo -n "🍓"
+# sleep 0.2
+# echo -n "."
+# sleep 0.2
+# echo -n "."
+# sleep 0.2
+# echo -n "."
+# sleep 0.2
+# echo -en "🎌\n"
+# sleep 0.2
 
+
+# TODO: Check for .local being available.
 
 
 # + Clone GitHub
@@ -126,8 +128,29 @@ echo -e "\n$LILA♻️  App von GitHub klonieren…$NOCO"
 
 # Clone the git repository here and cd into it, so we set the new
 # working directory.
-git clone https://github.com/brudermusscode/UnSpotify.git musikbruder
+if [ ! -d "musikbruder" ]; then
+  git clone https://github.com/brudermusscode/UnSpotify.git musikbruder
+fi
+
 cd musikbruder
+
+
+# + Link Music Directory
+MUSIC_DIR="$HOME/Music"
+MUSIC_DIR_LINKED=false
+
+if [ -d $MUSIC_DIR ]; then
+  echo -e ""
+  read -p "⌨️  Willst du deinen lokalen Musik-Ordner verlinken? ja/* " link_music < /dev/tty
+
+  if [ "$link_music" == "ja" ]; then
+    REPLACEMENT="- $MUSIC_DIR:/data/public/data/user/1/tracks";
+    sed -i "s|%MUSIC_DIR_AS_VOLUME%|${REPLACEMENT}|g" compose-dummy
+    mv compose-dummy compose.deploy.yml
+    echo -e "✅ Verlinkt!"
+    MUSIC_DIR_LINKED=true
+  fi
+fi
 
 
 # + Dependency directories and files.
@@ -194,11 +217,16 @@ docker compose -f compose.deploy.yml up -d
 URL="http://localhost:6789"
 
 # # Done!
-sleep 0.2
+sleep 0.2;
 if command -v xdg-open >/dev/null 2>&1; then
   xdg-open "$URL"
 else
   echo -e "\nxdg-open fehlt leider, sont hätte sich das Fenster nun automatisch geöffnet 🥸"
 fi
 
-echo -e "\n$GREEN🤝 Fertig! Geh zu $URL - Deine Musik kannst du in ~/.local/share/musikbruder/public/data/user/1/tracks packen ❤️"
+sleep 0.2;
+if $MUSIC_DIR_LINKED; then
+  echo -e "\n$GREEN🤝 Fertig! Geh zu $URL - Musik kannst du in deinen lokalen Musik-Ordner packen, die wird dann automatisch synchronisiert!";
+else
+  echo -e "\n$GREEN🤝 Fertig! Geh zu $URL ❤️"
+fi

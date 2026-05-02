@@ -70,11 +70,23 @@ function scan_dir_and_add_files_to_array(string $path_to_dir, array $ignore_name
       continue;
     }
 
-    /**
-     * Run this function again, if the path is a directory.
-     */
-    if (is_dir($full_path)) {
+    // ? Symlink
+    if (is_link($full_path)) {
+      $full_path = readlink($full_path);
+      $files2 = scan_dir_and_add_files_to_array($full_path, $ignore_names, prefix: $file);
 
+      pdie(scandir($full_path));
+
+      foreach ($files2 ?? [] as $file2)
+        $array[] = $file2;
+
+
+
+      continue;
+    }
+
+    // ? Directory
+    if (is_dir($full_path)) {
       $files2 = scan_dir_and_add_files_to_array($full_path, $ignore_names, prefix: $file);
 
       foreach ($files2 ?? [] as $file2)
