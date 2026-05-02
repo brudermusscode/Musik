@@ -85,20 +85,19 @@ command -v php >/dev/null 2>&1 || {
 }
 
 # + Install composer
-if command -v composer >/dev/null 2>&1; then
-	cecho "$LILA" "Dependencies!"
+cecho "$LILA" "Dependencies!"
+
+if ! command -v composer >/dev/null 2>&1; then
 	ciecho "$GREY" "Installiere composer…"
 	curl -sS https://getcomposer.org/installer | php >/dev/null 2>&1
 	ciecho "$GREY" "In »~/.local/bin« verschieben…"
 	mv composer.phar $BIN_DIR/composer
 fi
 
-section_end
-
 # Set working dir.
 cd $WORK_DIR
 
-# TODO: Check for .local being available.
+section_end
 
 # + Clone GitHub
 sleep 0.2

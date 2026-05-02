@@ -28,14 +28,17 @@ if (file_get_contents(_root() . "/sql/last_migration") !== "009_create_1st_user.
    */
   try {
 
+
     /**
      * @var PDO
      */
     $pdo = new PDO("mysql:host=$host", $user, $pass);
   } catch (\PDOException $e) {
-    echo "Konnte noch keine Verbindung herstellen. Versuch es nochmal in ein paar Sekunden!<br><br>";
-    echo $e->getMessage();
+    include _root() . "/app/templates/error/one-moment.php";
+    exit();
   }
+
+
 
   try {
 
