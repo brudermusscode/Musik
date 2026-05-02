@@ -40,7 +40,7 @@ class Queue extends Bruder
       ($Object instanceof Collection) && !$Object->contains($Track) ||
       !($Object instanceof Collection) && !$Object->tracks->contains($Track)
     )
-      return error("Kein Track");
+      return error("no_track");
 
     /**
      * @var Collection<Track>

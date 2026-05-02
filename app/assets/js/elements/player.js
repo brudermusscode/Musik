@@ -761,8 +761,11 @@ export const create_queue = async (
           return resolve(1);
         }
 
-        Frontend.ajax_response("error");
-        console.log(`%c▒ Queue creation failed.`, `color: ${error_color};`);
+        if (data.message !== "no_track") {
+          Frontend.ajax_response("error");
+          console.log(`%c▒ Queue creation failed.`, `color: ${error_color};`);
+        }
+
         return resolve(0);
       },
     });
