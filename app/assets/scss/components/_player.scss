@@ -87,7 +87,6 @@ player {
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 12px;
       cursor: pointer;
     }
 
@@ -200,14 +199,19 @@ player {
   fullscreen-player-close {
     display: none;
     position: absolute;
-    top: $main-distance;
-    right: $main-distance;
-    height: 2.4em;
-    width: 2.4em;
+    top: $main-distance * 2;
+    right: $main-distance * 2;
+    height: $mbutton-mid-size;
+    width: $mbutton-mid-size;
     opacity: 0.6;
     z-index: 3;
+    border-radius: 50%;
+    transition:
+      scale 0.6s $cubic,
+      background 0.6s $cubic;
 
     &:hover {
+      scale: 1.12;
       background: $slight-light;
       opacity: 1;
     }
@@ -552,6 +556,10 @@ player {
 
         mi::before {
           content: "pause";
+        }
+
+        &:hover {
+          background: $active;
         }
       }
 
