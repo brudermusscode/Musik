@@ -19,7 +19,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/data
-      - ./public/data/user/1/tracks/deleted:/data/public/data/user/1/tracks/deleted
       %MUSIC_DIR_AS_VOLUME%
 
   web:

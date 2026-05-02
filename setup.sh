@@ -39,6 +39,11 @@ ciecho() {
 	echo -e "$GREY╟$NOCO  ${color}$@${NOCO}"
 }
 
+section_end() {
+	echo -n "✅"
+	echo -e "\n"
+}
+
 HOME_DIR=${XDG_DATA_HOME:-$HOME}
 WORK_DIR="$HOME_DIR/.local/share"
 BIN_DIR="$HOME_DIR/.local/bin"
@@ -56,7 +61,7 @@ sleep 0.05
 echo -e "Dein Bruder der Musik (I use Arch btw)$NOCO\n"
 sleep 0.05
 
-read -p "⌨️  Hast du Bock? ja/* " you_in </dev/tty
+read -p "Hast du Bock? Schreib [ja] oder [nein] ⌨️  " you_in </dev/tty
 
 if [ "$you_in" != "ja" ]; then
 	cecho "$YELLOW" "✋ Alles klar Bruder, vielleicht ein andermal!"
@@ -70,88 +75,42 @@ cecho "$GREEN" "😍 Nice, dann las los gehen jetzt…"
 mkdir -p "$WORK_DIR"
 mkdir -p "$BIN_DIR"
 
-# + Check dependencies.
-sleep 0.2
-cnecho "$GREY" "·"
+echo -e ""
 
+# + Check dependencies.
 # ! PHP installed?
 command -v php >/dev/null 2>&1 || {
 	echo -e "\n$YELLOW💔 Sorry Bruder, aber du musst PHP installieren. Das findest du auf https://www.php.net/manual/en/install.unix.php - Versuch es danach nochmal!$NOCO"
 	exit 1
 }
 
-sleep 0.2
-cnecho "$GREY" "·"
-
-# ! tput (ncurses) installed?
-command -v tput >/dev/null 2>&1 || {
-	echo -e "\n$GREY ncurses ist nicht installiert, Terminal-Output sieht nicht so schön aus aber wird funktionieren.$NOCO"
-}
-
-sleep 0.2
-cnecho "$GREY" "·"
-
-# + Install composer if not exists
-if ! command -v composer >/dev/null 2>&1; then
-	echo -e "\n$YELLOW♻️  Installiere composer in »~/.local/bin«$NOCO"
-
-	curl -sS https://getcomposer.org/installer | php
-	echo -e "Moving composer to »~/.local/bin«"
+# + Install composer
+if command -v composer >/dev/null 2>&1; then
+	cecho "$LILA" "Dependencies!"
+	ciecho "$GREY" "Installiere composer…"
+	curl -sS https://getcomposer.org/installer | php >/dev/null 2>&1
+	ciecho "$GREY" "In »~/.local/bin« verschieben…"
 	mv composer.phar $BIN_DIR/composer
-	echo -e "Good went!"
 fi
 
-sleep 0.2
-cnecho "$GREY" "·"
-sleep 0.2
-echo -n ✅
+section_end
 
 # Set working dir.
 cd $WORK_DIR
 
-# echo -en "\n🍎"
-# sleep 0.2
-# echo -n "🍊"
-# sleep 0.2
-# echo -n "🍉"
-# sleep 0.2
-# echo -n "🍇"
-# sleep 0.2
-# echo -n "🍋"
-# sleep 0.2
-# echo -n "🍑"
-# sleep 0.2
-# echo -n "🥭"
-# sleep 0.2
-# echo -n "🥐"
-# sleep 0.2
-# echo -n "🧀"
-# sleep 0.2
-# echo -n "🍓"
-# sleep 0.2
-# echo -n "."
-# sleep 0.2
-# echo -n "."
-# sleep 0.2
-# echo -n "."
-# sleep 0.2
-# echo -en "🎌\n"
-# sleep 0.2
-
 # TODO: Check for .local being available.
 
 # + Clone GitHub
-echo -e "\n"
 sleep 0.2
 cecho "$LILA" "App runterladen…"
 
 # If the base directory already exists, ask for reinstalling everything.
 if [ -d "musikbruder" ]; then
-	ciecho "$RED" "⬇️  »~/.local/share/musikbruder« existiert schon!"
-	read -p "$(echo -e "${GREY}╟${NOCO}  ⌨️  Alles löschen & neu installieren? ja/* ")" delete </dev/tty
+	ciecho "$RED" "»~/.local/share/musikbruder« existiert schon!"
+	read -p "$(echo -e "${GREY}╟${NOCO}  Alles löschen & neu installieren? [ja]/[nein] ⌨️  ")" delete </dev/tty
 
 	if [ "$delete" != "ja" ]; then
-		ciecho "$GREEN" "➡️  Alles klar Bruder, vielleicht ein andermal!"
+		ciecho "$GREEN" "Alles klar Bruder, vielleicht ein andermal!"
 		exit 1
 	else
 		ciecho "$GREY" "Oha, wird gelöscht…"
@@ -166,15 +125,31 @@ ciecho "$GREY" "Kloniere GitHub Repo…"
 git clone https://github.com/brudermusscode/UnSpotify.git musikbruder >/dev/null 2>&1
 cd musikbruder
 
+section_end
+
+# + Dependency directories and files.
+cecho "$LILA" "Alle Relevanzen erstellen…"
+ciecho "$GREY" "Mach ich Bruder, warte kurz…"
+ciecho "$GREY" "Ordner erstellen…"
+mkdir -p public/data/user/1/{tracks,art,portraits,videos}
+mkdir -p public/data/user/1/tracks/{local,deleted}
+mkdir -p storage/logs
+touch sql/last_migration
+ciecho "$GREY" "Rechte einstellen…"
+chmod a+rw -R storage public sql
+chmod a+rw sql/last_migration
+ciecho "$GREY" "Environment erstellen…"
+cp .env.example .env
+
 # + Link Music Directory
 MUSIC_DIR="$HOME/Music"
 MUSIC_DIR_LINKED=false
 
 if [ -d $MUSIC_DIR ]; then
-	read -p "$(echo -e "${GREY}╟${NOCO}  ⌨️  Willst du deinen lokalen Musik-Ordner verlinken? ja/* ")" link_music </dev/tty
+	read -p "$(echo -e "${GREY}╟${NOCO}  Willst du deinen lokalen Musik-Ordner synchronisieren? [ja]/[nein] ⌨️  ")" link_music </dev/tty
 
 	if [ "$link_music" == "ja" ]; then
-		REPLACEMENT="- $MUSIC_DIR:/data/public/data/user/1/tracks"
+		REPLACEMENT="- $MUSIC_DIR:/data/public/data/user/1/tracks/local"
 		sed -i "s|%MUSIC_DIR_AS_VOLUME%|${REPLACEMENT}|g" compose-dummy
 		MUSIC_DIR_LINKED=true
 	else
@@ -184,28 +159,13 @@ if [ -d $MUSIC_DIR ]; then
 	mv compose-dummy compose.deploy.yml
 fi
 
-echo -n "✅"
-
-# + Dependency directories and files.
-echo -e "\n"
-cecho "$LILA" "Alle Relevanzen erstellen…"
-ciecho "$GREY" "Mach ich Bruder, warte kurz…"
-
-mkdir -p public/data/user/1/{tracks,art,portraits,videos}
-mkdir -p public/data/user/1/tracks/deleted
-mkdir -p storage/logs
-chmod a+rw -R storage public sql
-touch sql/last_migration
-chmod a+rw sql/last_migration
-cp .env.example .env
-
-echo -n "✅"
+section_end
 
 # + Composer
-echo -e "\n"
 cecho "$LILA" "Composer?"
 ciecho "$GREY" "Ist wichtig, versprochen…"
 composer install >/dev/null 2>&1
+ciecho "$GREY" "Alle Relevanzen dumpen…"
 composer dump-autoload >/dev/null 2>&1
 echo -n "✅"
 
@@ -214,27 +174,27 @@ echo -e "\n"
 cecho "$LILA" "Bruder bauen…"
 ciecho "$GREY" "Lehn dich zurück, das kann 1 bisschen dauern 😇…"
 docker compose -f compose.deploy.yml build >/dev/null 2>&1
-echo -n "✅"
+
+section_end
 
 # + Start the app.
-echo -e "\n"
-cecho "$LILA" "Endspurt…"
-ciecho "$GREY" "Ist gleich fertig…"
+cecho "$LILA" "Endspürt…"
+ciecho "$GREY" "App hochfahren…"
 docker compose -f compose.deploy.yml up -d >/dev/null 2>&1
 
 URL="http://localhost:6789"
 
-if command -v xdg-open >/dev/null 2>&1; then
-	xdg-open "$URL"
-else
-	ciecho "$GREY" "xdg-open fehlt leider, sont hätte sich das Fenster nun automatisch geöffnet 🥸"
-fi
-echo -n "✅"
+# if command -v xdg-open >/dev/null 2>&1; then
+# 	xdg-open "$URL"
+# else
+# 	ciecho "$GREY" "xdg-open fehlt leider, sont hätte sich das Fenster nun automatisch geöffnet 🥸"
+# fi
+
+section_end
 
 # # DONE
-echo -e "\n"
 if $MUSIC_DIR_LINKED; then
-	cecho "$GREEN" "🤝 Fertig! Geh zu $URL - Musik wird automatisch aus deinem lokalen Musik-Ordner synchronisiert!"
+	cecho "$GREEN" "🤝 Fertig! Geh zu $URL - Musik wird automatisch aus deinem lokalen Musik-Ordner synchronisiert! ❤️"
 else
 	cecho "$GREEN" "🤝 Fertig! Geh zu $URL ❤️"
 fi
