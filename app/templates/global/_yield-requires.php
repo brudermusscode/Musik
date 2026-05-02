@@ -32,6 +32,8 @@
     active: false,
     volume: null,
     shuffle: true,
+    repeat: false,
+    fullscreen: false,
     Track: {
       relation: {
         id: null,

@@ -28,6 +28,25 @@ logo {
   }
 }
 
+mbutton {
+  &[repeat] {
+    mi:before {
+      display: block;
+      content: "repeat";
+    }
+  }
+  &[repeat="all"] {
+    mi:before {
+      content: "repeat";
+    }
+  }
+  &[repeat="single"] {
+    mi:before {
+      content: "repeat_one";
+    }
+  }
+}
+
 theme-switcher {
   $theme-switcher-size: 56px;
 

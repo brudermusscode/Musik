@@ -131,6 +131,9 @@ export const update_current_track = async (
 
             Frontend.reload_images();
 
+            if (__player.fullscreen)
+              document.find("current-track[has-video] video")?.pause();
+
             /**
              * Set __player attributes for the Relation.
              */

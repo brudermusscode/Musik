@@ -102,6 +102,12 @@ export const play_track = async (
       playing();
 
       /**
+       * Pause video if the fullscreen player is active.
+       */
+      if (__player.fullscreen)
+        document.find("current-track[has-video] video")?.pause();
+
+      /**
        * Add +1 listens.
        */
       let formdata = new FormData();
@@ -117,7 +123,7 @@ export const play_track = async (
       document.title = `🎶 ${Track.artist} × ${Track.title}`;
 
       console.log(
-        `%cPlaying Track ID::${Track.id}\n${Track.title}\n${Track.artist}\nDuration: ${(Track.length_seconds / 60).toFixed(2)}min\nVolume: ${__player.volume * 100}%\nQueue: ${priority ? "Priority" : "Regular"}`,
+        `%c▒ Playing Track ID::${Track.id}\n${Track.title}\n${Track.artist}\nDuration: ${(Track.length_seconds / 60).toFixed(2)}min\nVolume: ${__player.volume * 100}%\nQueue: ${priority ? "Priority" : "Regular"}`,
         `color: ${success_color};`,
       );
 
@@ -183,8 +189,8 @@ export const set_track_relation = (init = false) => {
     type: relation_type,
   };
 
-  Cookie.set("__player_Track_relation_id", relation_id);
-  Cookie.set("__player_Track_relation_type", relation_type);
+  Cookie.set("__player_Track_relation_id", relation_id, 365);
+  Cookie.set("__player_Track_relation_type", relation_type, 365);
 };
 
 /**
@@ -221,36 +227,43 @@ export const queue_play_next = async (skipped = false) => {
   // ? Priority Queue
   let pq = __player.priority_queue;
 
+  // ? Repeat::single
+  if (__player.repeat == "single" && !skipped) return replay();
+
+  // ? Priority Queue
   if (pq.length > 0) return priority_queue_play_next(skipped);
 
   // ? Base Queue
   let q = __player.queue;
   let current_q_idx = __player.Track.queue_index;
   let next_track_id = q[current_q_idx + 1];
+  let will_repeat_queue = __player.repeat == "all" && !next_track_id;
+  let next_track_idx = current_q_idx + 1;
 
-  // Return if no Track is left in any queue.
-  if (!next_track_id) {
-    console.log("[queue] Nothing else to play!");
-
-    if (!skipped) pause();
-
-    return;
+  if (will_repeat_queue) {
+    console.log(`%c▒ Repeating Queue!`, `color: ${success_color};`);
+    next_track_id = __player.queue[0];
+    next_track_idx = 0;
+  } else if (!next_track_id) {
+    //
+    // No more songs in queue & no repeat enabled.
+    if (!skipped) {
+      console.log(
+        `%c▒ Nothing else to play from Queue!`,
+        `color: ${success_color};`,
+      );
+      return pause();
+    }
   }
 
   let response = await get_Track(next_track_id);
   let Track = response.data.Track;
   let track_public_url = response.data.track_public_url;
 
-  // Add new index (+1) to Track object.
-  Track.index = current_q_idx + 1;
-
-  // Set new index.
+  Track.index = next_track_idx;
   __player.Track.queue_index = parseInt(Track.index);
 
-  // Play the new Track.
   await play_track(Track, track_public_url, false, false);
-
-  // Update right sidebar
   await update_current_track_w_cookies();
 };
 
@@ -313,7 +326,7 @@ export const queue_play_previous = async () => {
  */
 export const playing = () => {
   __player.active = true;
-  Cookie.set("__player_active", 1, 2);
+  Cookie.set("__player_active", 1, 365);
 };
 
 /**
@@ -321,7 +334,26 @@ export const playing = () => {
  */
 export const not_playing = () => {
   __player.active = false;
-  Cookie.set("__player_active", 0, 2);
+  Cookie.set("__player_active", 0, 365);
+};
+
+/**
+ * Replays the currently playing track if one is set.
+ */
+export const replay = async () => {
+  let track_id = __player.Track.id;
+
+  if (!track_id) return;
+
+  let track_response = await get_Track(track_id);
+
+  await play_track(
+    track_response.data.Track,
+    track_response.data.track_public_url,
+    false,
+  );
+
+  console.log(`%c▒ Replaying current Track!`, `color: ${success_color};`);
 };
 
 /**
@@ -331,8 +363,10 @@ export const not_playing = () => {
 export const resume = () => {
   if (!__player.Track.audio || !__player.Track.id) return;
 
-  // Play cover video in sidebar
-  document.find(current_track_video_path)?.play();
+  /**
+   * Play the video.
+   */
+  if (!__player.fullscreen) document.find(current_track_video_path)?.play();
 
   __player.Track.audio.play();
 
@@ -528,14 +562,34 @@ export const init_player_state = async () => {
     /**
      * Set a cookie for persistence.
      */
-    Cookie.set("__player_volume", parsed_volume);
+    Cookie.set("__player_volume", parsed_volume, 365);
 
     // ? Shuffle
-    if (!Cookie.get("__player_shuffle")) Cookie.set("__player_shuffle", 0);
+    if (Cookie.get("__player_shuffle") == null)
+      Cookie.set("__player_shuffle", 0, 365);
     __player.shuffle = parseInt(Cookie.get("__player_shuffle"));
 
     console.log(
       `%c▒ Shuffle is ${__player.shuffle ? "enabled" : "disabled"}.`,
+      `color: ${init_color};`,
+    );
+
+    // ? Repeat::all/single
+    let repeat = Cookie.get("__player_repeat");
+    if (repeat !== null && repeat !== "single" && repeat !== "all")
+      repeat = null;
+    __player.repeat = repeat;
+
+    console.log(repeat);
+
+    console.log(
+      `%c▒ Repeat is ${
+        __player.repeat == "all"
+          ? "enabled for all songs"
+          : __player.repeat == "single"
+            ? "enabled for one song"
+            : "disabled"
+      }.`,
       `color: ${init_color};`,
     );
 
@@ -644,16 +698,34 @@ export const unmute = () => {
  */
 export const shuffle = () => {
   if (Cookie.get("__player_shuffle") == 1) {
-    Cookie.set("__player_shuffle", 0);
+    Cookie.set("__player_shuffle", 0, 365);
     __player.shuffle = 0;
 
     return 0;
   } else {
-    Cookie.set("__player_shuffle", 1);
+    Cookie.set("__player_shuffle", 1, 365);
     __player.shuffle = 1;
 
     return 1;
   }
+};
+
+/**
+ * Toggle repeat mode. Evaluates either repeating all, only one or
+ * not at all.
+ */
+export const repeat = () => {
+  let cookie = "__player_repeat";
+  let repeat = Cookie.get(cookie);
+
+  if (repeat == "all") repeat = "single";
+  else if (repeat == "single") repeat = null;
+  else repeat = "all";
+
+  __player.repeat = repeat;
+  Cookie.set(cookie, repeat, 365);
+
+  return repeat;
 };
 
 /**
@@ -704,10 +776,10 @@ document.addEventListener("DOMContentLoaded", async function () {
   if (!Cookie.get("__lib_view")) {
     document.find("library").setAttribute("view", "list");
     document.find("library-view [view=list]").activate();
-    Cookie.set("__lib_view", "list");
+    Cookie.set("__lib_view", "list", 365);
   }
 
-  Cookie.set("__player_active", 0, 2);
+  Cookie.set("__player_active", 0, 365);
 
   set_track_relation(true);
   await init_player_state();
@@ -767,13 +839,25 @@ $(function () {
     // always take the value of the cookie.
     let cookie_shuffle = parseInt(Cookie.get("__player_shuffle") ?? "0");
     if (__player.shuffle !== cookie_shuffle) {
-      Cookie.set("__player_shuffle", cookie_shuffle);
+      Cookie.set("__player_shuffle", cookie_shuffle, 365);
       __player.shuffle = cookie_shuffle;
     }
 
     set_track_relation(false);
     await create_queue(relation_type, relation_id, track_id, cookie_shuffle);
     await Global.update_current_track(relation_id, relation_type);
+  });
+
+  /**
+   * Toggles shuffle mode by click on a button and shows the
+   * button element based on the returned value of the shuffle() function.
+   */
+  $(document).on("click", "[player-repeat]", function (e) {
+    let r = repeat();
+    this.setAttribute("repeat", r);
+
+    if (r === "single" || r === "all") this.activate();
+    else this.deactivate();
   });
 
   /**
@@ -821,6 +905,8 @@ $(function () {
         Player.setAttribute("fullscreen", true);
         Player.setAttribute("cursor-moved", true);
 
+        __player.fullscreen = 1;
+
         /**
          * Stop video playback, if a song is currently playing.
          */
@@ -833,6 +919,8 @@ $(function () {
       } else {
         Player.removeAttribute("fullscreen");
         Player.removeAttribute("cursor-moved");
+
+        __player.fullscreen = 0;
 
         /**
          * Start video playback, if a song is currently playing.
@@ -852,11 +940,11 @@ $(function () {
     if (!Player.hasAttribute("collapsed")) {
       Player.setAttribute("collapsed", true);
       show_button.setAttribute("collapsed", true);
-      Cookie.set("__player_collapsed", 1);
+      Cookie.set("__player_collapsed", 1, 365);
     } else {
       Player.removeAttribute("collapsed");
       show_button.removeAttribute("collapsed");
-      Cookie.set("__player_collapsed", 0);
+      Cookie.set("__player_collapsed", 0, 365);
     }
   });
 

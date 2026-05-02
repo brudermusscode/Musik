@@ -59,8 +59,15 @@ player {
       width 1.2s $cubic,
       height 0.4s $cubic,
       bottom 0.4s $cubic;
+    cursor: none;
 
     &[cursor-moved] {
+      cursor: initial;
+
+      fullscreen-player-close {
+        opacity: 1;
+      }
+
       player-content {
         player-metadata {
           div:not([sizing]) {
@@ -76,6 +83,7 @@ player {
     }
 
     fullscreen-player-close {
+      opacity: 0;
       display: flex;
       align-items: center;
       justify-content: center;
