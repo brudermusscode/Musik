@@ -28,7 +28,6 @@ if (file_get_contents(_root() . "/sql/last_migration") !== "009_create_1st_user.
    */
   try {
 
-
     /**
      * @var PDO
      */

@@ -402,7 +402,16 @@ class Track extends Bruder
       // # Commit all changes!
       $Object->db_commit();
 
-      return $Request->success("Tracks synced! $new newly added" . ($error ? ", " . count($error) . " failed." : "."), $error);
+      /**
+       * Append the number of newly synchronized tracks to the
+       * data return object.
+       */
+      $error["new"] = $new;
+
+      return $Request->success(
+        "Tracks synced! $new newly added" . ($error ? ", " . count($error) . " failed." : "."),
+        data: $error
+      );
     } catch (\Exception $e) {
       $Object->db_rollback();
 

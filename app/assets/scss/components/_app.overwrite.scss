@@ -33,6 +33,31 @@ background-blur {
   backdrop-filter: blur(64px);
 }
 
+syncing-overlay {
+  z-index: 10000;
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: $slight-dark;
+  backdrop-filter: blur(64px);
+  visibility: hidden;
+  opacity: 0;
+
+  &[active] {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &[changing] {
+    p {
+      opacity: 0;
+    }
+  }
+}
+
 [disable-user-selection] {
   user-select: none;
 }

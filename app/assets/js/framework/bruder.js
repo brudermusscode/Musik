@@ -76,7 +76,7 @@ const init_application = async () => {
    * TODO: Fix first page to second won't allow history
    */
   document.body.setAttribute("initialized", true);
-  document.body.setAttribute("toggled", false);
+  // document.body.setAttribute("toggled", false);
 
   // console.log(
   //   "%c🌞 Bruder, alles geladen!",

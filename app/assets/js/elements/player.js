@@ -20,11 +20,34 @@ const current_track_video_path = "current-track cover video";
  * Syncs new files from main directory set in PHP.
  */
 export const sync_files = () => {
+  let overlay = document.find("syncing-overlay");
+  // overlay.activate();
+
   $.ajax({
     url: "/track/sync",
     method: "POST",
     success: function (data) {
       console.log(`%c▒ ${data.message}`, `color: ${job_color};`);
+
+      if (!data.data.new) {
+        document.body.setAttribute("toggled", false);
+        overlay.deactivate();
+
+        return;
+      }
+
+      overlay.setAttribute("changing", true);
+      setTimeout(() => {
+        overlay.find("[title]").innerHTML =
+          `Hab ${data.data.new} neue gefunden!`;
+        overlay.find("[subtext]").innerHTML = "Much wow. So new.";
+
+        overlay.removeAttribute("changing");
+
+        setTimeout(() => {
+          window.location.replace("/");
+        }, 2000);
+      }, 400);
     },
   });
 };
