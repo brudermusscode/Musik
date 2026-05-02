@@ -57,8 +57,6 @@ belassen und neue auch dort speichern. Ansonsten geht sie in
 > Damit alles sauber synchronisiert werden kann, solltest du die
 > Metadaten deiner Musik-Dateien ausfüllen (title, artist, album, …)
 
-<br>
-
 ### **Wo ist die App gespeichert?**
 
 Das Setup-Script sollte alles in
