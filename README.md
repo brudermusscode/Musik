@@ -29,7 +29,7 @@ herausfinden 💋
 > Damit alles später sauber synchronisiert werden kann, solltest du die
 > Metadaten deiner Musik-Dateien vor dem Ausführen des Setups
 > ausfüllen (title & artist sind wichtig). Ein gutes Tool dafür ist <a
-> href="https://flathub.org/en/apps/org.gnome.EasyTAG">EasyTAG</a>!
+> href="https://flathub.org/en/apps/org.gnome.EasyTAG" target="_blank">EasyTAG</a>!
 
 ### 〰️ **2 · Setup ausführen** ¬
 
