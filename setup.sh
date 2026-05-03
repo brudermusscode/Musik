@@ -94,7 +94,7 @@ if ! command -v composer >/dev/null 2>&1; then
 	mv composer.phar $BIN_DIR/composer
 fi
 
-# Set working dir.
+# Set working dir..
 cd $WORK_DIR
 
 section_end
