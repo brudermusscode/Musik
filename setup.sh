@@ -141,7 +141,7 @@ ciecho "$GREY" "Environment erstellen…"
 cp .env.example .env
 
 # + Link Music Directory
-MUSIC_DIR="$HOME/Music"
+MUSIC_DIR="$HOME_DIR/Music"
 MUSIC_DIR_LINKED=false
 
 if [ -d $MUSIC_DIR ]; then
