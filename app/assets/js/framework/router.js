@@ -33,6 +33,25 @@ export const routes = {
     execute_last: (url, Route) => {},
   },
 
+  artists: {
+    mark: "artists",
+  },
+
+  artist: {
+    params: "/:id",
+    mark: "artists",
+    execute_last: (url, Route) => {
+      let extracted_params = extract_params(url, Route);
+      let buttons = document.find_all(
+        `[page="artist"][data-id="${extracted_params.id}"]`,
+      );
+
+      buttons?.forEach((button) => {
+        button.setAttribute("active", true);
+      });
+    },
+  },
+
   albums: {
     mark: "albums",
   },

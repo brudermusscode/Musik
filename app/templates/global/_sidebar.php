@@ -51,7 +51,7 @@ use Bruder\Model\Album;
         </library-view>
       </div>
 
-      <bookmarks>
+      <bookmarks p4>
         <get-content from="/get/library">
           <?php include TEMPLATE . "/global/_loader.php"; ?>
         </get-content>

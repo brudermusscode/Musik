@@ -59,4 +59,4 @@ RUN chown www-data -R public storage
 
 EXPOSE 80
 
-ENTRYPOINT ["/data/docker/deploy/entrypoint.sh"]
+ENTRYPOINT ["/data/docker/entrypoint.sh"]

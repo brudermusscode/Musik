@@ -159,6 +159,11 @@ class Album extends Bruder
   public function upload_art(array $file)
   {
 
+    /**
+     * Die on any error.
+     */
+    \Bruder\File\Upload::error($file);
+
     $save_path = _root() . "/public/data/user/1/art";
     $file_name = Utils::random_alpha_token(24) . ".webp";
 
@@ -185,6 +190,7 @@ class Album extends Bruder
        * @var string
        */
       $full_path = "$save_path/$file_name";
+
 
       // # Save!
       $encoded->save($full_path);

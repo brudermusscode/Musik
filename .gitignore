@@ -13,7 +13,6 @@
 /.vscode
 /compose.yml
 /compose.deploy.yml
-/Dockerfile
 /docker/dev
 /xbundler.*
 /storage

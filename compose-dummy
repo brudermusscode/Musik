@@ -8,7 +8,7 @@ networks:
 x-web: &x-web # <<: *x-env
   build:
     context: .
-    dockerfile: Dockerfile.deploy
+    dockerfile: Dockerfile
   restart: on-failure
   tty: true
 

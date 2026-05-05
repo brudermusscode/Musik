@@ -464,7 +464,7 @@ sidebar {
             line-height: 0.6;
 
             [title] {
-              font-size: $font-size-smol;
+              font-size: $font-size-smol-plus;
             }
           }
         }
@@ -477,7 +477,7 @@ sidebar {
         }
 
         option {
-          padding: 4px;
+          padding: 2px;
           padding-right: 16px;
           border-radius: 16px;
           display: flex;
@@ -487,6 +487,11 @@ sidebar {
 
           [metadata] {
             margin-top: -4px;
+
+            [title] {
+              font-size: $font-size-std;
+              font-weight: 600;
+            }
           }
         }
       }

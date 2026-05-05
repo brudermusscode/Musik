@@ -81,7 +81,7 @@ wir statt den 10 Euro monatlich zahlen.
 
 <p align="center">…………… 👀 ……………</p>
 
-<p align="center">Mit viel ☕, höchst verfügbarer ❤️ und einem großen 🍆 gebaut!
+<p align="center">Mit viel ☕ und höchst verfügbarer ❤️ gebaut!
 Ich übernehme keine Verantwortung für Over-Engineering und/oder
 schlechte Performance 😘.</p>
 
