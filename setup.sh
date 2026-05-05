@@ -115,18 +115,17 @@ if [ -d "musikbruder" ]; then
 		cd musikbruder
 		docker compose -f compose.deploy.yml down --volumes >>"$LOG_FILE" 2>&1
 		cd ..
-		sudo rm -rf musikbruder
+		sudo -p "╟  Passwort für %u: " rm -rf musikbruder
 	fi
 fi
 
 # + Clone GitHub
-ciecho "$GREY" "Kloniere GitHub Repo…"
-{
-	[ -z "$TESTING" ] &&
-		git clone https://github.com/brudermusscode/MusikBruder.git musikbruder ||
-		git clone --branch test --single-branch https://github.com/brudermusscode/MusikBruder.git musikbruder
-	cd musikbruder
-} >>"$LOG_FILE" 2>&1
+REPO="https://github.com/brudermusscode/MusikBruder.git"
+BRANCH="deploy"
+[ -n "$TESTING" ] && BRANCH="test"
+ciecho "$GREY" "Kloniere $REPO (Branch: $BRANCH)…"
+git clone --branch "$BRANCH" --single-branch "$REPO" musikbruder >>"$LOG_FILE" 2>&1
+cd musikbruder
 
 section_end
 
@@ -174,7 +173,7 @@ fi
 	# Replace variable placeholders with the actual replacement and
 	# create a real compose file for upping docker.
 	sed -i "s|%MUSIC_DIR_AS_VOLUME%|${REPLACEMENT}|g" compose-dummy
-	mv compose-dummy compose.deploy.yml
+	cp compose-dummy compose.deploy.yml
 } >>"$LOG_FILE" 2>&1
 
 section_end
