@@ -13,5 +13,10 @@ fi
 
 case "$command" in
 nginx) exec nginx -c /data/docker/nginx.conf "$@" ;;
+php)
+    composer install --no-dev --no-scripts
+    composer dump-autoload
+    exec php-fpm -F "$@"
+    ;;
 *) exec "$command" "$@" ;;
 esac

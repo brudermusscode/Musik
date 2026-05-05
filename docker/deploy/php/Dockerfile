@@ -31,6 +31,8 @@ RUN docker-php-ext-enable pdo_mysql intl exif curl zip gd
 COPY zz-custom.ini /usr/local/etc/php/conf.d/zz-custom.ini
 COPY zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
 EXPOSE 9000
 
-CMD ["php-fpm", "-F"]
+ENTRYPOINT ["/data/docker/entrypoint.sh"]
