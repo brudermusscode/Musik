@@ -44,10 +44,6 @@ section_end() {
 	echo -e "\n"
 }
 
-HOME_DIR=${XDG_DATA_HOME:-$HOME}
-WORK_DIR="$HOME_DIR/.local/share"
-BIN_DIR="$HOME_DIR/.local/bin"
-
 echo -e "\n$PINK/////   //////   //      ////    /////  //////"
 sleep 0.05
 echo -e "//  //  //   //  //  //  //  //  //     //   //"
@@ -70,10 +66,25 @@ fi
 
 cecho "$GREEN" "😍 Nice, dann las los gehen jetzt…"
 
+HOME_DIR=${XDG_DATA_HOME:-$HOME}
+WORK_DIR="$HOME_DIR/.local/share"
+BIN_DIR="$HOME_DIR/.local/bin"
+LOG_DIR="$HOME_DIR/.logs/musikbruder"
+LOG_FILE=$LOG_DIR/setup.log
+
 # Ensure the .local/share dir exists by creating it. This won't
 # output anything if it already exists.
 mkdir -p "$WORK_DIR"
 mkdir -p "$BIN_DIR"
+
+# Create loging directory and a file for this setup.
+mkdir -p "$LOG_DIR"
+
+if [ -f "$LOG_FILE" ]; then
+	rm -f $LOG_DIR/setup.log
+fi
+
+touch $LOG_FILE
 
 echo -e ""
 
@@ -89,7 +100,7 @@ cecho "$LILA" "Dependencies!"
 
 if ! command -v composer >/dev/null 2>&1; then
 	ciecho "$GREY" "Installiere composer…"
-	curl -sS https://getcomposer.org/installer | php >/dev/null 2>&1
+	curl -sS https://getcomposer.org/installer | php >>"$LOG_FILE" 2>&1
 	ciecho "$GREY" "In »~/.local/bin« verschieben…"
 	mv composer.phar $BIN_DIR/composer
 fi
@@ -114,76 +125,80 @@ if [ -d "musikbruder" ]; then
 	else
 		ciecho "$GREY" "Oha, wird gelöscht…"
 		cd musikbruder
-		docker compose -f compose.deploy.yml down --volumes >/dev/null 2>&1
+		docker compose -f compose.deploy.yml down --volumes >>"$LOG_FILE" 2>&1
 		cd ..
 		rm -rf musikbruder
 	fi
 fi
 
 ciecho "$GREY" "Kloniere GitHub Repo…"
-git clone https://github.com/brudermusscode/UnSpotify.git musikbruder >/dev/null 2>&1
+git clone https://github.com/brudermusscode/UnSpotify.git musikbruder >>"$LOG_FILE" 2>&1
 cd musikbruder
 
 section_end
 
 # + Dependency directories and files.
+# {
 cecho "$LILA" "Alle Relevanzen erstellen…"
 ciecho "$GREY" "Mach ich Bruder, warte kurz…"
 ciecho "$GREY" "Ordner erstellen…"
 mkdir -p public/data/user/1/{tracks,art,portraits,videos}
 mkdir -p public/data/user/1/tracks/{local,deleted}
 mkdir -p storage/logs
+touch storage/logs/setup.log
 touch sql/last_migration
 ciecho "$GREY" "Rechte einstellen…"
 chmod a+rw -R storage public sql
 chmod a+rw sql/last_migration
 ciecho "$GREY" "Environment erstellen…"
 cp .env.example .env
+# } >>"$LOG_FILE" 2>&1
 
 # + Link Music Directory
 MUSIC_DIR="$HOME_DIR/Music"
 MUSIC_DIR_LINKED=false
+REPLACEMENT=""
 
 if [ -d $MUSIC_DIR ]; then
 	read -p "$(echo -e "${GREY}╟${NOCO}  Willst du deinen lokalen Musik-Ordner synchronisieren? [ja]/[nein] ⌨️  ")" link_music </dev/tty
 
 	if [ "$link_music" == "ja" ]; then
-		REPLACEMENT="- $MUSIC_DIR:/data/public/data/user/1/tracks/local"
-		sed -i "s|%MUSIC_DIR_AS_VOLUME%|${REPLACEMENT}|g" compose-dummy
 		MUSIC_DIR_LINKED=true
-	else
-		sed -i "s|%MUSIC_DIR_AS_VOLUME%|""|g" compose-dummy
+		REPLACEMENT="- $MUSIC_DIR:/data/public/data/user/1/tracks/local"
 	fi
-
-	mv compose-dummy compose.deploy.yml
 fi
+
+{
+	sed -i "s|%MUSIC_DIR_AS_VOLUME%|${REPLACEMENT}|g" compose-dummy
+	mv compose-dummy compose.deploy.yml
+} >>"$LOG_FILE" 2>&1
 
 section_end
 
 # + Composer
 cecho "$LILA" "Composer?"
 ciecho "$GREY" "Ist wichtig, versprochen…"
-composer install >/dev/null 2>&1
+composer install >>"$LOG_FILE" 2>&1
 ciecho "$GREY" "Alle Relevanzen dumpen…"
-composer dump-autoload >/dev/null 2>&1
+composer dump-autoload >>"$LOG_FILE" 2>&1
 echo -n "✅"
 
 # + Build docker-container.
 echo -e "\n"
 cecho "$LILA" "Bruder bauen…"
 ciecho "$GREY" "Lehn dich zurück, das kann 1 bisschen dauern 😇…"
-docker compose -f compose.deploy.yml build --no-cache >/dev/null 2>&1
+docker compose -f compose.deploy.yml build --no-cache >>"$LOG_FILE" 2>&1
 
 section_end
 
 # + Start the app.
 cecho "$LILA" "Endspürt…"
 ciecho "$GREY" "App hochfahren…"
-docker compose -f compose.deploy.yml up -d >/dev/null 2>&1
+docker compose -f compose.deploy.yml up -d >>"$LOG_FILE" 2>&1
 
 URL="http://localhost:6789"
 
-# if command -v xdg-open >/dev/null 2>&1; then
+# if command -v xdg-open >>$LOG_FILE 2>&1; then
 # 	xdg-open "$URL"
 # else
 # 	ciecho "$GREY" "xdg-open fehlt leider, sont hätte sich das Fenster nun automatisch geöffnet 🥸"
