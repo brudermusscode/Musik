@@ -194,7 +194,6 @@ section_end
 # echo -n "✅"
 
 # + Build docker-container.
-echo -e "\n"
 cecho "$LILA" "Bruder bauen…"
 ciecho "$GREY" "Lehn dich zurück, das kann 1 bisschen dauern 😇…"
 docker compose -f compose.deploy.yml build --no-cache >>"$LOG_FILE" 2>&1

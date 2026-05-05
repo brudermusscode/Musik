@@ -52,15 +52,20 @@ RUN rm -f /var/log/nginx/access.log /var/log/nginx/error.log && \
 
 WORKDIR /data
 
+RUN curl -L "https://getcomposer.org/download/latest-2.x/composer.phar" > /usr/local/bin/composer && chmod 755 /usr/local/bin/composer
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --no-scripts
+
 # Copy all files of this app to the container.
 COPY . .
 
 # Install composer globally. This gets rid for the need of having
 # the user to have php installed on their system. Thank you Simon
 # :) May god bless you.
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-ENV PATH="$PATH:/usr/local/bin"
-RUN composer install --no-scripts && composer dump-autoload
+# RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# ENV PATH="$PATH:/usr/local/bin"
+
+RUN composer dump-autoload
 
 RUN chown www-data -R public storage
 
