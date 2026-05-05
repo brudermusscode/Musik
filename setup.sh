@@ -118,8 +118,10 @@ echo -e ""
 # Set working dir..
 cd $WORK_DIR
 
-[ -n "$TESTING" ] && cecho "$RED" "🛠️  Test-Modus aktiviert"
-[ -n "$CACHELESS" ] && cecho "$RED" "🧃 Cache wird umgangen"
+[ -n "$TESTING" ] && cecho "$RED" "Test-Modus aktiviert"
+[ -n "$CACHELESS" ] && cecho "$RED" "Cache wird umgangen"
+
+echo -e ""
 
 sleep 0.2
 # + Download App
