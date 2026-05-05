@@ -18,9 +18,6 @@ RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 # Remove unused files from php directory
 RUN rm -rf -r /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini-production
 
-# Install custom ini file.
-RUN cp ./zz-custom.ini /usr/local/etc/php/conf.d/zz-custom.ini
-
 RUN docker-php-ext-configure gd \
     --with-freetype \
     --with-jpeg \
@@ -30,8 +27,8 @@ RUN docker-php-ext-configure gd \
 RUN docker-php-ext-install pdo_mysql intl exif curl zip
 RUN docker-php-ext-enable pdo_mysql intl exif curl zip gd
 
-# Copy the php fpm docker configuration with a different exposed port
-# which should be the port being exposed in the end of this file
+# Install custom config files.
+COPY zz-custom.ini /usr/local/etc/php/conf.d/zz-custom.ini
 COPY zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 
 EXPOSE 9000
