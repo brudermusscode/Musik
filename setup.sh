@@ -72,7 +72,7 @@ if [ "$you_in" != "ja" ]; then
 	exit 1
 fi
 
-cecho "$GREEN" "😍 Nice, dann las los gehen jetzt…"
+cecho "$GREEN" "😍 Nice, dann las los gehen jetzt…\n"
 
 HOME_DIR=${XDG_DATA_HOME:-$HOME}
 WORK_DIR="$HOME_DIR/.local/share"
@@ -85,37 +85,13 @@ LOG_FILE=$LOG_DIR/setup.log
 mkdir -p "$WORK_DIR"
 mkdir -p "$BIN_DIR"
 
-# Create loging directory and a file for this setup.
+# + Logging setup
 mkdir -p "$LOG_DIR"
-
 if [ -f "$LOG_FILE" ]; then
 	rm -f $LOG_DIR/setup.log
 fi
-
 touch $LOG_FILE
 
-echo -e ""
-
-# + Check dependencies.
-# ! PHP installed?
-# command -v php >/dev/null 2>&1 || {
-# 	echo -e "\n$YELLOW💔 Sorry Bruder, aber du musst PHP installieren. Das findest du auf https://www.php.net/manual/en/install.unix.php - Versuch es danach nochmal!$NOCO"
-# 	exit 1
-# }
-
-# + Install composer
-# cecho "$LILA" "Dependencies!"
-
-# if ! command -v composer >/dev/null 2>&1; then
-# 	ciecho "$GREY" "Installiere composer…"
-# 	curl -sS https://getcomposer.org/installer | php >>"$LOG_FILE" 2>&1
-# 	ciecho "$GREY" "In »~/.local/bin« verschieben…"
-# 	mv composer.phar $BIN_DIR/composer
-# fi
-
-# section_end
-
-# Set working dir..
 cd $WORK_DIR
 
 [ -n "$TESTING" ] && cecho "$RED" "Test-Modus aktiviert"
@@ -123,7 +99,6 @@ cd $WORK_DIR
 
 echo -e ""
 
-sleep 0.2
 # + Download App
 cecho "$LILA" "App runterladen…"
 
@@ -203,15 +178,6 @@ fi
 } >>"$LOG_FILE" 2>&1
 
 section_end
-
-# + Composer
-# TODO: Build composer inside Dockerfile. Removes php dependency!
-# cecho "$LILA" "Composer?"
-# ciecho "$GREY" "Ist wichtig, versprochen…"
-# composer install >>"$LOG_FILE" 2>&1
-# ciecho "$GREY" "Alle Relevanzen dumpen…"
-# composer dump-autoload >>"$LOG_FILE" 2>&1
-# echo -n "✅"
 
 # + Build docker-container.
 cecho "$LILA" "Bruder bauen…"
