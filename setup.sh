@@ -90,20 +90,20 @@ echo -e ""
 
 # + Check dependencies.
 # ! PHP installed?
-command -v php >/dev/null 2>&1 || {
-	echo -e "\n$YELLOW💔 Sorry Bruder, aber du musst PHP installieren. Das findest du auf https://www.php.net/manual/en/install.unix.php - Versuch es danach nochmal!$NOCO"
-	exit 1
-}
+# command -v php >/dev/null 2>&1 || {
+# 	echo -e "\n$YELLOW💔 Sorry Bruder, aber du musst PHP installieren. Das findest du auf https://www.php.net/manual/en/install.unix.php - Versuch es danach nochmal!$NOCO"
+# 	exit 1
+# }
 
 # + Install composer
-cecho "$LILA" "Dependencies!"
+# cecho "$LILA" "Dependencies!"
 
-if ! command -v composer >/dev/null 2>&1; then
-	ciecho "$GREY" "Installiere composer…"
-	curl -sS https://getcomposer.org/installer | php >>"$LOG_FILE" 2>&1
-	ciecho "$GREY" "In »~/.local/bin« verschieben…"
-	mv composer.phar $BIN_DIR/composer
-fi
+# if ! command -v composer >/dev/null 2>&1; then
+# 	ciecho "$GREY" "Installiere composer…"
+# 	curl -sS https://getcomposer.org/installer | php >>"$LOG_FILE" 2>&1
+# 	ciecho "$GREY" "In »~/.local/bin« verschieben…"
+# 	mv composer.phar $BIN_DIR/composer
+# fi
 
 # Set working dir..
 cd $WORK_DIR
@@ -186,12 +186,12 @@ section_end
 
 # + Composer
 # TODO: Build composer inside Dockerfile. Removes php dependency!
-cecho "$LILA" "Composer?"
-ciecho "$GREY" "Ist wichtig, versprochen…"
-composer install >>"$LOG_FILE" 2>&1
-ciecho "$GREY" "Alle Relevanzen dumpen…"
-composer dump-autoload >>"$LOG_FILE" 2>&1
-echo -n "✅"
+# cecho "$LILA" "Composer?"
+# ciecho "$GREY" "Ist wichtig, versprochen…"
+# composer install >>"$LOG_FILE" 2>&1
+# ciecho "$GREY" "Alle Relevanzen dumpen…"
+# composer dump-autoload >>"$LOG_FILE" 2>&1
+# echo -n "✅"
 
 # + Build docker-container.
 echo -e "\n"

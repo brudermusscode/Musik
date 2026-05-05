@@ -30,7 +30,6 @@ RUN echo "deb [signed-by=/etc/apt/keyrings/nginx.gpg] \
     http://nginx.org/packages/ubuntu $(lsb_release -cs) nginx" \
     > /etc/apt/sources.list.d/nginx.list
 
-# Install everything we need.
 RUN apt update -q && \
     apt install -y \
     nginx \
@@ -53,7 +52,15 @@ RUN rm -f /var/log/nginx/access.log /var/log/nginx/error.log && \
 
 WORKDIR /data
 
+# Copy all files of this app to the container.
 COPY . .
+
+# Install composer globally. This gets rid for the need of having
+# the user to have php installed on their system. Thank you Simon
+# :) May god bless you.
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+ENV PATH="$PATH:/usr/local/bin"
+RUN composer install --no-scripts && composer dump-autoload
 
 RUN chown www-data -R public storage
 
