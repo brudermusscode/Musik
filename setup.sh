@@ -142,8 +142,8 @@ fi
 ciecho "$GREY" "Kloniere GitHub Repo…"
 {
 	[ -z "$TESTING" ] &&
-		git clone https://github.com/brudermusscode/UnSpotify.git musikbruder ||
-		git clone --branch test --single-branch https://github.com/brudermusscode/UnSpotify.git musikbruder
+		git clone https://github.com/brudermusscode/MusikBruder.git musikbruder ||
+		git clone --branch test --single-branch https://github.com/brudermusscode/MusikBruder.git musikbruder
 	cd musikbruder
 } >>"$LOG_FILE" 2>&1
 

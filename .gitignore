@@ -1,10 +1,9 @@
 /.git
 /.env
+/.setup
 /vendor
 /node_modules
 /bin
-/deploy.sh
-/setup-remove.sh
 /public/data
 /config/keys/*
 /*-lock.*
