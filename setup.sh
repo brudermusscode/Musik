@@ -9,6 +9,7 @@
 for arg in "$@"; do
 	case "$arg" in
 	--test) TESTING=true ;;
+	--no-cache) CACHELESS=true ;;
 	esac
 done
 
@@ -117,6 +118,9 @@ echo -e ""
 # Set working dir..
 cd $WORK_DIR
 
+[ -n "$TESTING" ] && cecho "$RED" "🛠️  Test-Modus aktiviert"
+[ -n "$CACHELESS" ] && cecho "$RED" "🧃 Cache wird umgangen"
+
 sleep 0.2
 # + Download App
 cecho "$LILA" "App runterladen…"
@@ -207,7 +211,7 @@ section_end
 # + Build docker-container.
 cecho "$LILA" "Bruder bauen…"
 ciecho "$GREY" "Lehn dich zurück, das kann 1 bisschen dauern 😇…"
-docker compose -f compose.deploy.yml build --no-cache >>"$LOG_FILE" 2>&1
+docker compose -f compose.deploy.yml build ${CACHELESS:+--no-cache} >>"$LOG_FILE" 2>&1
 
 section_end
 
