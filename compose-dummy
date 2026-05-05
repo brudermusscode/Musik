@@ -18,7 +18,8 @@ services:
       context: ./docker/deploy/php
       dockerfile: Dockerfile
     volumes:
-      - .:/data
+#      - .:/data
+      - ./public/data/user/1/tracks:/data/public/data/user/1/tracks
       %MUSIC_DIR_AS_VOLUME%
 
   web:

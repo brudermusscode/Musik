@@ -105,10 +105,10 @@ echo -e ""
 # 	mv composer.phar $BIN_DIR/composer
 # fi
 
+# section_end
+
 # Set working dir..
 cd $WORK_DIR
-
-section_end
 
 sleep 0.2
 # + Download App
