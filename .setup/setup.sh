@@ -5,6 +5,13 @@
 #   exit 1
 # }
 
+# Check if test is requested.
+for arg in "$@"; do
+	case "$arg" in
+	--test) TESTING=true ;;
+	esac
+done
+
 PINK="\033[38;5;205m"
 GREEN="\033[32m"
 YELLOW="\033[33m"
@@ -133,8 +140,12 @@ fi
 
 # + Clone GitHub
 ciecho "$GREY" "Kloniere GitHub Repo…"
-git clone https://github.com/brudermusscode/UnSpotify.git musikbruder >>"$LOG_FILE" 2>&1
-cd musikbruder
+{
+	[ -z "$TESTING" ] &&
+		git clone https://github.com/brudermusscode/UnSpotify.git musikbruder ||
+		git clone --branch test --single-branch https://github.com/brudermusscode/UnSpotify.git musikbruder
+	cd musikbruder
+} >>"$LOG_FILE" 2>&1
 
 section_end
 
