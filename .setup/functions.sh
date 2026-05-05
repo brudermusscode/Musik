@@ -38,3 +38,5 @@ section_end() {
   echo -n "✅"
   echo -e "\n"
 }
+
+# __DIR__="$(cd "$(dirname "$0")" && pwd)"
