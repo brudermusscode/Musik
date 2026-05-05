@@ -190,8 +190,11 @@ fi
 	# If local music shall be linked, create a /local folder inside
 	# the sync base dir in the app.
 	if $MUSIC_DIR_LINKED; then
+		ciecho "$GREY" "Verlinke lokale Musik-Bib…"
 		mkdir -p public/data/user/1/tracks/local
 	fi
+
+	ciecho "$GREY" "Compose Dummy-Datei aufbereiten…"
 
 	# Replace variable placeholders with the actual replacement and
 	# create a real compose file for upping docker.
