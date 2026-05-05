@@ -31,22 +31,18 @@ file_put_contents(
   FILE_APPEND | LOCK_EX
 );
 
-/**
- * @var string
- */
 $DIR__to_scan = ROOT . "/public/data/user/1/tracks";
 $ignore_dirs = ["deleted", ".", ".."];
 $files = [];
 
 /**
- * @var array
- */
-
-/**
  * @return ?array
  */
-function scan_dir_and_add_files_to_array(string $path_to_dir, array $ignore_names, ?string $prefix = null)
-{
+function scan_dir_and_add_files_to_array(
+  string $path_to_dir,
+  array $ignore_names,
+  ?string $prefix = null
+) {
 
   $files = scandir($path_to_dir);
   $array = [];
@@ -111,6 +107,6 @@ $files = scan_dir_and_add_files_to_array($DIR__to_scan, $ignore_dirs);
 /**
  * Try adding the files.
  */
-$SyncTracks = (new Track)->hhhhhhi89999999999999999999pcreate_from_file($files);
+$SyncTracks = (new Track)->hhhhhhi89999999999999999999pcreate_from_file($files ?? []);
 
 die($SyncTracks);
