@@ -110,8 +110,8 @@ cd $WORK_DIR
 
 section_end
 
-# + Clone GitHub
 sleep 0.2
+# + Download App
 cecho "$LILA" "App runterladen…"
 
 # If the base directory already exists, ask for reinstalling everything.
@@ -131,6 +131,7 @@ if [ -d "musikbruder" ]; then
 	fi
 fi
 
+# + Clone GitHub
 ciecho "$GREY" "Kloniere GitHub Repo…"
 git clone https://github.com/brudermusscode/UnSpotify.git musikbruder >>"$LOG_FILE" 2>&1
 cd musikbruder
@@ -143,7 +144,7 @@ cecho "$LILA" "Alle Relevanzen erstellen…"
 ciecho "$GREY" "Mach ich Bruder, warte kurz…"
 ciecho "$GREY" "Ordner erstellen…"
 mkdir -p public/data/user/1/{tracks,art,portraits,videos}
-mkdir -p public/data/user/1/tracks/{local,deleted}
+mkdir -p public/data/user/1/tracks/deleted
 mkdir -p storage/logs
 touch storage/logs/setup.log
 touch sql/last_migration
@@ -169,6 +170,14 @@ if [ -d $MUSIC_DIR ]; then
 fi
 
 {
+	# If local music shall be linked, create a /local folder inside
+	# the sync base dir in the app.
+	if $MUSIC_DIR_LINKED; then
+		mkdir -p public/data/user/1/tracks/local
+	fi
+
+	# Replace variable placeholders with the actual replacement and
+	# create a real compose file for upping docker.
 	sed -i "s|%MUSIC_DIR_AS_VOLUME%|${REPLACEMENT}|g" compose-dummy
 	mv compose-dummy compose.deploy.yml
 } >>"$LOG_FILE" 2>&1
@@ -176,6 +185,7 @@ fi
 section_end
 
 # + Composer
+# TODO: Build composer inside Dockerfile. Removes php dependency!
 cecho "$LILA" "Composer?"
 ciecho "$GREY" "Ist wichtig, versprochen…"
 composer install >>"$LOG_FILE" 2>&1
