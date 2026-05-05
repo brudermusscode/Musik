@@ -172,7 +172,7 @@ echo -n "✅"
 echo -e "\n"
 cecho "$LILA" "Bruder bauen…"
 ciecho "$GREY" "Lehn dich zurück, das kann 1 bisschen dauern 😇…"
-docker compose -f compose.deploy.yml build >/dev/null 2>&1
+docker compose -f compose.deploy.yml build --no-cache >/dev/null 2>&1
 
 section_end
 
