@@ -115,7 +115,7 @@ if [ -d "musikbruder" ]; then
 		cd musikbruder
 		docker compose -f compose.deploy.yml down --volumes >>"$LOG_FILE" 2>&1
 		cd ..
-		rm -rf musikbruder
+		sudo rm -rf musikbruder
 	fi
 fi
 
