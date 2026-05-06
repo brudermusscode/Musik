@@ -72,7 +72,7 @@ foreach ($Bookmarks ?? [] as $key => $Bookmark) :
     data-id="<?= $Ref->id ?>"
     <?= $show_active ? "active" : "" ?>>
 
-    <option flex-truncate>
+    <moption flex-truncate>
       <?php
 
       /**
@@ -128,7 +128,7 @@ foreach ($Bookmarks ?? [] as $key => $Bookmark) :
           <p text smoler ttup regular><?= $Ref->tracks->count() ?> Tracks</p>
         </div>
       </div>
-    </option>
+    </moption>
   </a>
 <?php endforeach;
 

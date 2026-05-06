@@ -1,24 +1,10 @@
 <album data-id="<?= $Album->id ?>" has-menu>
-  <menu>
-    <inr>
-      <div height>
-        <section>
-          <option request-get="album:edit" data-id="<?= $Album->id ?>">
-            <mi>edit</mi>
-            Editieren
-          </option>
+  <?php
 
-          <form request="album:delete" responder=simple reload>
-            <input type=hidden name=id value=<?= $Album->id ?> />
-            <option data-id="<?= $Album->id ?>" submit-closest>
-              <mi>delete_forever</mi>
-              Weg damit
-            </option>
-          </form>
-        </section>
-      </div>
-    </inr>
-  </menu>
+  /**
+   * + Context menu
+   */
+  include __DIR__ . "/_menu.php" ?>
 
   <a href="/album/<?= $Album->id ?>">
     <div top-menu>

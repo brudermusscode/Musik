@@ -15,23 +15,23 @@ use Bruder\Model\Album;
   <section>
     <pages>
       <a page=home href="/" <?= CURRENT_PAGE === "" ? "active" : "" ?>>
-        <option fl alic jucsb>
+        <moption fl alic jucsb>
           <div fl alic gap=smol+>
             <mi>all_inclusive</mi>
             <p title>Alle Songs</p>
           </div>
           <p text smol ttup><?= Track::count() ?></p>
-        </option>
+        </moption>
       </a>
 
       <a page=albums href="/albums" <?= in_array(CURRENT_PAGE, ["albums", "album"]) ? "active" : "" ?>>
-        <option fl alic jucsb>
+        <moption fl alic jucsb>
           <div fl alic gap=smol+>
             <mi>album</mi>
             <p title>Alben</p>
           </div>
           <p text smol ttup><?= Album::count() ?></p>
-        </option>
+        </moption>
       </a>
     </pages>
   </section>

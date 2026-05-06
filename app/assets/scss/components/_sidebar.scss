@@ -243,17 +243,17 @@ sidebar {
 
       a {
         &:first-of-type {
-          option {
+          moption {
             border-radius: 16px 16px 8px 8px;
           }
         }
 
-        option {
+        moption {
           border-radius: 8px;
         }
       }
 
-      option {
+      moption {
         display: block;
         padding-block: 12px;
         padding-inline: 12px 24px;
@@ -271,7 +271,7 @@ sidebar {
       }
 
       a[active] {
-        option {
+        moption {
           background: $slighter-light;
 
           [title] {
@@ -454,7 +454,7 @@ sidebar {
           max-width: calc(50% - $gap-smolest);
         }
 
-        option {
+        moption {
           padding: 4px;
           border-radius: 16px;
 
@@ -476,7 +476,7 @@ sidebar {
           max-width: 100%;
         }
 
-        option {
+        moption {
           padding: 2px;
           padding-right: 16px;
           border-radius: 16px;
@@ -496,7 +496,7 @@ sidebar {
         }
       }
 
-      option {
+      moption {
         &:hover {
           background: $slighterer-light;
         }
@@ -511,7 +511,7 @@ sidebar {
       }
 
       a[active] {
-        option {
+        moption {
           background: $slighter-light;
 
           [title] {

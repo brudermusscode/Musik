@@ -10,18 +10,18 @@
   <inr>
     <div height>
       <section>
-        <option data-action="playlist:track:play-next">
+        <moption data-action="playlist:track:play-next">
           <mi>next_plan</mi>
           Als nächstes spielen
-        </option>
+        </moption>
 
         <?php if ($in_playlist || $in_album) : ?>
-          <option data-action="<?= $in_playlist ? "playlist:track:delete" : "album:track:delete" ?>"
+          <moption data-action="<?= $in_playlist ? "playlist:track:delete" : "album:track:delete" ?>"
             data-track-id="<?= $Track->id ?>"
             data-id="<?= $Playlist?->id ?? $Album->id ?>">
             <mi>playlist_remove</mi>
             Rausschmeißen
-          </option>
+          </moption>
         <?php endif ?>
       </section>
 
@@ -45,32 +45,32 @@
 
         if ($show_album): ?>
           <a href="/album/<?= $Album->id ?>">
-            <option>
+            <moption>
               <mi>album</mi>
               Album
-            </option>
+            </moption>
           </a>
         <?php endif ?>
 
         <a href="/artist/<?= $Track->artistt->id ?>">
-          <option>
+          <moption>
             <mi>artist</mi>
             Künstler
-          </option>
+          </moption>
         </a>
       </section>
 
       <section>
-        <option request-get="track:add-to" data-id="<?= $Track->id ?>" has-sub>
+        <moption request-get="track:add-to" data-id="<?= $Track->id ?>" has-sub>
           <mi>sticker_add</mi>
           Hinzufügen
-        </option>
+        </moption>
 
-        <option request="track:delete" data-id="<?= $Track->id ?>"
+        <moption request="track:delete" data-id="<?= $Track->id ?>"
           shadow-submit update-current-track reload color=light-red has-sub>
           <mi>emoji_symbols</mi>
           Tschüss
-        </option>
+        </moption>
       </section>
     </div>
   </inr>
