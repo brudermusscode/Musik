@@ -17,15 +17,13 @@ https://github.com/user-attachments/assets/a451f78d-d819-4bec-8dd2-4c5f7b30a982
 
 <p align="center">…………… 🫴 ……………</p>
 
-## Setup - Step (〰️) by Step (〰️)
+## Setup - Einfacher geht's nicht
 
 > [!IMPORTANT]
 > Damit alles später sauber synchronisiert werden kann, solltest du die
 > Metadaten deiner Musik-Dateien vor dem Ausführen des Setups
 > ausfüllen (title & artist sind wichtig). Ein gutes Tool dafür ist <a
 > href="https://flathub.org/en/apps/org.gnome.EasyTAG" target="_blank">EasyTAG</a>!
-
-### 〰️ **1 · Setup ausführen** ¬
 
 Um deinen besten Freund der Musik zu installieren, gib einfach
 folgenden Befehl in dein Terminal ein:
@@ -37,11 +35,6 @@ bash <(curl -fsSL https://www.heia.kim/MusikBruder/setup.sh)
 Was das Script macht, kannst du in diesem Repo in der Datei
 `setup.sh` einsehen. Die Datei auf `www.heia.kim` ist immer die
 aktuellste Version!
-
-### 〰️ **9 · Fertig** ¬
-
-Ab gehts. Dein Freund ist unter `http://localhost:6789`
-erreichbar.
 
 <br>
 <p align="center">…………… ❓ ……………</p>
