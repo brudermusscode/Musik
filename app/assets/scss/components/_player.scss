@@ -42,9 +42,10 @@ player {
   translate: -50% 0;
   transition: all 0.6s $cubic;
 
-  @media screen and (max-width: calc($content-width + 2*$main-distance)) {
-    width: 100%;
-    padding-inline: $main-distance;
+  @media screen and (max-width: $collapsed-max-width) {
+    bottom: 0;
+    // left: $main-distance;
+    width: calc(100% - 2 * $main-distance);
   }
 
   &[collapsed] {
@@ -221,17 +222,17 @@ player {
     $player-border-radius: 20px;
 
     height: $player-height;
+    width: 100%;
     // box-shadow: var(--mio-theme-elevation-1);
     border-radius: $player-border-radius;
     padding-inline: 2px 18px;
     border-top: 1px solid rgba(255, 255, 255, 0.04);
     transition: $trans-cubic;
 
-    @extend .window, .window-width;
+    @extend .window;
 
-    @media screen and (max-width: 990px) {
-      max-width: initial;
-      margin-inline: 6px;
+    @media screen and (max-width: $collapsed-max-width) {
+      border-radius: $player-border-radius $player-border-radius 0 0;
     }
 
     &::before {
@@ -252,6 +253,10 @@ player {
       overflow: hidden;
       display: block;
       border-radius: $player-border-radius;
+
+      @media screen and (max-width: $collapsed-max-width) {
+        border-radius: $player-border-radius $player-border-radius 0 0;
+      }
     }
 
     duration-track {
@@ -276,23 +281,6 @@ player {
       position: relative;
       z-index: 1;
 
-      [title],
-      [artist] {
-        &:not(::empty) > span {
-          display: none;
-        }
-      }
-
-      [artist] {
-        mi {
-          font-size: 18px;
-        }
-
-        &:hover {
-          background: $slight-light;
-        }
-      }
-
       $player-cover-size: 74px;
 
       [sizing] {
@@ -303,12 +291,16 @@ player {
       picture {
         height: $player-cover-size;
         width: $player-cover-size;
-        border-radius: 19px;
+        border-radius: 18px;
         background: $hover-dark;
         overflow: hidden;
         display: flex;
         justify-content: flex-start;
         align-items: flex-end;
+
+        @media screen and (max-width: $collapsed-max-width) {
+          border-radius: 18px 12px 12px 2px;
+        }
 
         fullscreen-player {
           position: absolute;
@@ -356,6 +348,23 @@ player {
 
         img:not([src]) {
           display: none;
+        }
+      }
+
+      [title],
+      [artist] {
+        &:not(::empty) > span {
+          display: none;
+        }
+      }
+
+      [artist] {
+        mi {
+          font-size: 18px;
+        }
+
+        &:hover {
+          background: $slight-light;
         }
       }
     }

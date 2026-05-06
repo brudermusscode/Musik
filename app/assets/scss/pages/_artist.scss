@@ -8,20 +8,6 @@ page {
   flex-direction: column;
   gap: $gap-smol-plus;
 
-  top-banner {
-    display: block;
-    border-radius: 32px;
-    padding: $cover-from-border-padding;
-    padding-left: 3px;
-    position: fixed;
-    top: $bruder-distance;
-    z-index: 10;
-    width: $content-width;
-    transition: $trans-cubic;
-
-    @extend .window;
-  }
-
   &[artist] {
     padding-top: 272px;
     display: flex;

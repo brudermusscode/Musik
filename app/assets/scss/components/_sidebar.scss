@@ -11,17 +11,27 @@ sidebar {
   &[right],
   &[left] {
     top: $bruder-distance;
-    width: calc((100% - $content-width) / 2 - $window-overflow-content / 2);
+    width: $sidebar-width;
+    // width: calc((100% - $content-width) / 2 - $window-overflow-content / 2);
     min-width: 285px;
     display: flex;
     flex-direction: column;
     gap: $gap-smol;
     transition: $trans-cubic;
 
+    max-height: calc(100vh - $bruder-height - 6 * $main-distance);
+
+    @media screen and (max-width: $collapsed-max-width) {
+      max-height: calc(
+        100vh - $main-distance - $player-height - $bruder-distance
+      );
+    }
+
     section {
       border-radius: 12px;
       margin-inline: $main-distance;
       transition: $trans-cubic;
+      scrollbar-width: none;
 
       @extend .window;
     }
@@ -30,21 +40,19 @@ sidebar {
   &[right] {
     right: 0;
 
-    section {
-      border-radius: 20px;
-      padding: $cover-from-border-padding;
-      overflow: auto;
-      max-height: calc(100vh - $bruder-height - 6 * $main-distance);
-    }
-
-    @media screen and (max-width: 1000px) {
+    @media screen and (max-width: $hide-sidebar-max-width) {
       right: 0px;
-      right: -290px;
-      min-width: 380px;
+      right: calc(-1 * ($sidebar-width - $hide-sidebar-sidebar-width));
 
       &:hover {
         right: 0;
       }
+    }
+
+    section {
+      border-radius: 20px;
+      padding: $cover-from-border-padding;
+      overflow: auto;
     }
 
     current-track {
@@ -210,11 +218,13 @@ sidebar {
 
   &[left] {
     left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
 
-    @media screen and (max-width: 1000px) {
+    @media screen and (max-width: $hide-sidebar-max-width) {
       left: 0px;
-      left: -290px;
-      min-width: 380px;
+      left: calc(-1 * ($sidebar-width - $hide-sidebar-sidebar-width));
 
       &:hover {
         left: 0;
@@ -287,15 +297,27 @@ sidebar {
       }
     }
 
+    section:nth-of-type(2) {
+      max-height: calc(
+        100vh - $bruder-distance - 106px - $main-distance - $gap-smol
+      );
+      overflow: auto;
+      scrollbar-width: none;
+
+      @media screen and (max-width: $collapsed-max-width) {
+        max-height: calc(
+          100vh - 106px - $bruder-distance - $player-height - $main-distance -
+            $gap-smol
+        );
+      }
+    }
+
     library {
       position: relative;
       display: flex;
       flex-direction: column;
       gap: $gap-smoler;
-      max-height: calc(100vh - $bruder-distance - 124px);
-      overflow: auto;
       padding: 6px;
-      scrollbar-width: none;
 
       library-view {
         [view] {

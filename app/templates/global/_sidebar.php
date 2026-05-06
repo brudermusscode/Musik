@@ -12,7 +12,8 @@ use Bruder\Model\Album;
 ?>
 
 <sidebar left>
-  <section>
+  <!--- this will cause chaos I prmoimse 😆 --->
+  <section style=height:106px;>
     <pages>
       <a page=home href="/" <?= CURRENT_PAGE === "" ? "active" : "" ?>>
         <moption fl alic jucsb>

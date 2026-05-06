@@ -2,53 +2,6 @@
 @use "../framework/var.sizes" as *;
 @use "../abstract" as *;
 
-ajax-response {
-  content: "";
-  display: block;
-  position: fixed;
-  top: 100%;
-  left: 0;
-  height: 0%;
-  width: 100%;
-  z-index: $endless-z-index;
-
-  &[success] {
-    background: rgba(37, 241, 71, 0.24);
-  }
-
-  &[error] {
-    background: rgba(237, 29, 92, 0.24);
-  }
-
-  &[success],
-  &[error] {
-    backdrop-filter: blur(4px);
-  }
-
-  &[active] {
-    animation: ajax-response 0.8s $cubic forwards;
-
-    @keyframes ajax-response {
-      from {
-        height: 0%;
-        top: 100%;
-        opacity: 1;
-      }
-
-      50% {
-        height: 100%;
-        top: 0;
-      }
-
-      to {
-        height: 0%;
-        top: 0;
-        // opacity: 0;
-      }
-    }
-  }
-}
-
 bruder {
   content: "";
   display: block;
@@ -63,10 +16,14 @@ bruder {
   border-radius: 62px;
   padding: 14px 17px;
   width: 445px;
-  max-width: calc($content-width + 32px);
+  max-width: $content-width;
   overflow: hidden;
   z-index: 99;
   cursor: pointer;
+
+  @media screen and (max-width: $hide-sidebar-max-width) {
+    max-width: $hide-sidebar-content-width;
+  }
 
   &[scrolled="true"] {
     // top: -$bruder-height - 48px;
@@ -172,8 +129,7 @@ bruder {
       transform 0s;
     overflow: auto;
     cursor: default;
-
-    @extend .window-width;
+    width: $content-width;
 
     input {
       width: 100%;

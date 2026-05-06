@@ -270,13 +270,11 @@ export const queue_play_next = async (skipped = false) => {
   } else if (!next_track_id) {
     //
     // No more songs in queue & no repeat enabled.
-    if (!skipped) {
-      console.log(
-        `%c▒ Nothing else to play from Queue!`,
-        `color: ${success_color};`,
-      );
-      return pause();
-    }
+    console.log(
+      `%c▒ Nothing else to play from Queue!`,
+      `color: ${success_color};`,
+    );
+    return pause();
   }
 
   let response = await get_Track(next_track_id);
@@ -353,7 +351,7 @@ export const playing = () => {
 };
 
 /**
- * Set anything related to the player to playing.
+ * Set anything related to the player to NOT playing.
  */
 export const not_playing = () => {
   __player.active = false;
@@ -602,8 +600,6 @@ export const init_player_state = async () => {
     if (repeat !== null && repeat !== "single" && repeat !== "all")
       repeat = null;
     __player.repeat = repeat;
-
-    console.log(repeat);
 
     console.log(
       `%c▒ Repeat is ${

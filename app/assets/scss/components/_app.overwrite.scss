@@ -1,4 +1,5 @@
 @use "../abstract" as *;
+@use "../framework/var.utils" as *;
 
 body {
   color: $text;
@@ -58,16 +59,86 @@ syncing-overlay {
   }
 }
 
+ajax-response {
+  content: "";
+  display: block;
+  position: fixed;
+  top: 100%;
+  left: 0;
+  height: 0%;
+  width: 100%;
+  z-index: $endless-z-index;
+
+  &[success] {
+    background: rgba(37, 241, 71, 0.24);
+  }
+
+  &[error] {
+    background: rgba(237, 29, 92, 0.24);
+  }
+
+  &[success],
+  &[error] {
+    backdrop-filter: blur(4px);
+  }
+
+  &[active] {
+    animation: ajax-response 0.8s $cubic forwards;
+
+    @keyframes ajax-response {
+      from {
+        height: 0%;
+        top: 100%;
+        opacity: 1;
+      }
+
+      50% {
+        height: 100%;
+        top: 0;
+      }
+
+      to {
+        height: 0%;
+        top: 0;
+        // opacity: 0;
+      }
+    }
+  }
+}
+
 [disable-user-selection] {
   user-select: none;
 }
 
+top-banner {
+  @extend .window;
+
+  display: block;
+  border-radius: 32px;
+  padding: $cover-from-border-padding;
+  padding-left: 3px;
+  position: fixed;
+  top: $bruder-distance;
+  z-index: 10;
+  width: $content-width;
+  transition: $trans-cubic;
+
+  @media screen and (max-width: $hide-sidebar-max-width) {
+    width: $hide-sidebar-content-width;
+  }
+}
+
 main {
-  max-width: calc($content-width + 2 * $main-distance);
+  // max-width: calc($content-width + 2 * $main-distance);
+  width: $content-width;
   margin: 0 auto;
-  padding-inline: $main-distance;
+  // padding-inline: $main-distance;
   padding-top: $bruder-distance;
   padding-bottom: $player-height + $main-distance * 3;
+
+  @media screen and (max-width: $hide-sidebar-max-width) {
+    width: $hide-sidebar-content-width;
+  }
 }
 
 [outlined] {

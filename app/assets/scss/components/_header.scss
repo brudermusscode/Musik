@@ -34,15 +34,29 @@ mbutton {
       display: block;
       content: "repeat";
     }
+
+    [ttooltip]::before {
+      content: "Alles nochmal spielen?";
+    }
   }
+
   &[repeat="all"] {
     mi:before {
       content: "repeat";
     }
+
+    [ttooltip]::before {
+      content: "Einzelnen Song wiederholen?";
+    }
   }
+
   &[repeat="single"] {
     mi:before {
       content: "repeat_one";
+    }
+
+    [ttooltip]::before {
+      content: "Gar nichts wiederholen?";
     }
   }
 }

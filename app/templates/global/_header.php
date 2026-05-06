@@ -17,9 +17,7 @@ use Bruder\Application\Cookie;
       <?= in_array(Cookie::get("__player_repeat"), ["all", "single"]) ? "active" : "" ?>
       material size=mid icon-only has-tooltip=bottom window>
       <mi></mi>
-      <div ttooltip text regular>
-        Alles nochmal spielen?
-      </div>
+      <div ttooltip text regular></div>
     </mbutton>
 
     <mbutton player-shuffle <?= Cookie::get("__player_shuffle") ? "active" : "" ?> material size=mid icon-only has-tooltip=bottom window>

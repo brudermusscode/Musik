@@ -5,15 +5,19 @@ $mbutton-std-plus-size: 48px;
 $mbutton-mid-size: 56px;
 $mbutton-wide-size: 74px;
 
-$content-width: 760px;
+$main-distance: 8px;
 
-$sidebar-width: 248px;
+$collapsed-max-width: 1400px;
+$hide-sidebar-max-width: 1176px;
 
 $player-height: 80px;
-
 $bruder-height: 70px;
+$sidebar-width: 350px;
+$content-width: calc(100% - (2 * 350px + 2 * $main-distance));
+$hide-sidebar-sidebar-width: 100px;
+$hide-sidebar-content-width: calc(
+  100vw - 2 * $hide-sidebar-sidebar-width - 2 * $main-distance
+);
 $bruder-distance: calc(2 * 20px + $bruder-height);
-
-$main-distance: 8px;
 
 $cover-from-border-padding: 2px;
