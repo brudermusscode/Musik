@@ -207,7 +207,7 @@ echo -e ""
 section_end
 
 # # DONE
-if $MUSIC_DIR_LINKED; then
+if [ -n $MUSIC_DIR_LINKED ]; then
 	cecho "$GREEN" "🤝 Fertig! Geh zu $URL - Musik wird automatisch aus deinem lokalen Musik-Ordner synchronisiert! ❤️"
 else
 	cecho "$GREEN" "🤝 Fertig! Geh zu $URL ❤️"
