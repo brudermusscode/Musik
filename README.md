@@ -19,19 +19,13 @@ https://github.com/user-attachments/assets/a451f78d-d819-4bec-8dd2-4c5f7b30a982
 
 ## Setup - Step (〰️) by Step (〰️)
 
-### 〰️ **1 · Abhängigkeiten installieren** ¬
-
-Für eine fehlerfreie Installation, solltest du `php` auf
-deinem `Linux`-System installiert haben. Wie, darfst du selbst
-herausfinden 💋
-
 > [!IMPORTANT]
 > Damit alles später sauber synchronisiert werden kann, solltest du die
 > Metadaten deiner Musik-Dateien vor dem Ausführen des Setups
 > ausfüllen (title & artist sind wichtig). Ein gutes Tool dafür ist <a
 > href="https://flathub.org/en/apps/org.gnome.EasyTAG" target="_blank">EasyTAG</a>!
 
-### 〰️ **2 · Setup ausführen** ¬
+### 〰️ **1 · Setup ausführen** ¬
 
 Um deinen besten Freund der Musik zu installieren, gib einfach
 folgenden Befehl in dein Terminal ein:
@@ -55,7 +49,8 @@ erreichbar.
 ### **Meine Musik - Wohin?**
 
 Im Setup wirst du gefragt, ob du deine lokale Musik-Bibliothek,
-also den Ordner `~/Music` synchronisieren möchtest. Falls du da
+also den Ordner `~/Music` synchronisieren möchtest, sofern es
+diesen Ordner gibt. Falls du da
 mit ja geantwortet hast, kannst du deine Musik einfach dort
 belassen und neue auch dort speichern. Ansonsten geht sie in
 `~/.local/share/musikbruder/public/data/user/1/tracks`.
@@ -63,8 +58,13 @@ belassen und neue auch dort speichern. Ansonsten geht sie in
 
 ### **Wo ist die App gespeichert?**
 
-Das Setup-Script sollte alles in
-`~/.local/share/musikbruder` speichern.
+Hoffentlich in `~/.local/share/musikbruder`.
+<br>
+
+### **Wenn was schief geht?**
+
+Schau in `~/.logs/musikbruder/setup.log` nach. Da das Setup
+komplett quiet läuft, werden alle logs in diese Datei geschrieben.
 
 <br>
 
