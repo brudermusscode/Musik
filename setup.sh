@@ -44,11 +44,11 @@ cnecho() {
 ciecho() {
 	color=$1
 	shift
-	echo -e "$GREY╟$NOCO  ${color}$@${NOCO}"
+	echo -e "$GREY╟$NOCO ${color}$@${NOCO}"
 }
 
 section_end() {
-	echo -n "✅"
+	echo -en "$GREY╙$NOCO ✅"
 	echo -e "\n"
 }
 
@@ -105,7 +105,7 @@ cecho "$LILA" "App runterladen…"
 # If the base directory already exists, ask for reinstalling everything.
 if [ -d "musikbruder" ]; then
 	ciecho "$RED" "»~/.local/share/musikbruder« existiert schon!"
-	read -p "$(echo -e "${GREY}╟${NOCO}  Alles löschen & neu installieren? [ja]/[nein] ⌨️  ")" delete </dev/tty
+	read -p "$(echo -e "${GREY}╟${NOCO}  ${YELLOW}Alles löschen & neu installieren?$NOCO [ja]/[nein] ⌨️  ")" delete </dev/tty
 
 	if [ "$delete" != "ja" ]; then
 		ciecho "$GREEN" "Alles klar Bruder, vielleicht ein andermal!"
@@ -115,7 +115,7 @@ if [ -d "musikbruder" ]; then
 		cd musikbruder
 		docker compose -f compose.deploy.yml down --volumes >>"$LOG_FILE" 2>&1
 		cd ..
-		sudo -p "╟  Passwort für %u: " rm -rf musikbruder
+		sudo -p "$(echo -e "$GREY╟$NOCO  ${YELLOW}Passwort für %u$NOCO 🔒 ")" rm -rf musikbruder
 	fi
 fi
 
@@ -148,28 +148,26 @@ cp .env.example .env
 
 # + Link Music Directory
 MUSIC_DIR="$HOME_DIR/Music"
-MUSIC_DIR_LINKED=false
 REPLACEMENT=""
 
 if [ -d $MUSIC_DIR ]; then
-	read -p "$(echo -e "${GREY}╟${NOCO}  Willst du deinen lokalen Musik-Ordner synchronisieren? [ja]/[nein] ⌨️  ")" link_music </dev/tty
+	read -p "$(echo -e "${GREY}╟${NOCO}  ${YELLOW}Willst du deinen lokalen Musik-Ordner synchronisieren?$NOCO [ja]/[nein] ⌨️  ")" link_music </dev/tty
 
 	if [ "$link_music" == "ja" ]; then
-		MUSIC_DIR_LINKED=true
+		MUSIC_DIR_LINKED="yes"
 		REPLACEMENT="- $MUSIC_DIR:/data/public/data/user/1/tracks/local"
 	fi
 fi
 
+# If local music shall be linked, create a /local folder inside
+# the sync base dir in the app.
+if [ -n "$MUSIC_DIR_LINKED" ]; then
+	ciecho "$GREY" "Verlinke lokale Musik-Bib…"
+	mkdir -p public/data/user/1/tracks/local
+fi
+
+ciecho "$GREY" "Compose Dummy-Datei aufbereiten…"
 {
-	# If local music shall be linked, create a /local folder inside
-	# the sync base dir in the app.
-	if $MUSIC_DIR_LINKED; then
-		ciecho "$GREY" "Verlinke lokale Musik-Bib…"
-		mkdir -p public/data/user/1/tracks/local
-	fi
-
-	ciecho "$GREY" "Compose Dummy-Datei aufbereiten…"
-
 	# Replace variable placeholders with the actual replacement and
 	# create a real compose file for upping docker.
 	sed -i "s|%MUSIC_DIR_AS_VOLUME%|${REPLACEMENT}|g" compose-dummy
@@ -190,7 +188,15 @@ cecho "$LILA" "Endspürt…"
 ciecho "$GREY" "App hochfahren…"
 docker compose -f compose.deploy.yml up -d >>"$LOG_FILE" 2>&1
 
+# Wait for the app to return status 200.
 URL="http://localhost:6789"
+printf "\r$GREY╟$NOCO ${GREY}Auf Status 200 warten "
+while [ "$(curl -s -o /dev/null -w "%{http_code}" "$URL")" != "200" ]; do
+	printf "▓"
+	sleep 1
+done
+
+echo -e ""
 
 # if command -v xdg-open >>$LOG_FILE 2>&1; then
 # 	xdg-open "$URL"

@@ -1,6 +1,7 @@
 /.git
 /.env
 /.setup
+/.vscode
 /vendor
 /node_modules
 /bin
@@ -9,7 +10,6 @@
 /*-lock.*
 /*.lock
 /package.json
-/.vscode
 /Dockerfile
 /compose.yml
 /compose.deploy.yml
@@ -17,4 +17,5 @@
 /xbundler.*
 /storage
 /sql/last_migration
+/test.sh
 !**/*/.empty
