@@ -170,8 +170,8 @@ ciecho "$GREY" "Compose Dummy-Datei aufbereiten…"
 {
 	# Replace variable placeholders with the actual replacement and
 	# create a real compose file for upping docker.
-	sed -i "s|%MUSIC_DIR_AS_VOLUME%|${REPLACEMENT}|g" compose-dummy
 	cp compose-dummy compose.deploy.yml
+	sed -i "s|%MUSIC_DIR_AS_VOLUME%|${REPLACEMENT}|g" compose.deploy.yml
 } >>"$LOG_FILE" 2>&1
 
 section_end
