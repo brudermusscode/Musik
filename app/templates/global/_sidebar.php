@@ -67,4 +67,40 @@ use Bruder\Model\Album;
       <?php include TEMPLATE . "/global/_loader.php"; ?>
     </get-content>
   </section>
+
+  <!--- Volume will be populated by js. --->
+  <player <?= Cookie::get("__player_collapsed") == 1 ? "collapsed" : "" ?>>
+    <player-content fl alic jucc>
+
+      <fullscreen-player-close>
+        <mi midplus>close</mi>
+      </fullscreen-player-close>
+
+      <player-overflow>
+        <duration-track></duration-track>
+      </player-overflow>
+
+      <player-actions fl alic gap=smol>
+        <div></div>
+        <div main-controls>
+          <mbutton play-previous previous material icon-only size=mid hoverable no-hover-shadow>
+            <mi>arrow_back_2</mi>
+          </mbutton>
+          <mbutton play material icon-only size=mid>
+            <mi></mi>
+          </mbutton>
+          <mbutton play-next next material icon-only size=mid hoverable no-hover-shadow>
+            <mi>play_arrow</mi>
+          </mbutton>
+        </div>
+
+        <div dno divider style="height:60px;width:2px;background:rgba(0,0,0,.12);" rounded minline12></div>
+
+        <mbutton dno data-action="player:hide" material icon-only size=mid hoverable no-hover-shadow>
+          <mi>keyboard_arrow_down </mi>
+        </mbutton>
+      </player-actions>
+    </player-content>
+  </player>
+
 </sidebar>

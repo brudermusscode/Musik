@@ -75,23 +75,6 @@ export const play_track = async (
     reset_duration_track();
 
     /**
-     * Set metadata.
-     */
-    player_metadata.find("[title]").innerHTML = Track.title;
-    player_metadata.find("[artist]").innerHTML =
-      `<mi>artist</mi> ${Track.artist}`;
-
-    let player_art = player_metadata.find("picture");
-
-    if (Track.art) {
-      player_art.setAttribute("has-art", true);
-      player_art.find("img").setAttribute("src", Track.art);
-    } else {
-      player_art.removeAttribute("has-art");
-      player_art.find("img").removeAttribute("src");
-    }
-
-    /**
      * Create a new Audio Object with the requested Track.
      */
     let audio = new Audio(public_url);
@@ -558,6 +541,7 @@ export const kick_duration_track = (audio_element, reset = false) => {
 export const init_player_state = async () => {
   return new Promise((resolve) => {
     let Player = document.find("player");
+    let volume_controls = document.find("volume-controls");
 
     // ? Volume
     let current_volume_cookie = Cookie.get("__player_volume");
@@ -576,7 +560,7 @@ export const init_player_state = async () => {
     if (isNaN(parsed_volume) || parsed_volume > 1.0)
       parsed_volume = DEFAULT_VOLUME;
 
-    Player.setAttribute("volume", parsed_volume);
+    volume_controls.setAttribute("volume", parsed_volume);
     __player.volume = parsed_volume;
     if (__player.Track.audio) __player.Track.audio.volume = parsed_volume;
 
@@ -677,6 +661,7 @@ export const init_current_track = async () => {
  */
 export const mute = () => {
   let volume = 0.0;
+  let volume_controls = document.find("volume-controls");
 
   // Persistent cookie
   Cookie.set("__player_volume", volume, 365);
@@ -689,7 +674,7 @@ export const mute = () => {
     __player.Track.audio.volume = volume;
 
   // Frontend Player
-  Player.setAttribute("volume", volume);
+  volume_controls.setAttribute("volume", volume);
 };
 
 /**
@@ -697,6 +682,7 @@ export const mute = () => {
  */
 export const unmute = () => {
   let volume = DEFAULT_VOLUME;
+  let volume_controls = document.find("volume-controls");
 
   // Persistent cookie
   Cookie.set("__player_volume", volume, 365);
@@ -709,7 +695,7 @@ export const unmute = () => {
     __player.Track.audio.volume = volume;
 
   // Frontend Player
-  Player.setAttribute("volume", volume);
+  volume_controls.setAttribute("volume", volume);
 };
 
 /**
@@ -999,6 +985,7 @@ $(function () {
    */
   $(document).on("click", "[volume-up]", function () {
     let new_volume = __player.volume + 0.1;
+    let volume_controls = document.find("volume-controls");
 
     if (new_volume >= 1.0) {
       __player.volume = 1;
@@ -1008,7 +995,7 @@ $(function () {
 
     let parsed_volume = __player.volume.toFixed(1);
 
-    Player.setAttribute("volume", parsed_volume);
+    volume_controls.setAttribute("volume", parsed_volume);
 
     Cookie.set("__player_volume", parsed_volume, 365);
 
@@ -1020,6 +1007,7 @@ $(function () {
    */
   $(document).on("click", "[volume-down]", function () {
     let new_volume = __player.volume - 0.1;
+    let volume_controls = document.find("volume-controls");
 
     if (new_volume < 0) {
       __player.volume = 0;
@@ -1029,7 +1017,7 @@ $(function () {
 
     let parsed_volume = __player.volume.toFixed(1);
 
-    Player.setAttribute("volume", parsed_volume);
+    volume_controls.setAttribute("volume", parsed_volume);
 
     Cookie.set("__player_volume", parsed_volume, 365);
 

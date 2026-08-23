@@ -457,11 +457,9 @@ class Track extends Bruder
   public function art_link()
   {
     $album_art = $this->albums->first()?->art;
-    $artist_art = $this->artistt?->art;
+    // $artist_art = $this->artistt?->art;
 
-    return ($album_art ? "/data/user/1/art/$album_art" : (
-      $artist_art ? "/data/user/1/portraits/$artist_art" : null
-    ));
+    return $album_art ? "/data/user/1/art/$album_art" : null;
   }
 
   /**

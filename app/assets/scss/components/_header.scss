@@ -11,7 +11,7 @@ header {
   height: $bruder-height + 32px;
   z-index: 99;
   padding: $main-distance;
-  padding-inline: $main-distance * 3 $main-distance * 6;
+  padding-inline: $main-distance * 3;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -120,6 +120,114 @@ theme-switcher {
         display: block;
         content: "sentiment_calm";
       }
+    }
+  }
+}
+
+volume-controls {
+  position: relative;
+
+  &[volume] {
+    &[volume="0"],
+    &[volume="0.0"] {
+      [volume-display] {
+        [muted] {
+          visibility: visible;
+          opacity: 1;
+          width: 1.8em;
+        }
+
+        mi::before {
+          content: "volume_up";
+          color: $red;
+        }
+      }
+    }
+
+    &[volume="0.1"],
+    &[volume="0.2"],
+    &[volume="0.3"],
+    &[volume="0.4"],
+    &[volume="0.5"] {
+      [volume-display] mi {
+        &::before {
+          content: "volume_down";
+        }
+      }
+    }
+
+    &[volume="0.6"],
+    &[volume="0.7"],
+    &[volume="0.8"],
+    &[volume="0.9"],
+    &[volume="1.0"],
+    &[volume="1"] {
+      [volume-display] {
+        mi {
+          &::before {
+            content: "volume_up";
+          }
+        }
+      }
+    }
+  }
+
+  [volume-display] {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3em;
+    width: 3em;
+    border-radius: 50%;
+    cursor: pointer;
+
+    [muted] {
+      transition: $trans-cubic;
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      translate: -50% -50%;
+      width: 0;
+      rotate: 35deg;
+      height: 4px;
+      // border: 1px solid rgba(255, 255, 255, 0.02);
+      border-radius: 4px;
+      background: $red;
+    }
+  }
+
+  [controls] {
+    z-index: 2;
+    visibility: hidden;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $gap-smoler;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    translate: -50% 0;
+    background: white;
+    border-radius: 38px;
+    color: $dark;
+    padding: 8px;
+    margin-top: -12px;
+    transition: $trans-cubic;
+  }
+
+  &:hover {
+    [volume-display] {
+      background: $slighter-light;
+      scale: 1.08;
+    }
+
+    [controls] {
+      visibility: visible;
+      opacity: 1;
+      margin-top: -1px;
     }
   }
 }

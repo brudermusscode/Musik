@@ -30,27 +30,14 @@ show-player {
 }
 
 player {
-  position: fixed;
+  position:absolute;
+  bottom:0;
+  width:calc(100% - 2 * $main-distance);
   display: flex;
   justify-content: center;
   align-items: center;
-  bottom: $main-distance;
-  z-index: 100;
-  width: $content-width;
-  height: $player-height;
-  left: 50%;
-  translate: -50% 0;
   transition: all 0.6s $cubic;
-
-  @media screen and (max-width: $collapsed-max-width) {
-    bottom: 0;
-    // left: $main-distance;
-    width: calc(100% - 2 * $main-distance);
-  }
-
-  &[collapsed] {
-    bottom: -$player-height - 8px;
-  }
+  margin-inline:$main-distance;
 
   &[fullscreen] {
     bottom: 0;
@@ -224,39 +211,24 @@ player {
     height: $player-height;
     width: 100%;
     // box-shadow: var(--mio-theme-elevation-1);
-    border-radius: $player-border-radius;
+    border-radius: 0 0 12px 12px;
     padding-inline: 2px 18px;
-    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    padding-bottom:calc(4 * $main-distance);
     transition: $trans-cubic;
-
-    @extend .window;
-
-    @media screen and (max-width: $collapsed-max-width) {
-      border-radius: $player-border-radius $player-border-radius 0 0;
-    }
-
-    &::before {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      translate: -50% -50%;
-      height: 100%;
-      width: 100%;
-      border-radius: $player-border-radius;
-      background: rgba(230, 164, 186, 0.24);
-      opacity: 1;
-    }
+    background: #101012;
+    background: linear-gradient(0deg, rgba(16, 16, 18, 1) 0%, rgba(16, 16, 18, 1) 18%, rgba(16, 16, 18, 1) 34%, rgba(16, 16, 18, 0.85) 58%, rgba(16, 16, 18, 0.65) 74%, rgba(16, 16, 18, 0.45) 83%, rgba(16, 16, 18, 0) 95%);
 
     player-overflow {
-      @extend .cover-full;
-
-      overflow: hidden;
       display: block;
-      border-radius: $player-border-radius;
-
-      @media screen and (max-width: $collapsed-max-width) {
-        border-radius: $player-border-radius $player-border-radius 0 0;
-      }
+      position:absolute;
+      bottom:0;
+      left:0;
+      margin-inline:$main-distance;
+      margin-bottom:$main-distance;
+      background: $slight-light;
+      border-radius:12px;
+      width:calc(100% - 2 * $main-distance);
+      height:4px;
     }
 
     duration-track {
@@ -264,109 +236,11 @@ player {
       width: 0%;
       transition: all 0.1s linear;
       position: absolute;
-      top: 0;
       left: 0;
       z-index: 0;
-      height: 100%;
-      border-radius: 0;
-      background: rgba(231, 17, 88, 0.28);
-    }
-
-    player-metadata {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: $gap-smol-plus;
-      flex: 1;
-      position: relative;
-      z-index: 1;
-
-      $player-cover-size: 74px;
-
-      [sizing] {
-        width: $player-cover-size;
-        height: $player-cover-size;
-      }
-
-      picture {
-        height: $player-cover-size;
-        width: $player-cover-size;
-        border-radius: 18px;
-        background: $hover-dark;
-        overflow: hidden;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-end;
-
-        @media screen and (max-width: $collapsed-max-width) {
-          border-radius: 18px 12px 12px 2px;
-        }
-
-        fullscreen-player {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          height: 90%;
-          width: 90%;
-          translate: -50% -50%;
-          background: rgba(0, 0, 0, 0.72);
-          opacity: 0;
-          z-index: 2;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          cursor: pointer;
-          border-radius: 18px;
-          transition:
-            opacity 0.4s $cubic,
-            height 0.2s $cubic,
-            width 0.4s $cubic;
-
-          &:hover {
-            height: 100%;
-            width: 100%;
-            opacity: 1;
-          }
-        }
-
-        &:not([has-art]) {
-          & > mi {
-            display: block;
-            margin-bottom: -12px;
-            margin-left: -6px;
-            color: $primary;
-          }
-
-          img {
-            display: none;
-          }
-        }
-
-        & > mi {
-          display: none;
-        }
-
-        img:not([src]) {
-          display: none;
-        }
-      }
-
-      [title],
-      [artist] {
-        &:not(::empty) > span {
-          display: none;
-        }
-      }
-
-      [artist] {
-        mi {
-          font-size: 18px;
-        }
-
-        &:hover {
-          background: $slight-light;
-        }
-      }
+      height: 4px;
+      border-radius: 12px;
+      background: rgba(231, 17, 88, 0.82);
     }
 
     player-actions {
@@ -400,6 +274,19 @@ player {
         background: $tertiary;
         color: $dark;
 
+        &::before {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          translate: -50% -50%;
+          height: 100%;
+          width: 100%;
+          border-radius: 50%;
+          background: $hover-green;
+          opacity: 1;
+          z-index:0;
+        }
+
         mi::before {
           content: "play_arrow";
         }
@@ -412,156 +299,41 @@ player {
           scale: 0.98;
         }
       }
-
-      volume-controls {
-        position: relative;
-
-        [volume-display] {
-          position: relative;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 3em;
-          width: 3em;
-          border-radius: 50%;
-          cursor: pointer;
-
-          &:hover {
-            background: $slight-light;
-          }
-
-          [muted] {
-            transition: $trans-cubic;
-            visibility: hidden;
-            opacity: 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            translate: -50% -50%;
-            width: 0;
-            rotate: 35deg;
-            height: 4px;
-            // border: 1px solid rgba(255, 255, 255, 0.02);
-            border-radius: 4px;
-            background: $red;
-          }
-        }
-
-        [controls] {
-          z-index: 2;
-          visibility: hidden;
-          opacity: 0;
-          display: flex;
-          flex-direction: column;
-          gap: $gap-smoler;
-          position: absolute;
-          bottom: 100%;
-          left: 50%;
-          translate: -50% 0;
-          background: white;
-          border-radius: 38px;
-          color: $dark;
-          padding: 8px;
-          margin-bottom: -12px;
-          transition: $trans-cubic;
-        }
-
-        &:hover {
-          [volume-display] {
-            scale: 1.12;
-            background: $slight-light;
-          }
-
-          [controls] {
-            visibility: visible;
-            opacity: 1;
-            margin-bottom: -1px;
-          }
-        }
-      }
-    }
-  }
-
-  &[volume] {
-    &[volume="0"],
-    &[volume="0.0"] {
-      [volume-display] {
-        [muted] {
-          visibility: visible;
-          opacity: 1;
-          width: 1.8em;
-        }
-
-        mi::before {
-          content: "volume_up";
-          color: $red;
-        }
-      }
-    }
-
-    &[volume="0.1"],
-    &[volume="0.2"],
-    &[volume="0.3"],
-    &[volume="0.4"],
-    &[volume="0.5"] {
-      [volume-display] mi {
-        &::before {
-          content: "volume_down";
-        }
-      }
-    }
-
-    &[volume="0.6"],
-    &[volume="0.7"],
-    &[volume="0.8"],
-    &[volume="0.9"],
-    &[volume="1.0"],
-    &[volume="1"] {
-      [volume-display] {
-        mi {
-          &::before {
-            content: "volume_up";
-          }
-        }
-      }
     }
   }
 
   &[active] {
-    player-content::before {
-      display: block;
-      content: "";
-      animation: pulse 2s $cubic forwards;
-
-      @keyframes pulse {
-        from {
-          opacity: 1;
-          width: 100%;
-          height: 100%;
-        }
-
-        99% {
-          // left: calc(50% - 12px);
-          // top: calc(50% - 12px);
-          width: calc(100% + 52px);
-          height: calc(100% + 42px);
-          opacity: 0;
-          border-radius: 52px;
-        }
-
-        100% {
-          opacity: 0;
-          height: 100%;
-          width: 100%;
-        }
-      }
-    }
-
     player-actions {
       [play] {
         background: $active;
         color: $active-text;
         animation: play-button-start 0.8s $cubic;
+
+        &::before {
+          display: block;
+          content: "";
+          animation: pulse 1s linear forwards;
+
+          @keyframes pulse {
+            from {
+              opacity: 1;
+              width: 100%;
+              height: 100%;
+            }
+
+            40% {
+              opacity: 0;
+              width: calc(100% + 62px);
+              height: calc(100% + 62px);
+            }
+
+            100% {
+              opacity: 0;
+              height: 100%;
+              width: 100%;
+            }
+          }
+        }
 
         mi::before {
           content: "pause";

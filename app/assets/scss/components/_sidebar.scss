@@ -18,14 +18,7 @@ sidebar {
     flex-direction: column;
     gap: $gap-smol;
     transition: $trans-cubic;
-
     max-height: calc(100vh - $bruder-height - 6 * $main-distance);
-
-    @media screen and (max-width: $collapsed-max-width) {
-      max-height: calc(
-        100vh - $main-distance - $player-height - $bruder-distance
-      );
-    }
 
     section {
       border-radius: 12px;
@@ -53,6 +46,8 @@ sidebar {
       border-radius: 20px;
       padding: $cover-from-border-padding;
       overflow: auto;
+      padding-bottom: 4.4em;
+      min-height: calc(100vh - $bruder-height - 6 * $main-distance);
     }
 
     current-track {
@@ -306,8 +301,7 @@ sidebar {
 
       @media screen and (max-width: $collapsed-max-width) {
         max-height: calc(
-          100vh - 106px - $bruder-distance - $player-height - $main-distance -
-            $gap-smol
+          100vh - 106px - $bruder-distance - $main-distance - $gap-smol
         );
       }
     }
