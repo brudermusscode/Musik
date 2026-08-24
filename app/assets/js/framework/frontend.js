@@ -271,7 +271,18 @@ $(function () {
 
     // Mute track playing.
     else if (e.key.toLowerCase() === "m") {
-      Player.mute();
+      if (__player.volume < 0.1) Player.set_volume(0.5);
+      else Player.mute();
+    }
+
+    // Play next track.
+    else if (e.key.toLowerCase() === "arrowright") {
+      Player.queue_play_next();
+    }
+
+    // Play previous track.
+    else if (e.key.toLowerCase() === "arrowleft") {
+      Player.queue_play_previous();
     }
   });
 

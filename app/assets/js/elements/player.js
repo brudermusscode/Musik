@@ -697,47 +697,30 @@ export const unmute = () => {
 };
 
 /**
- * What do you think? hihihihi
+ * Set a specific volume from 0.0 to 1.0.
+ * @param {float} volume
  */
-export const volume_up = () => {
-  let new_volume = __player.volume + 0.1;
-  let volume_controls = document.find("volume-controls");
+export const set_volume = (volume) => {
+  if (volume < 0.0 || volume > 1.0) return;
 
-  if (new_volume >= 1.0) {
-    __player.volume = 1;
-  } else __player.volume += 0.1;
+  let controls = document.find("volume-controls");
+  let parsed_volume = volume.toFixed(1);
 
-  if (__player.Track.audio) __player.Track.audio.volume = __player.volume;
-
-  let parsed_volume = __player.volume.toFixed(1);
-
-  volume_controls.setAttribute("volume", parsed_volume);
-
+  __player.volume = parsed_volume;
+  controls.setAttribute("volume", parsed_volume);
+  localStorage.setItem("__player_volume", parsed_volume);
   Cookie.set("__player_volume", parsed_volume, 365);
-
   console.log(`Volume: ${Math.round(__player.volume * 100)}%`);
+
+  if (__player.Track.audio) __player.Track.audio.volume = parsed_volume;
 };
 
-/**
- * And here? HIHIHIHIHI.
- */
+export const volume_up = () => {
+  set_volume(parseFloat(localStorage.getItem("__player_volume")) + 0.1);
+};
+
 export const volume_down = () => {
-  let new_volume = __player.volume - 0.1;
-  let volume_controls = document.find("volume-controls");
-
-  if (new_volume < 0) {
-    __player.volume = 0;
-  } else __player.volume -= 0.1;
-
-  if (__player.Track.audio) __player.Track.audio.volume = __player.volume;
-
-  let parsed_volume = __player.volume.toFixed(1);
-
-  volume_controls.setAttribute("volume", parsed_volume);
-
-  Cookie.set("__player_volume", parsed_volume, 365);
-
-  console.log(`Volume: ${Math.round(__player.volume * 100)}%`);
+  set_volume(parseFloat(localStorage.getItem("__player_volume")) - 0.1);
 };
 
 /**
