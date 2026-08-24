@@ -134,7 +134,7 @@ main {
   margin: 0 auto;
   // padding-inline: $main-distance;
   padding-top: $bruder-distance;
-  padding-bottom: $player-height + $main-distance * 3;
+  padding-bottom: 4 * $main-distance;
 
   @media screen and (max-width: $hide-sidebar-max-width) {
     width: $hide-sidebar-content-width;

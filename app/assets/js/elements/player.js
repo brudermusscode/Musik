@@ -361,15 +361,13 @@ export const replay = async () => {
 };
 
 /**
- * Start the player if there is an active <audio></audio> element
- * in the DOM.
+ * Start playing if there is a current track set. This will have no effect if there is
+ * a track playing and not been paused.
  */
 export const resume = () => {
   if (!__player.Track.audio || !__player.Track.id) return;
 
-  /**
-   * Play the video.
-   */
+  // Play the video.
   if (!__player.fullscreen) document.find(current_track_video_path)?.play();
 
   __player.Track.audio.play();
@@ -699,6 +697,50 @@ export const unmute = () => {
 };
 
 /**
+ * What do you think? hihihihi
+ */
+export const volume_up = () => {
+  let new_volume = __player.volume + 0.1;
+  let volume_controls = document.find("volume-controls");
+
+  if (new_volume >= 1.0) {
+    __player.volume = 1;
+  } else __player.volume += 0.1;
+
+  if (__player.Track.audio) __player.Track.audio.volume = __player.volume;
+
+  let parsed_volume = __player.volume.toFixed(1);
+
+  volume_controls.setAttribute("volume", parsed_volume);
+
+  Cookie.set("__player_volume", parsed_volume, 365);
+
+  console.log(`Volume: ${Math.round(__player.volume * 100)}%`);
+};
+
+/**
+ * And here? HIHIHIHIHI.
+ */
+export const volume_down = () => {
+  let new_volume = __player.volume - 0.1;
+  let volume_controls = document.find("volume-controls");
+
+  if (new_volume < 0) {
+    __player.volume = 0;
+  } else __player.volume -= 0.1;
+
+  if (__player.Track.audio) __player.Track.audio.volume = __player.volume;
+
+  let parsed_volume = __player.volume.toFixed(1);
+
+  volume_controls.setAttribute("volume", parsed_volume);
+
+  Cookie.set("__player_volume", parsed_volume, 365);
+
+  console.log(`Volume: ${Math.round(__player.volume * 100)}%`);
+};
+
+/**
  * Toggles shuffle mode.
  */
 export const shuffle = () => {
@@ -980,48 +1022,19 @@ $(function () {
     await queue_play_previous();
   });
 
+
   /**
    * Increase the volume of the currently playing track and set it globally.
    */
   $(document).on("click", "[volume-up]", function () {
-    let new_volume = __player.volume + 0.1;
-    let volume_controls = document.find("volume-controls");
-
-    if (new_volume >= 1.0) {
-      __player.volume = 1;
-    } else __player.volume += 0.1;
-
-    if (__player.Track.audio) __player.Track.audio.volume = __player.volume;
-
-    let parsed_volume = __player.volume.toFixed(1);
-
-    volume_controls.setAttribute("volume", parsed_volume);
-
-    Cookie.set("__player_volume", parsed_volume, 365);
-
-    console.log(`Volume: ${Math.round(__player.volume * 100)}%`);
+    volume_up();
   });
 
   /**
    * Decrease the volume of the currently playing track and set it globally.
    */
   $(document).on("click", "[volume-down]", function () {
-    let new_volume = __player.volume - 0.1;
-    let volume_controls = document.find("volume-controls");
-
-    if (new_volume < 0) {
-      __player.volume = 0;
-    } else __player.volume -= 0.1;
-
-    if (__player.Track.audio) __player.Track.audio.volume = __player.volume;
-
-    let parsed_volume = __player.volume.toFixed(1);
-
-    volume_controls.setAttribute("volume", parsed_volume);
-
-    Cookie.set("__player_volume", parsed_volume, 365);
-
-    console.log(`Volume: ${Math.round(__player.volume * 100)}%`);
+    volume_down();
   });
 
   /**

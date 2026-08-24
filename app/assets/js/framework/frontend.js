@@ -1,4 +1,5 @@
 import * as Responder from "./responder";
+import * as Player from "../elements/player";
 
 /**
  * Sets the frontend to be loading.
@@ -250,12 +251,49 @@ $(function () {
   document.addEventListener("keyup", (e) => {
     if (!e.key) return;
 
+    // This will just close all open overlays and possible popups, that allow being
+    // closed by an escape action.
     if (e.key.toLowerCase() === "escape") {
       let has_overlays = document.find_all("overlay");
 
       if (has_overlays) close_overlays();
 
       return;
+    }
+
+    // Resume or pause current track.
+    else if (e.key.toLowerCase() === " ") {
+      if (__player.active) Player.pause();
+      else Player.resume();
+
+      return;
+    }
+
+    // Mute track playing.
+    else if (e.key.toLowerCase() === "m") {
+      Player.mute();
+    }
+  });
+
+  /**
+   * @event keypress
+   */
+  document.addEventListener("keydown", (e) => {
+    if (!e.key) return;
+
+    if (e.key.toLowerCase() === " ") {
+      e.preventDefault();
+      return;
+    }
+
+    // Increase volume.
+    else if (e.key.toLowerCase() === "+") {
+      Player.volume_up();
+    }
+
+    // Decrease volume.
+    else if (e.key.toLowerCase() === "-") {
+      Player.volume_down();
     }
   });
 });

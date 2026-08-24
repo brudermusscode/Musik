@@ -1,5 +1,7 @@
 <?php
 
+use Bruder\Model\Album;
+
 /**
  * @var ?Album $Album
  */

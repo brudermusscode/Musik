@@ -8,6 +8,7 @@
 use Illuminate\Support\Collection;
 use Bruder\Model\Track;
 use Bruder\Model\Album;
+use Bruder\Model\Playlist;
 
 /**
  * @var Track $Track
