@@ -542,14 +542,17 @@ export const init_player_state = async () => {
     let volume_controls = document.find("volume-controls");
 
     // ? Volume
-    let current_volume_cookie = Cookie.get("__player_volume");
+    let current_volume = parseFloat(localStorage.getItem("__player_volume"));
+
+    // Set to default volume, if the saved volume in localStorage is scuffed.
+    if (isNaN(current_volume)) current_volume = DEFAULT_VOLUME;
 
     console.log(
-      `%c▒ Initialized Volume: ${current_volume_cookie * 100} %`,
+      `%c▒ Initialized Volume: ${current_volume * 100} %`,
       `color: ${init_color};`,
     );
 
-    let parsed_volume = parseFloat(current_volume_cookie);
+    let parsed_volume = parseFloat(current_volume);
 
     /**
      * If anything went wrong and the current volume parsed is not
@@ -661,8 +664,8 @@ export const mute = () => {
   let volume = 0.0;
   let volume_controls = document.find("volume-controls");
 
-  // Persistent cookie
-  Cookie.set("__player_volume", volume, 365);
+  // Local storage
+  localStorage.setItem("__player_volume", volume);
 
   // Global player
   __player.volume = volume;
@@ -683,7 +686,7 @@ export const unmute = () => {
   let volume_controls = document.find("volume-controls");
 
   // Persistent cookie
-  Cookie.set("__player_volume", volume, 365);
+  localStorage.setItem("__player_volume", volume);
 
   // Global player
   __player.volume = volume;

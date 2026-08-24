@@ -271,7 +271,8 @@ $(function () {
 
     // Mute track playing.
     else if (e.key.toLowerCase() === "m") {
-      if (__player.volume < 0.1) Player.set_volume(0.5);
+      let volume = parseFloat(localStorage.getItem("__player_volume"));
+      if (volume < 0.1) Player.set_volume(0.5);
       else Player.mute();
     }
 
