@@ -40,12 +40,6 @@ export const scroll_to = async (number) => {
   window.scrollTo({ top: number, behavior: "smooth" });
 };
 
-export const input_focused = (target) => {
-  let tag = target.tagName?.toLowerCase();
-  return (tag === "input" || tag === "textarea")
-    ? !0 : !1;
-};
-
 /**
  * Preloads a list of <img> elements by creating new Image
  * instances and marks them with a [loaded] tag so they will fade in.
@@ -240,6 +234,15 @@ export const get_content = () => {
   });
 };
 
+/**
+ * Returns a bool to show if a writable HTMLObject is currently focused.
+ */
+export const input_focused = () => {
+  let tag = document.activeElement.tagName?.toLowerCase();
+  return (tag === "input" || tag === "textarea")
+    ? !0 : !1;
+};
+
 $(function () {
   get_content();
 
@@ -268,7 +271,7 @@ $(function () {
     }
 
     // Resume or pause current track.
-    else if (e.key.toLowerCase() === " " && !input_focused(e.target)) {
+    else if (e.key.toLowerCase() === " " && !input_focused()) {
       if (__player.active) Player.pause();
       else Player.resume();
 
@@ -276,19 +279,19 @@ $(function () {
     }
 
     // Mute track playing.
-    else if (e.key.toLowerCase() === "m" && !input_focused(e.target)) {
+    else if (e.key.toLowerCase() === "m" && !input_focused()) {
       let volume = parseFloat(localStorage.getItem("__player_volume"));
       if (volume < 0.1) Player.set_volume(0.5);
       else Player.mute();
     }
 
     // Play next track.
-    else if (e.key.toLowerCase() === "arrowright" && !input_focused(e.target)) {
+    else if (e.key.toLowerCase() === "arrowright" && !input_focused()) {
       Player.queue_play_next();
     }
 
     // Play previous track.
-    else if (e.key.toLowerCase() === "arrowleft" && !input_focused(e.target)) {
+    else if (e.key.toLowerCase() === "arrowleft" && !input_focused()) {
       Player.queue_play_previous();
     }
   });
@@ -299,18 +302,18 @@ $(function () {
   document.addEventListener("keydown", (e) => {
     if (!e.key) return;
 
-    if (e.key.toLowerCase() === " " && !input_focused(e.target)) {
+    if (e.key.toLowerCase() === " " && !input_focused()) {
       e.preventDefault();
       return;
     }
 
     // Increase volume.
-    else if (e.key.toLowerCase() === "+" && !input_focused(e.target)) {
+    else if (e.key.toLowerCase() === "+" && !input_focused()) {
       Player.volume_up();
     }
 
     // Decrease volume.
-    else if (e.key.toLowerCase() === "-" && !input_focused(e.target)) {
+    else if (e.key.toLowerCase() === "-" && !input_focused()) {
       Player.volume_down();
     }
   });
