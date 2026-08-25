@@ -40,6 +40,12 @@ export const scroll_to = async (number) => {
   window.scrollTo({ top: number, behavior: "smooth" });
 };
 
+export const input_focused = (target) => {
+  let tag = target.tagName?.toLowerCase();
+  return (tag === "input" || tag === "textarea")
+    ? !0 : !1;
+};
+
 /**
  * Preloads a list of <img> elements by creating new Image
  * instances and marks them with a [loaded] tag so they will fade in.
@@ -262,7 +268,7 @@ $(function () {
     }
 
     // Resume or pause current track.
-    else if (e.key.toLowerCase() === " ") {
+    else if (e.key.toLowerCase() === " " && !input_focused(e.target)) {
       if (__player.active) Player.pause();
       else Player.resume();
 
@@ -270,19 +276,19 @@ $(function () {
     }
 
     // Mute track playing.
-    else if (e.key.toLowerCase() === "m") {
+    else if (e.key.toLowerCase() === "m" && !input_focused(e.target)) {
       let volume = parseFloat(localStorage.getItem("__player_volume"));
       if (volume < 0.1) Player.set_volume(0.5);
       else Player.mute();
     }
 
     // Play next track.
-    else if (e.key.toLowerCase() === "arrowright") {
+    else if (e.key.toLowerCase() === "arrowright" && !input_focused(e.target)) {
       Player.queue_play_next();
     }
 
     // Play previous track.
-    else if (e.key.toLowerCase() === "arrowleft") {
+    else if (e.key.toLowerCase() === "arrowleft" && !input_focused(e.target)) {
       Player.queue_play_previous();
     }
   });
@@ -293,18 +299,18 @@ $(function () {
   document.addEventListener("keydown", (e) => {
     if (!e.key) return;
 
-    if (e.key.toLowerCase() === " ") {
+    if (e.key.toLowerCase() === " " && !input_focused(e.target)) {
       e.preventDefault();
       return;
     }
 
     // Increase volume.
-    else if (e.key.toLowerCase() === "+") {
+    else if (e.key.toLowerCase() === "+" && !input_focused(e.target)) {
       Player.volume_up();
     }
 
     // Decrease volume.
-    else if (e.key.toLowerCase() === "-") {
+    else if (e.key.toLowerCase() === "-" && !input_focused(e.target)) {
       Player.volume_down();
     }
   });
