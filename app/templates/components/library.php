@@ -72,7 +72,7 @@ foreach ($Bookmarks ?? [] as $key => $Bookmark) :
     data-id="<?= $Ref->id ?>"
     <?= $show_active ? "active" : "" ?>>
 
-    <moption flex-truncate>
+    <moption>
       <?php
 
       /**

@@ -313,174 +313,63 @@ sidebar {
       gap: $gap-smoler;
       padding: 6px;
 
-      library-view {
-        [view] {
-          &[active] {
-            background: $slighter-light;
-            color: $tertiary;
-
-            mi {
-              font-weight: 800;
-            }
-          }
-        }
-      }
-
-      bookmarks {
-        display: flex;
-        flex-direction: column;
-        gap: $gap-smoler;
-      }
-
-      cover {
-        $playlist-cover-size: 3em;
-
-        display: block;
-        position: relative;
-        height: $playlist-cover-size;
-        width: $playlist-cover-size;
-
-        & > div {
-          display: flex;
-          flex-wrap: wrap;
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 100%;
-          width: 100%;
-          border-radius: 13px;
-          border: 1px solid $slight-light;
-          overflow: hidden;
-        }
-
-        &[single] {
-          picture {
-            background-color: $slighterer-dark;
-            border-radius: 12px;
-
-            mi {
-              display: block;
-              position: absolute;
-              bottom: -18px;
-              left: -6px;
-              height: 100%;
-              width: 100%;
-              font-size: 42px;
-            }
-          }
-        }
-
-        picture {
-          position: relative;
-          height: $playlist-cover-size;
-          width: $playlist-cover-size;
-          min-width: $playlist-cover-size;
-          min-height: $playlist-cover-size;
-        }
-
-        &[no-custom-art] {
-          &:not([no-custom-art="1"]),
-          &:not([no-custom-art="2"]),
-          &:not([no-custom-art="3"]) {
-            picture {
-              flex-basis: 50%;
-              padding-top: 50%;
-              height: initial;
-              min-height: initial;
-              min-width: initial;
-
-              img {
-                object-fit: cover;
-                position: absolute;
-                top: 0;
-                left: 0;
-                height: 100%;
-                width: 100%;
-              }
-            }
-          }
-
-          &[no-custom-art="1"] {
-            picture {
-              width: $playlist-cover-size;
-              flex-basis: 100%;
-            }
-          }
-
-          &[no-custom-art="2"] {
-            picture {
-              flex-basis: 50%;
-            }
-          }
-
-          &[no-custom-art="3"] {
-            picture {
-              flex-basis: 50%;
-
-              &:nth-of-type(3) {
-                flex-basis: 100%;
-              }
-            }
-          }
-        }
-      }
-
       &[view="grid"] {
-        cover {
-          width: 100%;
-          padding-top: 100%;
-
-          &[single] {
-            & > div {
-              justify-content: stretch;
-              align-items: stretch;
-
-              picture {
-                width: 100%;
-                padding-top: 100%;
-
-                img {
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  height: 100%;
-                  width: 100%;
-                }
-
-                mi {
-                  bottom: -48px;
-                  left: -22px;
-                  font-size: 120px;
-                }
-              }
-            }
-          }
-        }
-
         bookmarks {
           display: flex;
-          gap: $gap-smoler;
           flex-wrap: wrap;
           flex-direction: row;
-        }
+          gap: $gap-smoler;
 
-        a {
-          position: relative;
-          flex-basis: calc(50% - $gap-smolest);
-          max-width: calc(50% - $gap-smolest);
-        }
+          a {
+            position: relative;
+            flex-basis: calc(50% - $gap-smolest);
+            max-width: calc(50% - $gap-smolest);
+          }
 
-        moption {
-          padding: 4px;
-          border-radius: 16px;
+          moption {
+            display:block;
+            padding:4px;
+            border-radius: 16px;
 
-          [metadata] {
-            padding-block: 4px;
-            padding-inline: 8px;
-            line-height: 0.6;
+            [metadata] {
+              padding-block: 4px;
+              padding-inline: 8px;
+              line-height: 0.6;
 
-            [title] {
-              font-size: $font-size-smol-plus;
+              [title] {
+                font-size: $font-size-smol-plus;
+              }
+            }
+          }
+
+          cover {
+            width: 100%;
+            padding-top: 100%;
+
+            &[single] {
+              & > div {
+                justify-content: stretch;
+                align-items: stretch;
+
+                picture {
+                  width: 100%;
+                  padding-top: 100%;
+
+                  img {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
+                    width: 100%;
+                  }
+
+                  mi {
+                    bottom: -48px;
+                    left: -22px;
+                    font-size: 120px;
+                  }
+                }
+              }
             }
           }
         }
@@ -512,17 +401,133 @@ sidebar {
         }
       }
 
-      moption {
-        &:hover {
-          background: $slighterer-light;
-        }
+      // The buttons to the change the view.
+      library-view {
+        [view] {
+          &[active] {
+            background: $slighter-light;
+            color: $tertiary;
 
-        [title] {
-          font-weight: 600;
+            mi {
+              font-weight: 800;
+            }
+          }
         }
+      }
 
-        [metadata] {
-          line-height: 0.6;
+      // The actual bookmarks in the library like artists, playlists and albums.
+      bookmarks {
+        display: flex;
+        flex-direction: column;
+        gap: $gap-smoler;
+
+        moption {
+          &:hover {
+            background: $slighterer-light;
+          }
+
+          [title] {
+            font-weight: 600;
+          }
+
+          [metadata] {
+            line-height: 0.6;
+          }
+
+          // The cover images, handling single covers for artists and albums multi-
+          // covers for playlists like in spotify's library.
+          cover {
+            $playlist-cover-size: 3em;
+
+            display: block;
+            position: relative;
+            height: $playlist-cover-size;
+            width: $playlist-cover-size;
+
+            & > div {
+              display: flex;
+              flex-wrap: wrap;
+              position: absolute;
+              top: 0;
+              left: 0;
+              height: 100%;
+              width: 100%;
+              border-radius: 13px;
+              border: 1px solid $slight-light;
+              overflow: hidden;
+            }
+
+            &[single] {
+              picture {
+                background-color: $slighterer-dark;
+                border-radius: 12px;
+
+                mi {
+                  display: block;
+                  position: absolute;
+                  bottom: -18px;
+                  left: -6px;
+                  height: 100%;
+                  width: 100%;
+                  font-size: 42px;
+                }
+              }
+            }
+
+            picture {
+              position: relative;
+              height: $playlist-cover-size;
+              width: $playlist-cover-size;
+              min-width: $playlist-cover-size;
+              min-height: $playlist-cover-size;
+            }
+
+            &[no-custom-art] {
+              &:not([no-custom-art="1"]),
+              &:not([no-custom-art="2"]),
+              &:not([no-custom-art="3"]) {
+                picture {
+                  flex-basis: 50%;
+                  padding-top: 50%;
+                  height: initial;
+                  min-height: initial;
+                  min-width: initial;
+
+                  img {
+                    object-fit: cover;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
+                    width: 100%;
+                  }
+                }
+              }
+
+              &[no-custom-art="1"] {
+                picture {
+                  width: $playlist-cover-size;
+                  flex-basis: 100%;
+                }
+              }
+
+              &[no-custom-art="2"] {
+                picture {
+                  flex-basis: 50%;
+                }
+              }
+
+              &[no-custom-art="3"] {
+                picture {
+                  flex-basis: 50%;
+
+                  &:nth-of-type(3) {
+                    flex-basis: 100%;
+                  }
+                }
+              }
+            }
+          }
         }
       }
 
