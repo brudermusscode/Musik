@@ -1,5 +1,5 @@
 > [!CAUTION]
-> Preview-Version! An vielen Stellen wird's vermutlich Fehler geben.
+> Preview-Version! An vielen Stellen wird's vermutlich Fehler geben. Nur für Linux.
 
 # Musik, Bruder! - Dein Freund für deine Musik
 
