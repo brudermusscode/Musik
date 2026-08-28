@@ -20,7 +20,7 @@ sidebar {
     transition: $trans-cubic;
     max-height: calc(100vh - $bruder-height - 6 * $main-distance);
 
-    section {
+    > section {
       border-radius: 12px;
       margin-inline: $main-distance;
       transition: $trans-cubic;
@@ -226,7 +226,7 @@ sidebar {
       }
     }
 
-    section {
+    > section {
       &:first-of-type {
         border-radius: 20px 20px 12px 12px;
       }
@@ -292,7 +292,7 @@ sidebar {
       }
     }
 
-    section:nth-of-type(2) {
+    > section:nth-of-type(2) {
       max-height: calc(
         100vh - $bruder-distance - 106px - $main-distance - $gap-smol
       );
@@ -320,24 +320,37 @@ sidebar {
           flex-direction: row;
           gap: $gap-smoler;
 
+          song {
+            margin-block:4px;
+          }
+
           a {
             position: relative;
             flex-basis: calc(50% - $gap-smolest);
             max-width: calc(50% - $gap-smolest);
-          }
 
-          moption {
-            display:block;
-            padding:4px;
-            border-radius: 16px;
+            moption {
+              display:block;
+              padding:4px;
+              border-radius: 16px;
 
-            [metadata] {
-              padding-block: 4px;
-              padding-inline: 8px;
-              line-height: 0.6;
+              [playing] {
+                position:absolute;
+                height:2em;
+                width:2em;
+                right:12px;
+                top:12px;
+                translate: 0 0;
+              }
 
-              [title] {
-                font-size: $font-size-smol-plus;
+              [metadata] {
+                padding-block: 4px;
+                padding-inline: 8px;
+                line-height: 0.6;
+
+                [title] {
+                  font-size: $font-size-smol-plus;
+                }
               }
             }
           }
@@ -379,23 +392,23 @@ sidebar {
         a {
           position: relative;
           max-width: 100%;
-        }
 
-        moption {
-          padding: 2px;
-          padding-right: 16px;
-          border-radius: 16px;
-          display: flex;
-          align-items: center;
-          gap: $gap-smol-plus;
-          cursor: pointer;
+          moption {
+            padding: 2px;
+            padding-right: 16px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: $gap-smol-plus;
+            cursor: pointer;
 
-          [metadata] {
-            margin-top: -4px;
+            [metadata] {
+              margin-top: -4px;
 
-            [title] {
-              font-size: $font-size-std;
-              font-weight: 600;
+              [title] {
+                font-size: $font-size-std;
+                font-weight: 600;
+              }
             }
           }
         }
@@ -421,22 +434,54 @@ sidebar {
         flex-direction: column;
         gap: $gap-smoler;
 
-        moption {
-          &:hover {
-            background: $slighterer-light;
+        a {
+          &[active] {
+            moption {
+              background: $slighter-light;
+
+              [playing] {
+                display:flex;
+                align-items: center;
+                justify-content: center;
+              }
+
+              [title] {
+                color: $tertiary;
+                font-weight: 800;
+              }
+
+              mi {
+                font-weight: 800;
+              }
+            }
           }
 
-          [title] {
-            font-weight: 600;
-          }
+          moption {
+            &:hover {
+              background: $slighterer-light;
+            }
 
-          [metadata] {
-            line-height: 0.6;
-          }
+            [playing] {
+              display:none;
+              position:absolute;
+              height:2em;
+              width:2em;
+              right:8px;
+              top:50%;
+              translate: 0 -50%;
+            }
 
-          // The cover images, handling single covers for artists and albums multi-
-          // covers for playlists like in spotify's library.
-          cover {
+            [title] {
+              font-weight: 600;
+            }
+
+            [metadata] {
+              line-height: 0.6;
+            }
+
+            // The cover images, handling single covers for artists and albums multi-
+            // covers for playlists like in spotify's library.
+            cover {
             $playlist-cover-size: 3em;
 
             display: block;
@@ -528,20 +573,6 @@ sidebar {
               }
             }
           }
-        }
-      }
-
-      a[active] {
-        moption {
-          background: $slighter-light;
-
-          [title] {
-            color: $tertiary;
-            font-weight: 800;
-          }
-
-          mi {
-            font-weight: 800;
           }
         }
       }

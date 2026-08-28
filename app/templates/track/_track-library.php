@@ -10,17 +10,17 @@ use Bruder\Model\Album;
 /**
  * @var ?Album
  */
-$Album = $Track->album;
-
-$track_playable ??= false;
+$Album = $Track->albums()->first();
 
 ?>
 
-<song simple track="<?= $Track->id ?>"
-  <?= $track_playable ? "play-track=$Track->id curpo" : "" ?>>
+<song in-library has-menu track="<?= $Track->id ?>" play-track=<?= $Track->id; ?>>
+
+  <?php include __DIR__ . "/_menu.php"; ?>
+
   <div content fl alic jucsb flone gap=smol+>
-    <div fl alic gap=smol+ flone>
-      <album-art>
+    <div fl alic gap=smol+ flone flex-truncate>
+      <album-art <?= $Album ? "has-album" : "" ?>>
         <picture>
           <?php if ($Album && $Album->art) : ?>
             <img alt="<?= $Album->name ?> Cover Art" src="/data/user/1/art/<?= $Album->art ?>" />
@@ -30,9 +30,9 @@ $track_playable ??= false;
         </picture>
       </album-art>
 
-      <div fl alic gap=smol+ flone>
-        <div fl fldircol style="margin-top:-6px;">
-          <p title <?= strlen($Track->title) > 40 ? "std" : "stdplus" ?> text semibold trimt>
+      <div fl alic gap=smol+ flone flex-truncate>
+        <div fl fldircol style="margin-top:-6px;" flex-truncate>
+          <p title std text semibold trimt>
             <?= $Track->title ?>
           </p>
           <div fl alic gap=smoler>

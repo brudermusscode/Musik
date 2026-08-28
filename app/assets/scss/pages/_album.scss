@@ -301,6 +301,12 @@ preview {
 album-art {
   display: block;
 
+  &[has-album] {
+    picture {
+      background:transparent;
+    }
+  }
+
   picture {
     height: 2.4em;
     width: 2.4em;

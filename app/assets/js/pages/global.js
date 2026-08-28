@@ -315,36 +315,24 @@ $(function () {
     if (e.target.closest("[has-menu]")) {
       e.preventDefault();
 
-      let menu = e.target.closest("[has-menu]").find("menu");
+      let menu = e.target.closest("[has-menu]")?.find("menu");
 
-      if (menu.hasAttribute("active")) {
+      if (menu && menu.hasAttribute("active")) {
         console.log("Menu is open already.");
         return;
       }
 
       bulk_close_contextmenu();
 
-      document.find_all("[has-menu] menu")?.forEach((menu) => {
-        menu.removeAttribute("style");
-        menu.find("inr").removeAttribute("style");
-        menu.deactivate();
-      });
-
+      let inr = menu.find("inr");
       let mouse_position = { x: e.clientX, y: e.clientY };
-      let menu_size = { w: menu.clientWidth, h: menu.clientHeight };
-      let menu_content_h = menu.find("[height]").clientHeight + 24;
+      let menu_size = { w: inr.clientWidth, h: inr.clientHeight };
       let style_top = mouse_position.y;
 
       menu.activate();
       menu.style.position = "fixed";
       menu.style.left = mouse_position.x - menu_size.w / 2 + "px";
-      menu.style.top = style_top + 2 + "px";
-      menu.find("inr").style.height = menu_content_h + "px";
-
-      setTimeout(() => {
-        menu.style.left = mouse_position.x - menu_size.w / 2 + 6 + "px";
-        menu.style.top = style_top + 8 + "px";
-      }, 10);
+      menu.style.top = style_top + 12 + "px";
     }
   });
 

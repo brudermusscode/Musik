@@ -41,6 +41,7 @@ $Relation = match ($type) {
  * @var ?Track
  */
 $CurrentTrack = Track::with("artistt")
+  ->whereNull("deleted_at")
   ->find(Cookie::get("__player_Track"));
 
 /**

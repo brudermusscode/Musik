@@ -7,13 +7,12 @@ use Bruder\Model\Album;
 use Bruder\Model\Artist;
 use Bruder\Model\Bookmark;
 use Bruder\Model\Playlist;
+use Bruder\Model\Track;
 
 class BookmarksController extends Controller
 {
 
   /**
-   * POST
-   *
    * @return string
    */
   public function create()
@@ -25,12 +24,13 @@ class BookmarksController extends Controller
     );
 
     /**
-     * @var ?Album|Playlist|Artist
+     * @var ?Album|Playlist|Artist|Track
      */
     $Object = match ($this->params->type) {
       "album" => Album::findOrReturn($this->params->id),
       "playlist" => Playlist::findOrReturn($this->params->id),
       "artist" => Artist::findOrReturn($this->params->id),
+      "track" => Track::findOrReturn($this->params->id),
       default => die($this->error()),
     };
 
@@ -57,7 +57,7 @@ class BookmarksController extends Controller
     );
 
     /**
-     * @var ?Album|Playlist|Artist
+     * @var ?Album|Playlist|Artist|Track
      */
     $Bookmark = Bookmark::where("type", $this->params->type)
       ->where("reference_id", $this->params->id)

@@ -4,6 +4,8 @@ namespace Bruder\Model;
 
 use Bruder\Bruder;
 use Bruder\Utils\Utils;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
 use Intervention\Image\Format;
 use Intervention\Image\ImageManager;
@@ -127,7 +129,7 @@ class Artist extends Bruder
   }
 
   /**
-   * @return Collection<Album>
+   * @return HasMany<Album>
    */
   public function albums()
   {
@@ -148,7 +150,7 @@ class Artist extends Bruder
   }
 
   /**
-   * @return ?Collection<Track>
+   * @return HasMany<Track>
    */
   public function tracks()
   {
@@ -156,7 +158,7 @@ class Artist extends Bruder
   }
 
   /**
-   * @return ?Bookmark
+   * @return HasOne<Bookmark>
    */
   public function bookmark()
   {

@@ -15,6 +15,7 @@ class User extends Bruder
 
   public function tracks()
   {
-    return $this->hasMany(Track::class);
+    return $this->hasMany(Track::class)
+      ->whereNull("deleted_at");
   }
 }

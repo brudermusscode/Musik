@@ -2,14 +2,19 @@
 
 namespace Bruder\Model;
 
-use Illuminate\Support\Collection;
 use Bruder\Bruder;
 use Bruder\Http\Request;
 use Bruder\Utils\Utils;
 use getID3;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Track extends Bruder
 {
+  use SoftDeletes;
 
   const string ICON = "genres";
   const string COLOR = "primary";
@@ -85,49 +90,6 @@ class Track extends Bruder
   }
 
   /**
-   * @return string
-   */
-  public function remove()
-  {
-    /**
-     * Move the actual file to tracks/deleted/.
-     */
-    $path = _root() . "/public/data/user/1/tracks";
-    $full_path = "$path/$this->file_name";
-
-
-    $this->db_transaction();
-
-    try {
-      if (file_exists($full_path)) {
-
-        /**
-         * Serialize the file name by exploding it by a slash to
-         * get the file name without the sub directory names.
-         */
-        $file_name = explode("/", $this->file_name);
-        $file_name = array_last($file_name);
-
-        /**
-         * Rename will move the file to the deleted directory.
-         */
-        rename($full_path, "$path/deleted/" . $file_name);
-      }
-
-      $this->album_track()->delete();
-      $this->playlist_tracks()->delete();
-      $this->delete();
-      $this->db_commit();
-      return success();
-    } catch (\Exception $e) {
-      $this->db_rollback();
-      return error($e->getMessage());
-    }
-
-    return success();
-  }
-
-  /**
    * Uploads a new file with a random alpha string as name and
    * encodes it as webp.
    *
@@ -159,7 +121,6 @@ class Track extends Bruder
       return error($e->getMessage(), false);
     }
   }
-
 
   /**
    * Passing the path to a file will analyze this file and extract
@@ -220,7 +181,7 @@ class Track extends Bruder
         /**
          * Check if the file exists already.
          */
-        if (Track::where("file_name", $path)->first())
+        if (Track::where("file_name", $path)->withTrashed()->first())
           continue;
 
         /**
@@ -407,7 +368,7 @@ class Track extends Bruder
   }
 
   /**
-   * @return ?User
+   * @return BelongsTo<User>
    */
   public function user()
   {
@@ -415,19 +376,34 @@ class Track extends Bruder
   }
 
   /**
-   * @return ?AlbumTrack
+   * @return HasOne<Bookmark>
    */
-  public function album_track()
+  public function bookmark()
   {
-    return $this->hasOne(AlbumTrack::class);
+    return $this->hasOne(Bookmark::class, "reference_id", "id");
   }
 
   /**
-   * @return ?Album
+   * @return HasMany<AlbumTrack>
+   */
+  public function album_tracks()
+  {
+    return $this->hasMany(AlbumTrack::class);
+  }
+
+  /**
+   * @return HasManyThrough<Album>
    */
   public function albums()
   {
-    return $this->hasManyThrough(Album::class, AlbumTrack::class, "track_id", "id", "id", "album_id");
+    return $this->hasManyThrough(
+      Album::class,
+      AlbumTrack::class,
+      "track_id",
+      "id",
+      "id",
+      "album_id"
+    );
   }
 
   /**
@@ -436,7 +412,7 @@ class Track extends Bruder
    * interferes with the function call and returns just the name,
    * not an Eloquent Model Instance.
    *
-   * @return Artist
+   * @return BelongsTo<Artist>
    */
   public function artistt()
   {
@@ -444,7 +420,7 @@ class Track extends Bruder
   }
 
   /**
-   * @return ?Collection<PlaylistTrack>
+   * @return HasMany<PlaylistTrack>
    */
   public function playlist_tracks()
   {

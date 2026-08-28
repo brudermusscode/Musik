@@ -6,6 +6,7 @@ use Bruder\Http\Request;
 use Bruder\Model\Track;
 use Bruder\Model\Playlist;
 use Bruder\Model\Album;
+use Illuminate\Support\Collection;
 
 /**
  * @var Request $Request
@@ -50,7 +51,7 @@ if ($Object) {
 }
 
 /**
- * @var Collection<Playlist>|Collection<Album>|Collection<Playlist|Album>
+ * @var Collection<Playlist|Album|Playlist|Album>
  */
 $Collection = match (true) {
   ($Object === Playlist::class) => Playlist::where("name", "LIKE", "%$input%")->get(),

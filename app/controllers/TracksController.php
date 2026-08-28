@@ -10,8 +10,6 @@ class TracksController extends Controller
 
 
   /**
-   * UPDATE
-   *
    * @return string
    */
   public function update()
@@ -31,8 +29,6 @@ class TracksController extends Controller
   }
 
   /**
-   * DELETE
-   *
    * @return string
    */
   public function delete()
@@ -48,6 +44,17 @@ class TracksController extends Controller
      */
     $Track = Track::findOrReturn($this->params->id, "Kein Track");
 
-    return $Track->remove();
+    # Remove bookmark.
+    $Track->bookmark()->delete();
+    $Track->album_tracks()->delete();
+    $Track->playlist_tracks()->delete();
+
+    # We just set the song to soft deleted as we don't want to delete the whole track
+    # together with the media file.
+    $Track->update([
+      "deleted_at" => CURRENT_TIMESTAMP,
+    ]);
+
+    return success();
   }
 }

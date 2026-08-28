@@ -23,10 +23,13 @@ if (strlen($input) < 1)
 /**
  * @var Track
  */
-$Tracks = Track::where("title", "LIKE", "%$input%")
-  ->orWhere("artist", "LIKE", "%$input%")
-  ->orWhere("genre", "LIKE", "%$input%")
-  ->orWhere("file_name", "LIKE", "%$input%")
+$Tracks = Track::where(function ($q) use ($input) {
+  $q->where("title", "LIKE", "%$input%")
+    ->orWhere("artist", "LIKE", "%$input%")
+    ->orWhere("genre", "LIKE", "%$input%")
+    ->orWhere("file_name", "LIKE", "%$input%");
+})
+  ->whereNull("deleted_at")
   ->orderBy("created_at", "DESC")
   ->get();
 

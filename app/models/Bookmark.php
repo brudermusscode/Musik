@@ -3,6 +3,8 @@
 namespace Bruder\Model;
 
 use Bruder\Bruder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Collection;
 
 class Bookmark extends Bruder
 {
@@ -29,7 +31,7 @@ class Bookmark extends Bruder
     // # Type validation happens in Controller.
 
     /**
-     * @var Album|Playlist|Artist
+     * @var Album|Playlist|Artist|Track
      */
     $Object = $params->Object;
 
@@ -54,7 +56,7 @@ class Bookmark extends Bruder
   public function remove() {}
 
   /**
-   * @return ?Album
+   * @return BelongsTo<Album>
    */
   public function album()
   {
@@ -62,7 +64,7 @@ class Bookmark extends Bruder
   }
 
   /**
-   * @return ?Playlist
+   * @return BelongsTo<Playlist>
    */
   public function playlist()
   {
@@ -70,7 +72,7 @@ class Bookmark extends Bruder
   }
 
   /**
-   * @return ?Artist
+   * @return BelongsTo<Artist>
    */
   public function artist()
   {
@@ -78,10 +80,18 @@ class Bookmark extends Bruder
   }
 
   /**
+   * @return BelongsTo<Track>
+   */
+  public function track()
+  {
+    return $this->belongsTo(Track::class, "reference_id", "id");
+  }
+
+  /**
    * Through polymorphic relations this model can have different
    * reference models based on the type sepcified.
    *
-   * @return ?Album|Playlist|Artist
+   * @return ?Album|Playlist|Artist|Track
    */
   public function reference()
   {
@@ -89,6 +99,7 @@ class Bookmark extends Bruder
       "album" => $this->album,
       "playlist" => $this->playlist,
       "artist" => $this->artist,
+      "track" => $this->track,
       default => null,
     };
   }

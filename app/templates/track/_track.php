@@ -59,7 +59,7 @@ $show_playing ??= true;
 $show_listens ??= false;
 
 /**
- * @var string
+ * @var int
  */
 $length_minutes = $Track->length_seconds / 60;
 
