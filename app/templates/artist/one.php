@@ -119,26 +119,28 @@ else :
     </div>
 
     <!--- DISCOGRAPHY --->
-    <div fl fldircol gap=smol+>
-      <p text bold std ttup pinline16>Discography</p>
-      <div fl gap=smol flex-wrap>
-        <?php
+    <?php
 
-        /**
-         * @var Collection<Album>
-         */
-        $Albums = $Artist->all_albums()->sortByDesc("release_year");
+    /**
+     * @var Collection<Album>
+     */
+    $Albums = $Artist->all_albums()->sortByDesc("release_year");
 
-        foreach ($Albums as $Album) :
+    if ($Albums->count()) : ?>
+      <div fl fldircol gap=smol+>
+        <p text bold std ttup pinline16>Songs gibts hier drin</p>
+        <div fl gap=smol flex-wrap>
+          <?php foreach ($Albums as $Album) :
 
-          /**
-           * @var Album $Album
-           */
+            /**
+             * @var Album $Album
+             */
 
-          include TEMPLATE . "/album/_album.php";
-        endforeach ?>
+            include TEMPLATE . "/album/_album.php";
+          endforeach ?>
+        </div>
       </div>
-    </div>
+    <?php endif; ?>
 
     <!--- SIMILIAR ARTISTS --->
     <?php

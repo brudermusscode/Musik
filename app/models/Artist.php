@@ -26,7 +26,6 @@ class Artist extends Bruder
    */
   protected $fillable = [
     "name",
-    "genre",
     "deleted_at",
     "updated_at",
   ];
