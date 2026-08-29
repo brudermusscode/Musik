@@ -16,7 +16,7 @@ $Album = $Track->albums()->first();
 
 <song in-library has-menu track="<?= $Track->id ?>" play-track=<?= $Track->id; ?>>
 
-  <?php include __DIR__ . "/_menu.php"; ?>
+  <!--<?php include __DIR__ . "/_menu.php"; ?>-->
 
   <div content fl alic jucsb flone gap=smol+>
     <div fl alic gap=smol+ flone flex-truncate>

@@ -13,23 +13,23 @@ $in_album ??= false;
 
 <menu>
   <inr>
-    <section>
-      <moption data-action="playlist:track:play-next">
+    <div>
+      <menu-option data-action="playlist:track:play-next">
         <mi>next_plan</mi>
         Als nächstes spielen
-      </moption>
+      </menu-option>
 
       <?php if ($in_playlist || $in_album) : ?>
-        <moption data-action="<?= $in_playlist ? "playlist:track:delete" : "album:track:delete" ?>"
+        <menu-option data-action="<?= $in_playlist ? "playlist:track:delete" : "album:track:delete" ?>"
           data-track-id="<?= $Track->id ?>"
           data-id="<?= $Playlist?->id ?? $Album->id ?>">
           <mi>playlist_remove</mi>
           Rausschmeißen
-        </moption>
+        </menu-option>
       <?php endif ?>
-    </section>
+    </div>
 
-    <section>
+    <div>
       <?php
 
       /**
@@ -49,50 +49,50 @@ $in_album ??= false;
 
       if ($show_album): ?>
         <a href="/album/<?= $Album->id ?>">
-          <moption>
+          <menu-option>
             <mi>album</mi>
             Album
-          </moption>
+          </menu-option>
         </a>
       <?php endif ?>
 
       <a href="/artist/<?= $Track->artistt->id ?>">
-        <moption>
+        <menu-option>
           <mi>artist</mi>
           Künstler
-        </moption>
+        </menu-option>
       </a>
-    </section>
+    </div>
 
-    <section>
+    <div>
       <?php if (!$Track->bookmark) : ?>
-        <moption has-sub shadow-submit update-library
+        <menu-option has-sub shadow-submit update-library
           request="bookmark:create"
           data-id="<?= $Track->id ?>"
           data-type="track">
           <mi>add_row_above</mi>
           In Bib rein
-        </moption>
+        </menu-option>
       <?php else : ?>
-        <moption has-sub shadow-submit update-library
+        <menu-option has-sub shadow-submit update-library
           request="bookmark:delete"
           data-id="<?= $Track->id ?>"
           data-type="track">
           <mi>remove</mi>
           Aus Bib raus
-        </moption>
+        </menu-option>
       <?php endif; ?>
 
-      <moption request-get="track:add-to" data-id="<?= $Track->id ?>" has-sub>
+      <menu-option request-get="track:add-to" data-id="<?= $Track->id ?>" has-sub>
         <mi>box_add</mi>
         Hinzufügen zu…
-      </moption>
+      </menu-option>
 
-      <moption request="track:delete" data-id="<?= $Track->id ?>"
+      <menu-option request="track:delete" data-id="<?= $Track->id ?>"
         shadow-submit update-current-track update-library reload color=light-red has-sub>
         <mi>emoji_symbols</mi>
         Tschüss
-      </moption>
-    </section>
+      </menu-option>
+    </div>
   </inr>
 </menu>

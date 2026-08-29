@@ -317,12 +317,12 @@ $(function () {
 
       let menu = e.target.closest("[has-menu]")?.find("menu");
 
-      if (menu && menu.hasAttribute("active")) {
-        console.log("Menu is open already.");
+      if (menu && menu.hasAttribute("active"))
         return;
-      }
 
       bulk_close_contextmenu();
+
+      if (!menu) return;
 
       let inr = menu.find("inr");
       let mouse_position = { x: e.clientX, y: e.clientY };

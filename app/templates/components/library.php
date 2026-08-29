@@ -1,10 +1,10 @@
 <?php
 
-use Bruder\Model\Track;
 use Illuminate\Support\Collection;
 use Bruder\Http\Request;
 use Bruder\Model\Bookmark;
 use Bruder\Model\Playlist;
+use Bruder\Model\Track;
 use Bruder\Model\Artist;
 use Bruder\Model\Album;
 

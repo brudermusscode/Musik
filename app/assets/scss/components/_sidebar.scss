@@ -240,6 +240,20 @@ sidebar {
       }
     }
 
+    > section:nth-of-type(2) {
+      max-height: calc(
+        100vh - $bruder-distance - 106px - $main-distance - $gap-smol
+      );
+      overflow: auto;
+      scrollbar-width: none;
+
+      @media screen and (max-width: $collapsed-max-width) {
+        max-height: calc(
+          100vh - 106px - $bruder-distance - $main-distance - $gap-smol
+        );
+      }
+    }
+
     pages {
       display: flex;
       gap: $gap-smoler;
@@ -289,20 +303,6 @@ sidebar {
             font-weight: 800;
           }
         }
-      }
-    }
-
-    > section:nth-of-type(2) {
-      max-height: calc(
-        100vh - $bruder-distance - 106px - $main-distance - $gap-smol
-      );
-      overflow: auto;
-      scrollbar-width: none;
-
-      @media screen and (max-width: $collapsed-max-width) {
-        max-height: calc(
-          100vh - 106px - $bruder-distance - $main-distance - $gap-smol
-        );
       }
     }
 
