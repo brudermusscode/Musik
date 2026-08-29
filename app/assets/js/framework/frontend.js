@@ -239,12 +239,24 @@ export const get_content = () => {
  */
 export const input_focused = () => {
   let tag = document.activeElement.tagName?.toLowerCase();
-  return (tag === "input" || tag === "textarea")
-    ? !0 : !1;
+  return tag === "input" || tag === "textarea" ? !0 : !1;
 };
 
 $(function () {
   get_content();
+
+  $(document).on("click", "mbutton[checkbox]", function (e) {
+    let checked = this.hasAttribute("active");
+    let input = this.find("input[type=hidden]");
+
+    if (checked) {
+      this.removeAttribute("active");
+      if (input) input.value = 0;
+    } else {
+      this.setAttribute("active", 1);
+      if (input) input.value = 1;
+    }
+  });
 
   /**
    * Close all dangling overlays on click.

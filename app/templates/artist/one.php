@@ -128,7 +128,7 @@ else :
 
     if ($Albums->count()) : ?>
       <div fl fldircol gap=smol+>
-        <p text bold std ttup pinline16>Songs gibts hier drin</p>
+        <p text bold std ttup pinline16>Von <?= $Artist->name ?></p>
         <div fl gap=smol flex-wrap>
           <?php foreach ($Albums as $Album) :
 

@@ -30,59 +30,12 @@ class Artist extends Bruder
     "updated_at",
   ];
 
-
-  /**
-   * Updates an instance of this class.
-   *
-   * @param object $params
-   * @return string
-   */
-  public function edit(object $params)
-  {
-
-    /**
-     * ? Name
-     */
-    if (isset($params->name)) {
-      // Nothing hihi
-    }
-
-    /**
-     * ? Portrait
-     */
-    if (!empty($params->art["tmp_name"])) {
-
-      /**
-       * @var object
-       */
-      $upload = $this->upload_art($params->art);
-
-      if (!$upload->status)
-        return error($upload->message);
-
-      $this->art = $upload->data->file_name;
-    }
-
-    $this->db_transaction();
-
-    try {
-
-      $this->save();
-      $this->db_commit();
-
-      return success();
-    } catch (\Exception $e) {
-      $this->db_rollback();
-      return error($e->getMessage());
-    }
-  }
-
   /**
    * Uploads a new file with a random alpha string as name and
    * encodes it as webp.
    *
    * @param array $file
-   * @return object *->data holds the filename
+   * @return object|string *->data holds the filename
    */
   public function upload_art(array $file)
   {
@@ -173,6 +126,14 @@ class Artist extends Bruder
   public function genres()
   {
     return $this->belongsToMany(Genre::class, "artist_genres");
+  }
+
+  /**
+   * @return BelongsToMany<Mood>
+   */
+  public function moods()
+  {
+    return $this->belongsToMany(Mood::class, "artist_moods");
   }
 
   /**

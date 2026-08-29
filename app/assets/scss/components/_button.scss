@@ -27,6 +27,12 @@ mbutton {
     pointer-events: none;
   }
 
+  &[checkbox] {
+    &[active] {
+      font-weight: bold;
+    }
+  }
+
   &[material] {
     display: flex;
     align-items: center;
@@ -375,7 +381,7 @@ mbutton {
     &:hover {
       outline: none;
       box-shadow: var(--mio-theme-elevation-3);
-      scale: 1.08;
+      scale: 1.04;
 
       &[elevated] {
         box-shadow: var(--mio-theme-elevation-3);

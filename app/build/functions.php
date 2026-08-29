@@ -5,6 +5,7 @@ use Bruder\Http\Request;
 /**
  * @param ?string $message
  * @param ?mixed $data
+ * @param bool $json_encoded
  * @return object|string
  */
 function success(?string $message = null, mixed $data = null, bool $json_encoded = true)
