@@ -3,6 +3,7 @@
 namespace Bruder\Model;
 
 use Bruder\Bruder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AlbumTrack extends Bruder
 {
@@ -52,7 +53,7 @@ class AlbumTrack extends Bruder
   }
 
   /**
-   * @return Album
+   * @return BelongsTo<Album>
    */
   public function album()
   {
@@ -60,7 +61,7 @@ class AlbumTrack extends Bruder
   }
 
   /**
-   * @return Track
+   * @return BelongsTo<Track>
    */
   public function track()
   {

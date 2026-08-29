@@ -13,10 +13,10 @@ use Bruder\Time\Time;
 /**
  * @var int
  */
-$id = filter_var($GLOBALS["route_param_id"], FILTER_DEFAULT);
+$id = filter_var($GLOBALS["route_param_id"]);
 
 /**
- * @var ?Album
+ * @var ?Artist
  */
 $Artist = Artist::with(["tracks", "bookmark"])
   ->orderBy("id", "DESC")
@@ -139,6 +139,31 @@ else :
         endforeach ?>
       </div>
     </div>
+
+    <!--- SIMILIAR ARTISTS --->
+    <?php
+
+    /**
+     * @var Collection<Artist>
+     */
+    $SimiliarArtists = $Artist->similiar_artists();
+
+    if ($SimiliarArtists->count()) : ?>
+
+      <div fl fldircol gap=smol+>
+        <p text bold std ttup pinline16>Ähnliche Künstler</p>
+        <div fl gap=smol flex-wrap>
+          <?php foreach ($SimiliarArtists as $SimArtist) :
+
+            /**
+             * @var Artist $SimArtist
+             */
+
+            include TEMPLATE . "/artist/_artist.php";
+          endforeach ?>
+        </div>
+      </div>
+    <?php endif; ?>
 
   </page>
 

@@ -7,6 +7,9 @@ use Bruder\Bruder;
 use Bruder\Utils\Str;
 use Bruder\Utils\Utils;
 use GuzzleHttp\Client;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Intervention\Image\Format;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
@@ -221,7 +224,7 @@ class Album extends Bruder
   }
 
   /**
-   * @return Collection<AlbumTrack>
+   * @return HasMany<AlbumTrack>
    */
   public function album_tracks()
   {
@@ -231,7 +234,7 @@ class Album extends Bruder
   /**
    * Interessant wie leicht diese Pivot-Releation doch ist.
    *
-   * @return Collection<Track>
+   * @return BelongsToMany<Track>
    */
   public function tracks()
   {
@@ -239,7 +242,7 @@ class Album extends Bruder
   }
 
   /**
-   * @return ?Bookmark
+   * @return HasOne<Bookmark>
    */
   public function bookmark()
   {

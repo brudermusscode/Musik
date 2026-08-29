@@ -4,7 +4,9 @@ namespace Bruder\Model;
 
 use Bruder\Bruder;
 use Bruder\Utils\Utils;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
 use Intervention\Image\Format;
@@ -24,6 +26,7 @@ class Artist extends Bruder
    */
   protected $fillable = [
     "name",
+    "genre",
     "deleted_at",
     "updated_at",
   ];
@@ -163,6 +166,25 @@ class Artist extends Bruder
   public function bookmark()
   {
     return $this->hasOne(Bookmark::class, "reference_id", "id");
+  }
+
+  /**
+   * @return BelongsToMany<Artist>
+   */
+  public function genres()
+  {
+    return $this->belongsToMany(Genre::class, "artist_genres");
+  }
+
+  /**
+   * @return Collection<Artist>
+   */
+  public function similiar_artists()
+  {
+    return $this->genres->first()
+      ?->artists()
+      ->whereNot("artist_id", $this->id)
+      ->get() ?? Collection::empty();
   }
 
   /**
