@@ -15,7 +15,6 @@ ob_start();
 
 
 <popup-container>
-  <p text bold style="font-size:3.8em;margin-bottom:-18px;padding-left:24px;">CREATE</p>
   <popup-container__content p42 posrel style=z-index:2; elevated>
     <form request="album:create" responder=simple redirect="/album/:id" fl fldircol gap=mid
       enctype="multipart/form-data">
@@ -44,7 +43,6 @@ ob_start();
       </div>
     </form>
   </popup-container__content>
-  <p text bold widest fl jucend style="font-size:3.8em;margin-top:-18px;padding-right:24px;">ALBUM</p>
 </popup-container>
 
 

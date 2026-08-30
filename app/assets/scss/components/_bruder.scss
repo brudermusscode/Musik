@@ -36,7 +36,6 @@ bruder {
   @extend .window;
 
   &:not([active]):hover {
-    top: 16px;
     background-color: $slight-light;
     scale: 1.02;
   }

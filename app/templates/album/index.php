@@ -19,7 +19,23 @@ else :
    */
   include TEMPLATE . "/global/_current-playlist.php"; ?>
 
+  <div fl alic jucsb mb12 dno>
+    <div></div>
+    <div fl alic gap=smol>
+      <mbutton material size=midler window icon-only>
+        <mi>add</mi>
+      </mbutton>
+    </div>
+  </div>
+
   <div fl gap=smol flex-wrap>
+    <album request-get="album:new" fl alic jucc window clickable>
+      <div fl fldircol alic jucc gap=smol>
+        <mi mid>add</mi>
+        <p text smoler bold ttup dno>Neues Album</p>
+      </div>
+    </album>
+
     <?php
 
     /**

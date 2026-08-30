@@ -501,9 +501,10 @@ export const kick_duration_track = (audio_element, reset = false) => {
   // When resetting the width, we need to set it to 0.
   if (reset) current_width = 0;
 
-  // Gets the exact start time in ms.
-  let interval_step_ms = 10;
+  let interval_step_ms = 400;
   let total_duration_ms = 1000 * duration;
+
+  // Gets the exact start time in ms.
   let start = performance.now();
   let add_width;
 
@@ -516,6 +517,11 @@ export const kick_duration_track = (audio_element, reset = false) => {
 
     add_width = Math.min(100, (time_elapsed_ms / total_duration_ms) * 100);
     track.style.width = current_width + add_width + "%";
+
+    localStorage.setItem(
+      "__player_Track_currentTime",
+      __player.Track.audio.currentTime,
+    );
   }, interval_step_ms);
 
   /**
@@ -648,6 +654,9 @@ export const init_current_track = async () => {
      * the song is playing.
      */
     document.find(current_track_video_path)?.pause();
+
+    let time_saved = localStorage.getItem("__player_Track_currentTime");
+    if (time_saved) set_time(time_saved);
 
     console.log(`%c▒ Recent Track found and loaded.`, `color: ${init_color};`);
 
@@ -836,6 +845,26 @@ document.addEventListener("DOMContentLoaded", async function () {
   sync_files();
 });
 
+export const set_time = (seconds) => {
+  let track = document.find("player duration-track");
+  let percent_width = (seconds * 100) / __player.Track.audio.duration;
+  let should_resume = __player.active;
+
+  pause();
+
+  // Change visible track width.
+  track.style.width = percent_width + "%";
+
+  // Change actual <audio> time.
+  __player.Track.audio.currentTime = seconds;
+
+  // Waiting 120 ms to not interfere with the css animations.
+  if (should_resume)
+    setTimeout(() => {
+      resume();
+    }, 120);
+};
+
 $(function () {
   //
   //
@@ -914,24 +943,12 @@ $(function () {
    */
   $(document).on("click", "player-overflow", function (e) {
     let duration = __player.Track.audio.duration;
-    let track = this.find("duration-track");
     let track_width = parseFloat(getComputedStyle(this).width);
     let layer_clicked_x = e.originalEvent.layerX;
     let percent_width = (100 * layer_clicked_x) / track_width;
-    let new_audio_time = duration * (percent_width / 100);
+    let new_audio_time_sec = duration * (percent_width / 100);
 
-    pause();
-
-    // Change visible track width.
-    track.style.width = percent_width + "%";
-
-    // Change actual <audio> time.
-    __player.Track.audio.currentTime = new_audio_time;
-
-    // Waiting 120 ms to not interfere with the css animations.
-    setTimeout(() => {
-      resume();
-    }, 120);
+    set_time(new_audio_time_sec);
   });
 
   /**
