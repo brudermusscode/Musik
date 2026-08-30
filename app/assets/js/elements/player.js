@@ -6,7 +6,7 @@ import * as Cookie from "../framework/cookie";
 import * as Global from "../pages/global";
 
 const __duration_track_interval = null;
-const __duration_track_timeout = null;
+const __duration_track_reset_timeout = null;
 const DEFAULT_VOLUME = 0.2;
 
 const init_color = "#ff47ff";
@@ -408,7 +408,7 @@ export const pause = () => {
   Player.deactivate();
 
   clearInterval(__duration_track_interval);
-  clearTimeout(__duration_track_timeout);
+  clearTimeout(__duration_track_reset_timeout);
 
   /**
    * Deactivate ANY preview button when the song gets paused.
@@ -476,7 +476,7 @@ export const reset_duration_track = () => {
 
   Player.deactivate();
 
-  clearTimeout(__duration_track_timeout);
+  clearTimeout(__duration_track_reset_timeout);
   clearInterval(__duration_track_interval);
 
   player_track_duration.style.width = "0%";
@@ -491,19 +491,17 @@ export const reset_duration_track = () => {
  */
 export const kick_duration_track = (audio_element, reset = false) => {
   let duration = audio_element.duration;
-  let player_track_duration = Player.find("duration-track");
+  let overflow = Player.find("player player-overflow");
+  let track = overflow.find("duration-track");
 
-  let player_width = parseFloat(
-    getComputedStyle(Player.find("player-content")).width,
-  );
-  let track_starting_width = parseFloat(
-    getComputedStyle(player_track_duration).width,
-  );
-  let current_width = !reset ? (track_starting_width * 100) / player_width : 0;
+  let overflow_w = parseFloat(getComputedStyle(overflow).width);
+  let track_w = parseFloat(getComputedStyle(track).width);
+  let current_width = (track_w * 100) / overflow_w;
 
-  /**
-   * Gets the exact start time in ms.
-   */
+  // When resetting the width, we need to set it to 0.
+  if (reset) current_width = 0;
+
+  // Gets the exact start time in ms.
   let interval_step_ms = 10;
   let total_duration_ms = 1000 * duration;
   let start = performance.now();
@@ -517,7 +515,7 @@ export const kick_duration_track = (audio_element, reset = false) => {
     const time_elapsed_ms = performance.now() - start;
 
     add_width = Math.min(100, (time_elapsed_ms / total_duration_ms) * 100);
-    player_track_duration.style.width = `${current_width + add_width}%`;
+    track.style.width = current_width + add_width + "%";
   }, interval_step_ms);
 
   /**
@@ -527,7 +525,7 @@ export const kick_duration_track = (audio_element, reset = false) => {
   let left_duration = audio_element.duration - audio_element.currentTime;
   let total_left_duration_ms = 1000 * left_duration;
 
-  __duration_track_timeout = setTimeout(() => {
+  __duration_track_reset_timeout = setTimeout(() => {
     reset_duration_track();
     queue_play_next();
   }, Math.round(total_left_duration_ms));
@@ -885,6 +883,58 @@ $(function () {
   });
 
   /**
+   * Show a time label when hovering over a part of the player overflow holding the
+   * duration-track to indicate, where the song will start playing when clicking.
+   */
+  $(document).on("mouseover, mousemove", "player-overflow", function (e) {
+    let w = parseFloat(getComputedStyle(this).width);
+    let x = e.originalEvent.layerX;
+    let label = document.find("time-label");
+    let duration_sec = __player.Track.audio.duration;
+    let percent = (x * 100) / w;
+    let hovered_seconds = Math.floor(duration_sec * (percent / 100));
+    let minutes = Math.floor(hovered_seconds / 60);
+    let seconds = hovered_seconds % 60;
+
+    let time = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+    label.activate();
+    label.style.left = x - 14 + "px";
+    label.innerHTML = time;
+  });
+
+  $(document).on("mouseout", "player-overflow", function (e) {
+    let label = document.find("time-label");
+
+    label.deactivate();
+  });
+
+  /**
+   * Set new time for the currently playing track when clicking on the duration-track.
+   */
+  $(document).on("click", "player-overflow", function (e) {
+    let duration = __player.Track.audio.duration;
+    let track = this.find("duration-track");
+    let track_width = parseFloat(getComputedStyle(this).width);
+    let layer_clicked_x = e.originalEvent.layerX;
+    let percent_width = (100 * layer_clicked_x) / track_width;
+    let new_audio_time = duration * (percent_width / 100);
+
+    pause();
+
+    // Change visible track width.
+    track.style.width = percent_width + "%";
+
+    // Change actual <audio> time.
+    __player.Track.audio.currentTime = new_audio_time;
+
+    // Waiting 120 ms to not interfere with the css animations.
+    setTimeout(() => {
+      resume();
+    }, 120);
+  });
+
+  /**
    * Toggles shuffle mode by click on a button and shows the
    * button element based on the returned value of the shuffle() function.
    */
@@ -1007,7 +1057,6 @@ $(function () {
   $(document).on("click", "[play-previous]", async function (e) {
     await queue_play_previous();
   });
-
 
   /**
    * Increase the volume of the currently playing track and set it globally.

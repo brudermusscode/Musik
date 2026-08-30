@@ -83,9 +83,9 @@ foreach ($Bookmarks ?? [] as $key => $Bookmark) :
       <?= $show_active ? "active" : "" ?>>
 
       <moption flex-truncate>
-        <div playing rounded color=tertiary background=slight-dark alic jucc z>
+        <!--<div playing rounded color=tertiary background=slight-dark alic jucc z>
           <mi stdplus>volume_up</mi>
-        </div>
+        </div>-->
 
         <?php
 

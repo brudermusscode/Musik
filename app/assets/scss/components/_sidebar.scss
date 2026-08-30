@@ -21,7 +21,6 @@ sidebar {
     max-height: calc(100vh - $bruder-height - 6 * $main-distance);
 
     > section {
-      border-radius: 12px;
       margin-inline: $main-distance;
       transition: $trans-cubic;
       scrollbar-width: none;
@@ -46,8 +45,7 @@ sidebar {
       border-radius: 20px;
       padding: $cover-from-border-padding;
       overflow: auto;
-      padding-bottom: 4.4em;
-      min-height: calc(100vh - $bruder-height - 6 * $main-distance);
+      max-height: calc(100vh - $bruder-height - 6 * $main-distance);
     }
 
     current-track {
@@ -226,84 +224,11 @@ sidebar {
       }
     }
 
-    > section {
-      &:first-of-type {
-        border-radius: 20px 20px 12px 12px;
-      }
-
-      &:last-of-type {
-        border-radius: 12px 12px 20px 20px;
-      }
-
-      &:hover {
-        scale: 1.01;
-      }
-    }
-
-    > section:nth-of-type(2) {
-      max-height: calc(
-        100vh - $bruder-distance - 106px - $main-distance - $gap-smol
-      );
+    section {
+      max-height: calc(100vh - $bruder-distance - $main-distance);
       overflow: auto;
       scrollbar-width: none;
-
-      @media screen and (max-width: $collapsed-max-width) {
-        max-height: calc(
-          100vh - 106px - $bruder-distance - $main-distance - $gap-smol
-        );
-      }
-    }
-
-    pages {
-      display: flex;
-      gap: $gap-smoler;
-      flex-direction: column;
-      padding: 6px;
-
-      a {
-        &:first-of-type {
-          moption {
-            border-radius: 16px 16px 8px 8px;
-          }
-        }
-
-        moption {
-          border-radius: 8px;
-        }
-      }
-
-      moption {
-        display: block;
-        padding-block: 12px;
-        padding-inline: 12px 24px;
-        border-radius: 16px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: $gap-smol-plus;
-        font-size: 18px;
-        font-weight: 500;
-
-        &:hover {
-          background: $slighterer-light;
-        }
-      }
-
-      a[active] {
-        moption {
-          background: $slighter-light;
-
-          [title] {
-            color: $yellow;
-            font-weight: 800;
-          }
-
-          mi {
-            color: $text;
-            font-weight: 800;
-          }
-        }
-      }
+      border-radius: 24px;
     }
 
     library {
@@ -321,7 +246,7 @@ sidebar {
           gap: $gap-smoler;
 
           song {
-            margin-block:4px;
+            margin-block: 4px;
           }
 
           a {
@@ -330,16 +255,16 @@ sidebar {
             max-width: calc(50% - $gap-smolest);
 
             moption {
-              display:block;
-              padding:4px;
+              display: block;
+              padding: 4px;
               border-radius: 16px;
 
               [playing] {
-                position:absolute;
-                height:2em;
-                width:2em;
-                right:12px;
-                top:12px;
+                position: absolute;
+                height: 2em;
+                width: 2em;
+                right: 12px;
+                top: 12px;
                 translate: 0 0;
               }
 
@@ -440,7 +365,7 @@ sidebar {
               background: $slighter-light;
 
               [playing] {
-                display:flex;
+                display: flex;
                 align-items: center;
                 justify-content: center;
               }
@@ -462,12 +387,12 @@ sidebar {
             }
 
             [playing] {
-              display:none;
-              position:absolute;
-              height:2em;
-              width:2em;
-              right:8px;
-              top:50%;
+              display: none;
+              position: absolute;
+              height: 2em;
+              width: 2em;
+              right: 8px;
+              top: 50%;
               translate: 0 -50%;
             }
 
@@ -482,97 +407,97 @@ sidebar {
             // The cover images, handling single covers for artists and albums multi-
             // covers for playlists like in spotify's library.
             cover {
-            $playlist-cover-size: 3em;
+              $playlist-cover-size: 3em;
 
-            display: block;
-            position: relative;
-            height: $playlist-cover-size;
-            width: $playlist-cover-size;
-
-            & > div {
-              display: flex;
-              flex-wrap: wrap;
-              position: absolute;
-              top: 0;
-              left: 0;
-              height: 100%;
-              width: 100%;
-              border-radius: 13px;
-              border: 1px solid $slight-light;
-              overflow: hidden;
-            }
-
-            &[single] {
-              picture {
-                background-color: $slighterer-dark;
-                border-radius: 12px;
-
-                mi {
-                  display: block;
-                  position: absolute;
-                  bottom: -18px;
-                  left: -6px;
-                  height: 100%;
-                  width: 100%;
-                  font-size: 42px;
-                }
-              }
-            }
-
-            picture {
+              display: block;
               position: relative;
               height: $playlist-cover-size;
               width: $playlist-cover-size;
-              min-width: $playlist-cover-size;
-              min-height: $playlist-cover-size;
-            }
 
-            &[no-custom-art] {
-              &:not([no-custom-art="1"]),
-              &:not([no-custom-art="2"]),
-              &:not([no-custom-art="3"]) {
+              & > div {
+                display: flex;
+                flex-wrap: wrap;
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                border-radius: 13px;
+                border: 1px solid $slight-light;
+                overflow: hidden;
+              }
+
+              &[single] {
                 picture {
-                  flex-basis: 50%;
-                  padding-top: 50%;
-                  height: initial;
-                  min-height: initial;
-                  min-width: initial;
+                  background-color: $slighterer-dark;
+                  border-radius: 12px;
 
-                  img {
-                    object-fit: cover;
+                  mi {
+                    display: block;
                     position: absolute;
-                    top: 0;
-                    left: 0;
+                    bottom: -18px;
+                    left: -6px;
                     height: 100%;
                     width: 100%;
+                    font-size: 42px;
                   }
                 }
               }
 
-              &[no-custom-art="1"] {
-                picture {
-                  width: $playlist-cover-size;
-                  flex-basis: 100%;
-                }
+              picture {
+                position: relative;
+                height: $playlist-cover-size;
+                width: $playlist-cover-size;
+                min-width: $playlist-cover-size;
+                min-height: $playlist-cover-size;
               }
 
-              &[no-custom-art="2"] {
-                picture {
-                  flex-basis: 50%;
+              &[no-custom-art] {
+                &:not([no-custom-art="1"]),
+                &:not([no-custom-art="2"]),
+                &:not([no-custom-art="3"]) {
+                  picture {
+                    flex-basis: 50%;
+                    padding-top: 50%;
+                    height: initial;
+                    min-height: initial;
+                    min-width: initial;
+
+                    img {
+                      object-fit: cover;
+                      position: absolute;
+                      top: 0;
+                      left: 0;
+                      height: 100%;
+                      width: 100%;
+                    }
+                  }
                 }
-              }
 
-              &[no-custom-art="3"] {
-                picture {
-                  flex-basis: 50%;
-
-                  &:nth-of-type(3) {
+                &[no-custom-art="1"] {
+                  picture {
+                    width: $playlist-cover-size;
                     flex-basis: 100%;
                   }
                 }
+
+                &[no-custom-art="2"] {
+                  picture {
+                    flex-basis: 50%;
+                  }
+                }
+
+                &[no-custom-art="3"] {
+                  picture {
+                    flex-basis: 50%;
+
+                    &:nth-of-type(3) {
+                      flex-basis: 100%;
+                    }
+                  }
+                }
               }
             }
-          }
           }
         }
       }

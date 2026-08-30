@@ -101,12 +101,6 @@ if ($PreviousPlaylist || $NextPlaylist)
 
         <div fl fldircol alic gap=smol>
           <mbutton has-tooltip=right material size=mid icon-only background=slight-dark
-            close-bruder request-get="playlist:new" no-hover-shadow>
-            <mi><?= Playlist::ICON ?></mi>
-            <div ttooltip>Playlist erstellen</div>
-          </mbutton>
-
-          <mbutton has-tooltip=right material size=mid icon-only background=slight-dark
             close-bruder request-get="album:new" no-hover-shadow>
             <mi><?= Album::ICON ?></mi>
             <div ttooltip>Album erstellen</div>

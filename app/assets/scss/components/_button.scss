@@ -37,6 +37,7 @@ mbutton {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: $trans-cubic;
 
     &[placeholder] {
       opacity: 0 !important;
@@ -381,7 +382,10 @@ mbutton {
     &:hover {
       outline: none;
       box-shadow: var(--mio-theme-elevation-3);
-      scale: 1.04;
+
+      &[icon-only] {
+        scale: 1.06;
+      }
 
       &[elevated] {
         box-shadow: var(--mio-theme-elevation-3);
