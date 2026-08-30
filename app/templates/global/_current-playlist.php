@@ -93,30 +93,11 @@ if ($PreviousPlaylist || $NextPlaylist)
   ?>
 
   <search-tools>
-    <input autofocus floating mb24 data-action="<?= $track_explore_action ?>" placeholder="Titel, Artist, oder sonst was..." />
+    <input autofocus floating mb24 data-action="<?= $track_explore_action ?>" placeholder="Titel, Playlisten »   « Künstler, Alben" />
 
     <div fl gap=smol+ alistart jucstretch>
-      <div left-content fl fldircol gap=smol+ alic>
-        <p text smoler bold ttup tac>Machen</p>
-
-        <div fl fldircol alic gap=smol>
-          <mbutton has-tooltip=right material size=mid icon-only background=slight-dark
-            close-bruder request-get="album:new" no-hover-shadow>
-            <mi><?= Album::ICON ?></mi>
-            <div ttooltip>Album erstellen</div>
-          </mbutton>
-        </div>
-      </div>
-
       <div right-content data-react="<?= $track_explore_action ?>" tracks play-only flone>
-        <div posrel pinline24 fl fldircol gap=smol+>
-          <p text smoler bold ttup pinline4>jobs</p>
-
-          <p text regular background=hover-dark rounded jucc alic pblock42 fl fldircol gap=smol+>
-            <mi midplus>handyman</mi>
-            Aktuell keine Jobs eingebaut
-          </p>
-        </div>
+        <p text smol bold ttup tac slight>Tipp was ein, um zu suchen</p>
       </div>
     </div>
   </search-tools>
