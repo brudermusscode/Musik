@@ -39,6 +39,60 @@ mbutton {
     justify-content: center;
     transition: $trans-cubic;
 
+    @extend .window-light;
+
+    &:hover {
+      outline: none;
+      scale: 1.01;
+      background: rgba(255, 255, 255, 0.2);
+
+      &[active] {
+        &:hover {
+          background: rgba(255, 255, 255, 0.28);
+        }
+      }
+
+      &:not([no-hover-shadow]) {
+        box-shadow: var(--mio-theme-elevation-3);
+      }
+
+      &[icon-only] {
+        scale: 1.06;
+      }
+
+      &[elevated] {
+        box-shadow: var(--mio-theme-elevation-3);
+      }
+    }
+
+    &:focus {
+      outline: 4px solid $active;
+
+      box-shadow: none;
+    }
+
+    &:active {
+      outline: none;
+      box-shadow: none;
+    }
+
+    &[no-hover] {
+      pointer-events: none;
+    }
+
+    &[tag] {
+      &:not([has-tooltip]) {
+        cursor: default;
+        box-shadow: none;
+        pointer-events: none;
+
+        &:hover {
+          scale: 1;
+          box-shadow: none;
+        }
+      }
+    }
+
     &[placeholder] {
       opacity: 0 !important;
     }
@@ -73,12 +127,6 @@ mbutton {
       }
     }
 
-    &:not([background]) {
-      &:hover {
-        background: $slighter-light;
-      }
-    }
-
     &[blur] {
       backdrop-filter: blur(10px);
 
@@ -105,11 +153,7 @@ mbutton {
       }
     }
 
-    /**
-     * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-     * ,,,,,,,,,,,,,,,,,,,,,,, SIZING ,,,,,,,,,,,,,,,,,,,,,,,,,
-     * ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-     */
+    // ,,,,,,,,,,,,,,,,,,,,,,, SIZING ,,,,,,,,,,,,,,,,,,,,,,,,,
     &[size="std"],
     &:not([size]) {
       height: $mbutton-std-size;
@@ -360,62 +404,6 @@ mbutton {
           width: $mbutton-wide-size;
           max-width: $mbutton-wide-size;
           min-width: $mbutton-wide-size;
-        }
-      }
-    }
-
-    &[active] {
-      background: $active !important;
-      color: $active-text;
-
-      &:hover {
-        background: $active-hover !important;
-      }
-    }
-
-    &:focus {
-      outline: 4px solid $active;
-
-      box-shadow: none;
-    }
-
-    &:hover {
-      outline: none;
-      box-shadow: var(--mio-theme-elevation-3);
-
-      &[icon-only] {
-        scale: 1.06;
-      }
-
-      &[elevated] {
-        box-shadow: var(--mio-theme-elevation-3);
-      }
-    }
-
-    &:active {
-      outline: none;
-      box-shadow: none;
-    }
-
-    &[no-hover-shadow] {
-      &:hover {
-        box-shadow: none;
-      }
-    }
-
-    &[no-hover] {
-      pointer-events: none;
-    }
-
-    &[tag] {
-      &:not([has-tooltip]) {
-        cursor: default;
-        box-shadow: none;
-        pointer-events: none;
-
-        &:hover {
-          scale: 1;
-          box-shadow: none;
         }
       }
     }

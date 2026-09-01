@@ -59,7 +59,7 @@ if ($PreviousPlaylist || $NextPlaylist)
 <bruder <?= in_array(CURRENT_PAGE, ["album", "artist"]) ? "scroll-manipulated" : "" ?>>
   <current-playlist fl alic jucc gap>
     <a href="<?= $previous_playlist_href ?? "/" ?>">
-      <mbutton previous-playlist material icon-only background=slight-light hoverable>
+      <mbutton previous-playlist material icon-only window-light hoverable no-hover-shadow>
         <mi>keyboard_arrow_left</mi>
       </mbutton>
     </a>
@@ -77,7 +77,7 @@ if ($PreviousPlaylist || $NextPlaylist)
     </p>
 
     <a href="<?= !$NextPlaylist ? "/" : "/playlist/$NextPlaylist->id" ?>">
-      <mbutton next-playlist material icon-only background=slight-light hoverable>
+      <mbutton next-playlist material icon-only window-light hoverable no-hover-shadow>
         <mi>keyboard_arrow_right</mi>
       </mbutton>
     </a>

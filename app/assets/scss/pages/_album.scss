@@ -303,14 +303,13 @@ album-art {
 
   &[has-album] {
     picture {
-      background:transparent;
+      background: transparent;
     }
   }
 
   picture {
     height: 2.4em;
     width: 2.4em;
-    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;

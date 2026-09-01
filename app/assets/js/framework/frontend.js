@@ -245,6 +245,18 @@ export const input_focused = () => {
 $(function () {
   get_content();
 
+  $(document).on("mousedown", "[slider] slider nibble", function (e) {
+    let slider = this.closest("slider");
+    let mouse_x = e.clientX;
+    let slider_rect = this.closest("[slider]").getBoundingClientRect();
+    let w = parseFloat(getComputedStyle(this.closest("[slider]")).width);
+    let x = mouse_x - slider_rect.left;
+    let value = x / slider_rect.width;
+
+    console.log(x, value.toFixed(0));
+    slider.style.width = value.toFixed(0) + "%";
+  });
+
   $(document).on("click", "mbutton[checkbox]", function (e) {
     let checked = this.hasAttribute("active");
     let input = this.find("input[type=hidden]");

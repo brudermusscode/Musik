@@ -3,6 +3,8 @@
 @use "../abstract" as *;
 
 bruder {
+  @extend .window-light;
+
   content: "";
   display: block;
   position: fixed;
@@ -32,8 +34,6 @@ bruder {
     transition: all 0.1s linear;
     z-index: 0;
   }
-
-  @extend .window;
 
   &:not([active]):hover {
     background-color: $slight-light;

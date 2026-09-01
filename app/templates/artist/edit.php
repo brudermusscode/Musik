@@ -22,9 +22,10 @@ ob_start(); ?>
   <mi>sentiment_satisfied</mi>
 </popup-close>
 
-<popup-container>
-  <popup-container__content p42 posrel style=z-index:2; elevated>
-    <form request="artist:update" reload update-current-track update-library responder=simple fl fldircol gap=mid enctype="multipart/form-data">
+<form request="artist:update" reload update-current-track update-library
+  responder=simple enctype="multipart/form-data">
+  <popup-container>
+    <popup-container__content p42 posrel style=z-index:2; elevated fl fldircol gap=mid>
       <div fl fldircol gap=smol+>
         <div mt32 mb32>
           <div select-album-cover fl jucc>
@@ -82,20 +83,24 @@ ob_start(); ?>
             </mbutton>
           <?php endforeach; ?>
         </div>
+
+        <div slider>
+          <slider>
+            <nibble></nibble>
+          </slider>
+          <input type=hidden name=weight value="0.00" />
+        </div>
       </div>
 
       <input type=hidden name=id value="<?= $Artist->id ?>" />
+    </popup-container__content>
 
-      <div fl jucend alic>
-        <mbutton material size=mid icon-only color=tertiary hoverable outlined submit-closest
-          has-tooltip=left no-trans-delay>
-          <mi>pregnant_woman</mi>
-          <div ttooltip>Pööörfekt!</div>
-        </mbutton>
-      </div>
-    </form>
-  </popup-container__content>
-</popup-container>
+    <mbutton flone tabindex="3" material size=wide has-icon=right window
+      submit-closest color=tertiary>
+      <mi>pregnant_woman</mi>
+    </mbutton>
+  </popup-container>
+</form>
 
 
 <?php

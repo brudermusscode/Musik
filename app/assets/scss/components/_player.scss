@@ -402,13 +402,12 @@ volume-controls {
     &[volume="0"],
     &[volume="0.0"] {
       [volume-display] {
-        background: $red;
-        color: white;
+        background: rgba(237, 23, 87, 0.62);
 
         [muted] {
           visibility: visible;
           opacity: 1;
-          width: 1.8em;
+          width: 1.6em;
         }
 
         mi::before {
@@ -444,6 +443,13 @@ volume-controls {
         }
       }
     }
+
+    &[volume="1.0"],
+    &[volume="1"] {
+      [volume-display] {
+        background: rgba(244, 156, 48, 0.22);
+      }
+    }
   }
 
   [volume-display] {
@@ -466,8 +472,8 @@ volume-controls {
       translate: -50% -50%;
       width: 0;
       rotate: 35deg;
-      height: 6px;
-      border: 2px solid $red;
+      height: 4px;
+      // border: 2px solid rgba(237, 23, 87, 1);
       border-radius: 4px;
       background: $light;
     }

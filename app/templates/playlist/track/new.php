@@ -44,7 +44,7 @@ ob_start();
     <div fl fldircol gap=smol+>
       <div tracks add-to fl fldircol gap=smoler
         data-react="playlist:track:explore"><?php foreach ($Playlist->tracks as $Track) : ?>
-          <?php include TEMPLATE . "/playlist/track/_track_preview.php" ?>
+          <?php include TEMPLATE . "/playlist/track/_track-preview.php" ?>
         <?php endforeach; ?></div>
     </div>
 

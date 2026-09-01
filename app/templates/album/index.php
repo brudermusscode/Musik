@@ -29,7 +29,7 @@ else :
   </div>
 
   <div fl gap=smol flex-wrap>
-    <album request-get="album:new" fl alic jucc window clickable>
+    <album request-get="album:new" fl alic jucc window-light hoverable rounded>
       <div fl fldircol alic jucc gap=smol>
         <mi mid>add</mi>
         <p text smoler bold ttup dno>Neues Album</p>

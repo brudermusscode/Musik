@@ -858,6 +858,9 @@ export const set_time = (seconds) => {
   // Change actual <audio> time.
   __player.Track.audio.currentTime = seconds;
 
+  // Save the new time to the localStorage.
+  localStorage.setItem("__player_Track_currentTime", seconds);
+
   // Waiting 120 ms to not interfere with the css animations.
   if (should_resume)
     setTimeout(() => {

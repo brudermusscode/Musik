@@ -31,63 +31,15 @@ popup-close {
 }
 
 popup-container {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: $gap-smol-plus;
   position: absolute;
   top: 50%;
   left: 50%;
   translate: -50% -50%;
-
-  &::before {
-    content: "";
-    display: block;
-    position: absolute;
-    background: $primary;
-    opacity: 0.2;
-    display: none;
-    height: 100%;
-    width: 100%;
-    border-radius: 42px;
-    z-index: 0;
-    animation: before 1s $cubic forwards;
-
-    @keyframes before {
-      from {
-        top: 0;
-        left: 0;
-      }
-
-      to {
-        top: -32px;
-        left: -24px;
-      }
-    }
-  }
-
-  &::after {
-    content: "";
-    display: block;
-    position: absolute;
-    background: $secondary;
-    opacity: 0.2;
-    height: 100%;
-    width: 100%;
-    display: none;
-    border-radius: 42px;
-    z-index: 0;
-    animation: after 1s $cubic forwards;
-
-    @keyframes after {
-      from {
-        top: 0;
-        left: 0;
-      }
-
-      to {
-        top: 42px;
-        left: 18px;
-      }
-    }
-  }
+  margin-block: $main-distance;
+  max-height: calc(100vh - 3 * $main-distance);
 
   popup-container__content {
     border-radius: 42px;
@@ -112,7 +64,7 @@ popup-container {
       }
     }
 
-    @extend .window;
+    @extend .window-light;
 
     &[smol] {
       max-width: 300px;
@@ -219,7 +171,6 @@ select-media {
   border-radius: 22px;
   position: relative;
   margin: 42px;
-  margin-bottom: 0;
   cursor: pointer;
 
   &[filled] {

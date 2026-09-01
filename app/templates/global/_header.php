@@ -12,11 +12,10 @@ use Bruder\Application\Cookie;
       <mi></mi>
     </theme-switcher>
 
-    <div divider background=slight-light rounded minline2
-      style="height:6px;width:6px;"></div>
+    <dot-divider></dot-divider>
 
     <a circled href="/">
-      <mbutton material size=mid icon-only window has-tooltip=bottom
+      <mbutton material size=mid icon-only has-tooltip=bottom
         page=home <?= CURRENT_PAGE === "home" || !CURRENT_PAGE || CURRENT_PAGE === "/" ? "active" : "" ?>>
         <mi>newsstand</mi>
         <div ttooltip>Alles</div>
@@ -24,7 +23,7 @@ use Bruder\Application\Cookie;
     </a>
 
     <a circled href="/albums">
-      <mbutton material size=mid icon-only window has-tooltip=bottom
+      <mbutton material size=mid icon-only has-tooltip=bottom
         page=albums <?= CURRENT_PAGE === "albums" ? "active" : "" ?>>
         <mi>album</mi>
         <div ttooltip>Alben</div>
@@ -33,23 +32,25 @@ use Bruder\Application\Cookie;
   </div>
 
   <div fl alic gap=smol>
-    <mbutton player-repeat
-      repeat=<?= Cookie::get("__player_repeat") ?? "\"\"" ?>
-      <?= in_array(Cookie::get("__player_repeat"), ["all", "single"]) ? "active" : "" ?>
-      material size=midler icon-only has-tooltip=bottom window>
-      <mi></mi>
-      <div ttooltip text regular></div>
-    </mbutton>
+    <div player-tools>
+      <mbutton material size=midler icon-only has-tooltip=bottom no-hover-shadow
+        player-repeat
+        repeat=<?= Cookie::get("__player_repeat") ?? "\"\"" ?>
+        <?= in_array(Cookie::get("__player_repeat"), ["all", "single"])
+          ? "active" : "" ?>>
+        <mi></mi>
+        <div ttooltip text regular></div>
+      </mbutton>
 
-    <mbutton player-shuffle <?= Cookie::get("__player_shuffle") ? "active" : "" ?> material size=midler icon-only has-tooltip=bottom window>
-      <mi>shuffle</mi>
-      <div ttooltip text regular>
-        Shuffle?
-      </div>
-    </mbutton>
+      <mbutton material size=midler icon-only has-tooltip=bottom player-shuffle no-hover-shadow <?= Cookie::get("__player_shuffle") ? "active" : "" ?>>
+        <mi>shuffle</mi>
+        <div ttooltip text regular>
+          Shuffle?
+        </div>
+      </mbutton>
+    </div>
 
-    <div divider background=slight-light rounded minline2
-      style="height:6px;width:6px;"></div>
+    <dot-divider></dot-divider>
 
     <!--- Volume will be populated by js. --->
     <player <?= Cookie::get("__player_collapsed") == 1 ? "collapsed" : "" ?>>
@@ -64,35 +65,33 @@ use Bruder\Application\Cookie;
         </player-overflow>
 
         <player-actions fl alic gap=smol>
-          <mbutton play-previous previous material icon-only size=midler hoverable no-hover-shadow window>
+          <mbutton play-previous previous material icon-only size=midler hoverable no-hover-shadow>
             <mi>chevron_backward</mi>
           </mbutton>
           <play-button play>
             <mi></mi>
           </play-button>
-          <mbutton size=midler play-next next material icon-only hoverable no-hover-shadow window>
+          <mbutton size=midler play-next next material icon-only hoverable no-hover-shadow>
             <mi>chevron_forward</mi>
           </mbutton>
         </player-actions>
       </player-content>
     </player>
 
-    <div divider background=slight-light rounded minline2
-      style="height:6px;width:6px;"></div>
+    <dot-divider></dot-divider>
 
     <volume-controls fl alic gap=smol volume="<?= CURRENT_VOLUME ?>">
-      <div controls elevated>
-        <mbutton volume-up material size=midler icon-only hoverable>
-          <mi>add</mi>
-        </mbutton>
+      <mbutton material icon-only size=midler volume-display volume-mute>
+        <div muted></div>
+        <mi style=font-size:1.4em;></mi>
+      </mbutton>
+      <div controls elevated window-light>
         <mbutton volume-down material size=midler icon-only hoverable>
           <mi>remove</mi>
         </mbutton>
-      </div>
-
-      <div volume-display volume-mute window>
-        <div muted></div>
-        <mi style=font-size:1.4em;></mi>
+        <mbutton volume-up material size=midler icon-only hoverable>
+          <mi>add</mi>
+        </mbutton>
       </div>
     </volume-controls>
 

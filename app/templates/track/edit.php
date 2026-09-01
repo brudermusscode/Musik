@@ -14,21 +14,16 @@ $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT) ?? 0;
  */
 $Track = Track::findOrReturn($id, "No Track");
 
-/**
- * Begin output buffer.
- */
-ob_start();
-
-?>
+ob_start(); ?>
 
 <popup-close>
   <mi>web_traffic</mi>
 </popup-close>
 
-<popup-container>
-  <popup-container__content smolplus posrel style=z-index:2; elevated>
-    <form request="track:update" close-overlays update-current-track responder=simple fl fldircol gap
-      enctype="multipart/form-data">
+<form request="track:update" close-overlays update-current-track responder=simple
+  enctype="multipart/form-data">
+  <popup-container>
+    <popup-container__content smolplus posrel style=z-index:2; elevated>
       <select-media trigger-file-input fl alic jucc>
         <video src autoplay loop muted></video>
         <div fl alic jucc gap=smol+>
@@ -40,17 +35,14 @@ ob_start();
       </select-media>
 
       <input type=hidden name=id value="<?= $Track->id ?>" />
+    </popup-container__content>
 
-      <div fl jucend alic pinline42 pb28>
-        <mbutton material size=mid icon-only hoverable outlined submit-closest
-          has-tooltip=left no-trans-delay>
-          <mi>charger</mi>
-          <div ttooltip>Wow!</div>
-        </mbutton>
-      </div>
-    </form>
-  </popup-container__content>
-</popup-container>
+    <mbutton flone tabindex="3" material size=wide has-icon=right window
+      submit-closest color=white>
+      <mi>charger</mi>
+    </mbutton>
+  </popup-container>
+</form>
 
 
 <?php

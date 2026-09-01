@@ -29,9 +29,9 @@ include __DIR__ . "/_show_active.php";
   <?= $show_active; ?>>
 
   <div option fl alic gap=smol+ flone <?= $action ?>>
-    <picture midler background=primary posrel rounded=std ovhid>
+    <picture midler background=primary posrel ovhid>
       <?php if ($Track->art_link()) : ?>
-        <img rounded=std src="<?= $Track->art_link() ?>" loaded=true />
+        <img src="<?= $Track->art_link() ?>" loaded=true />
       <?php else : ?>
         <mi color=light style=font-size:42px;position:absolute;bottom:-10px;left:-6px;>genres</mi>
       <?php endif; ?>
@@ -47,7 +47,7 @@ include __DIR__ . "/_show_active.php";
       </div>
 
       <div fl alic gap=smol>
-        <div background=slight-light rounded=smol pinline6 pblock4>
+        <div background=slight-light rounded=smol pinline8 pblock6>
           <p text smoler semibold style=width:3.8em; tac ttup><?= $Track->length_formatted() ?> mins</p>
         </div>
         <mi status-icon midler></mi>

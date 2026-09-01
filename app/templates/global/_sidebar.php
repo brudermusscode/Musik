@@ -12,7 +12,7 @@ use Bruder\Model\Album;
 ?>
 
 <sidebar left>
-  <section>
+  <section window-light>
     <library view=<?= Cookie::get("__lib_view") ?>>
 
       <div fl alic jucsb p4 dno>
@@ -43,14 +43,14 @@ use Bruder\Model\Album;
   </section>
 
   <mbutton material size=mid rounded=std mid window has-icon=left
-    minline8 bold
+    minline8 bold window-lighter
     request-get="playlist:new">
     <mi>add</mi>
   </mbutton>
 </sidebar>
 
 <sidebar right>
-  <section current-track>
+  <section current-track window-light>
     <get-content from="/get/current-track">
       <?php include TEMPLATE . "/global/_loader.php"; ?>
     </get-content>

@@ -40,9 +40,8 @@ page {
       [metadata] {
         position: relative;
         flex: 1;
-        padding: 2px;
         padding-inline: 24px 8px;
-        padding-block: 8px 24px;
+        padding-block: 10px 32px;
         border-radius: 0 24px 24px 0;
 
         [album-name] {
@@ -53,6 +52,7 @@ page {
 
       &[scrolled="true"] {
         padding: 8px;
+        padding-left: 7px;
         top: 16px;
 
         [art] {

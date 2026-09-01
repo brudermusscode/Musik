@@ -8,10 +8,10 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  height: $bruder-height + 44px;
+  height: $bruder-height + 48px;
   z-index: 99;
   padding: $main-distance;
-  padding-inline: $main-distance * 2;
+  padding-inline: calc($main-distance * 2 + 5px);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -25,6 +25,23 @@ logo {
   picture {
     height: 56px;
     width: 56px;
+  }
+}
+
+[player-tools] {
+  display: flex;
+  align-items: center;
+  gap: $gap-smol;
+
+  &:hover {
+    mbutton {
+      margin-left: 0;
+    }
+  }
+
+  mbutton {
+    margin-left: -28px;
+    box-shadow: var(--mio-theme-elevation-1);
   }
 }
 
@@ -74,6 +91,8 @@ theme-switcher {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+
+  @extend .window-light;
 
   // Light mode
   &:hover {

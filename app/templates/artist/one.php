@@ -49,31 +49,42 @@ else :
       </picture>
 
       <div metadata fl fldircol alistart jucsb gap=smol+>
-        <div fl alistart jucend gap=smol flone w100>
-          <form <?= $Artist->bookmark
-                  ? 'request="bookmark:delete" interchange-action="bookmark:create"'
-                  : 'request="bookmark:create" interchange-action="bookmark:delete"'
-                ?> update-library toggle-button-active responder=simple>
-            <input type=hidden name=id value=<?= $Artist->id ?> />
-            <input type=hidden name=type value=artist />
-            <mbutton <?= $Artist->bookmark ? "active" : "" ?> submit-closest material background=slight-light icon-only has-tooltip=bottom>
-              <mi>bookmark_stacks</mi>
-              <div ttooltip text semibold>In o. aus Bib</div>
+        <div fl alic jucsb gap=smol w100>
+          <div fl alic gap=smoler>
+            <p text smol semibold regular ttup background=<?= $Artist::COLOR ?> color=secondary-text pr14 pl10 pblock6 rounded=std fl alic gap=smol>
+              <mi midler>artist</mi>
+              Artist
+            </p>
+          </div>
+
+          <div fl alic gap=smol jucend>
+            <form <?= $Artist->bookmark
+                    ? 'request="bookmark:delete" interchange-action="bookmark:create"'
+                    : 'request="bookmark:create" interchange-action="bookmark:delete"'
+                  ?> update-library toggle-button-active responder=simple>
+              <input type=hidden name=id value=<?= $Artist->id ?> />
+              <input type=hidden name=type value=artist />
+              <mbutton material <?= $Artist->bookmark ? "active" : "" ?> submit-closest icon-only has-tooltip=bottom>
+                <mi>add</mi>
+                <div ttooltip text semibold>Zur/aus Bib</div>
+              </mbutton>
+            </form>
+
+            <mbutton material request-get="artist:edit" data-id="<?= $Artist->id ?>" icon-only has-tooltip=bottom>
+              <mi>edit</mi>
+              <div ttooltip text semibold>Bearbeiten</div>
             </mbutton>
-          </form>
 
-          <mbutton request-get="artist:edit" data-id="<?= $Artist->id ?>" material background=slight-light icon-only has-tooltip=bottom>
-            <mi>edit</mi>
-            <div ttooltip text semibold>Bearbeiten</div>
-          </mbutton>
+            <dot-divider></dot-divider>
 
-          <p pr18 pl12 pblock12 ml8 background=hover-dark rounded=wide text smol fl alic gap=smol>
-            <mi>directory_sync</mi>
-            <?= Time::ago($Artist->updated_at ?? $Artist->created_at); ?>
-          </p>
+            <p window-light pr18 pl12 pblock10 rounded=wide text smol fl alic gap=smol>
+              <mi>directory_sync</mi>
+              <?= Time::ago($Artist->updated_at ?? $Artist->created_at); ?>
+            </p>
+          </div>
         </div>
 
-        <div fl fldircol alistart gap=smol>
+        <div fl fldircol alistart gap=smol+>
           <?php
 
           /**
@@ -90,14 +101,8 @@ else :
           };
 
           ?>
-
-          <p album-name text <?= $title_size ?> bold lh1 word-break><?= $Artist->name ?></p>
-          <div fl alic gap=smoler>
-            <p text smol regular ttup background=<?= $Artist::COLOR ?> color=secondary-text pr12 pl8 pblock6 rounded=smol fl alic gap=smol>
-              <mi midler>artist</mi>
-              Artist
-            </p>
-          </div>
+          <p album-name text <?= $title_size ?> bold lh1 word-break>
+            <?= $Artist->name ?></p>
         </div>
       </div>
     </top-banner>

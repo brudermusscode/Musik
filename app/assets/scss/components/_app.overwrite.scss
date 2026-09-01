@@ -11,7 +11,7 @@ body {
 
   &[theme="dark"] {
     background-blur {
-      background: rgba(0, 0, 0, 0.78);
+      background: rgba(0, 0, 0, 0.72);
     }
   }
 
@@ -110,13 +110,23 @@ ajax-response {
   user-select: none;
 }
 
+dot-divider {
+  display: block;
+  border-radius: 24px;
+  margin-inline: 2px;
+  background: rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.24);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  height: 6px;
+  width: 6px;
+}
+
 top-banner {
   @extend .window;
 
   display: block;
-  border-radius: 32px;
+  border-radius: 30px;
   padding: $cover-from-border-padding;
-  padding-left: 3px;
   position: fixed;
   top: $bruder-distance;
   z-index: 10;
@@ -125,6 +135,10 @@ top-banner {
 
   @media screen and (max-width: $hide-sidebar-max-width) {
     width: $hide-sidebar-content-width;
+  }
+
+  &[scrolled="true"] {
+    border-radius: 34px;
   }
 }
 

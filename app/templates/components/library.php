@@ -82,7 +82,7 @@ foreach ($Bookmarks ?? [] as $key => $Bookmark) :
       data-id="<?= $Ref->id ?>"
       <?= $show_active ? "active" : "" ?>>
 
-      <moption flex-truncate>
+      <moption flex-truncate <?= $Bookmark->type ?>>
         <!--<div playing rounded color=tertiary background=slight-dark alic jucc z>
           <mi stdplus>volume_up</mi>
         </div>-->

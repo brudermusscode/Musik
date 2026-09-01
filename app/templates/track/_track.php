@@ -149,7 +149,7 @@ include __DIR__ . "/_show_active.php";
       <?php endif; ?>
 
       <div fl alic gap=smol+ flone>
-        <div fl fldircol style="margin-top:-2px;">
+        <div fl fldircol style="margin-top:-6px;">
           <p title text <?= strlen($Track->title) > 40 ? "std" : "stdplus" ?> semibold trimt>
             <?= $Track->title ?>
           </p>
@@ -171,7 +171,7 @@ include __DIR__ . "/_show_active.php";
     </div>
     <div fl alic gap=smol>
       <div right-info text smol fl alic gap=smoler>
-        <p text smol regular ttup background=slight-light pblock6 rounded=smol no-word-wrap style=width:5.8em; tac>
+        <p text smol semibold window-light pblock8 rounded=smolplus no-word-wrap style=width:5.4em; tac>
           <?= $Track->length_formatted(); ?> mins
         </p>
       </div>

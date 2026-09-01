@@ -20,23 +20,16 @@ $Album = Album::find($id);
 if (!$Album)
   die($Request->error("<strong>Bruder, das Album gibt es nicht D:</strong>"));
 
-/**
- * Begin output buffer.
- */
-ob_start();
-
-?>
+ob_start(); ?>
 
 <popup-close>
   <mi>sentiment_satisfied</mi>
 </popup-close>
 
-<popup-container>
-  <popup-container__content p42 posrel style=z-index:2; elevated>
-    <form request="album:update" reload responder=simple update-library update-current-track
-      fl fldircol gap=mid
-      enctype="multipart/form-data">
-      <div fl fldircol gap=smol+>
+<form request="album:update" reload responder=simple update-library update-current-track enctype="multipart/form-data">
+  <popup-container>
+    <popup-container__content p42 posrel style=z-index:2; elevated fl fldircol gap=mid>
+      <div fl fldircol gap mb24>
         <div mt32 mb32>
           <div select-album-cover fl jucc>
             <picture widest rounded ovhid
@@ -58,18 +51,14 @@ ob_start();
       </div>
 
       <input type=hidden name=id value="<?= $Album->id ?>" />
+    </popup-container__content>
 
-      <div fl jucend alic>
-        <mbutton material size=mid icon-only color=tertiary hoverable outlined submit-closest
-          has-tooltip=left no-trans-delay>
-          <mi>mode_standby</mi>
-          <div ttooltip>Gut so!</div>
-        </mbutton>
-      </div>
-    </form>
-  </popup-container__content>
-</popup-container>
-
+    <mbutton flone tabindex="3" material size=wide has-icon=right window
+      submit-closest color=tertiary>
+      <mi>mode_standby</mi>
+    </mbutton>
+  </popup-container>
+</form>
 
 <?php
 

@@ -1,0 +1,42 @@
+@use "../framework/var.utils" as *;
+@use "../framework/var.sizes" as *;
+@use "../abstract" as *;
+
+[slider] {
+  display: block;
+  position: relative;
+  border-radius: 24px;
+  background: $slight-light;
+  height: 10px;
+
+  slider {
+    display: block;
+    position: absolute;
+    border-radius: 24px;
+    background: white;
+    height: 100%;
+    width: 20%;
+    left: 0;
+  }
+
+  nibble {
+    display: block;
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    height: 14px;
+    width: 14px;
+    cursor: pointer;
+    background: white;
+    border-radius: 4px;
+    box-shadow: var(--mio-theme-elevation-1);
+
+    &:hover,
+    &:active {
+      height: 18px;
+      width: 18px;
+      top: -4px;
+      right: -4px;
+    }
+  }
+}

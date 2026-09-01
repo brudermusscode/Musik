@@ -12,7 +12,7 @@ $UnoriginalArtist = $SimArtist ?? $Artist;
 ?>
 
 <a href="/artist/<?= $UnoriginalArtist->id ?>">
-  <div fl alic jucsb gap=smol hoverable=slight rounded=smol p8>
+  <div fl alic jucsb gap=smol hoverable=slight rounded=midplus p8>
     <div dno>
       <?php
 
@@ -23,7 +23,7 @@ $UnoriginalArtist = $SimArtist ?? $Artist;
     </div>
 
     <div fl alic gap=smol+>
-      <picture midler rounded=midplus <?= $UnoriginalArtist->art ? "has-art" : "" ?> ovhid background=secondary posrel>
+      <picture midler rounded=mid <?= $UnoriginalArtist->art ? "has-art" : "" ?> ovhid background=secondary posrel>
         <?php if ($UnoriginalArtist->art) : ?>
           <img src="<?= $UnoriginalArtist->art_link() ?>" loaded=true />
         <?php else : ?>
@@ -32,8 +32,8 @@ $UnoriginalArtist = $SimArtist ?? $Artist;
         <?php endif; ?>
       </picture>
 
-      <div>
-        <p text semibold><?= $UnoriginalArtist->name ?></p>
+      <div fl fldircol gap=smoler>
+        <p text stdplus semibold><?= $UnoriginalArtist->name ?></p>
         <p text smoler regular ttup>Artist &nbsp;&middot;&nbsp; <?= $track_count ?> tracks</p>
       </div>
     </div>

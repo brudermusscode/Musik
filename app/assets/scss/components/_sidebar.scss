@@ -24,8 +24,6 @@ sidebar {
       margin-inline: $main-distance;
       transition: $trans-cubic;
       scrollbar-width: none;
-
-      @extend .window;
     }
   }
 
@@ -228,7 +226,8 @@ sidebar {
       max-height: calc(100vh - $bruder-distance - $main-distance);
       overflow: auto;
       scrollbar-width: none;
-      border-radius: 24px;
+      border-radius: 26px;
+      padding-top: 2px;
     }
 
     library {
@@ -384,6 +383,20 @@ sidebar {
           moption {
             &:hover {
               background: $slighterer-light;
+            }
+
+            &[artist] {
+              border-radius: 24px;
+
+              cover {
+                & > div {
+                  border-radius: 23px;
+                }
+
+                picture {
+                  border-radius: 22px;
+                }
+              }
             }
 
             [playing] {

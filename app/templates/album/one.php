@@ -55,41 +55,54 @@ else :
       </picture>
 
       <div metadata fl fldircol alistart jucsb gap=smol+>
-        <div fl alistart jucend gap=smol flone w100>
-          <form <?= $Album->bookmark
-                  ? 'request="bookmark:delete" interchange-action="bookmark:create"'
-                  : 'request="bookmark:create" interchange-action="bookmark:delete"'
-                ?> update-library toggle-button-active responder=simple>
-            <input type=hidden name=id value=<?= $Album->id ?> />
-            <input type=hidden name=type value=album />
-            <mbutton <?= $Album->bookmark ? "active" : "" ?> submit-closest material background=slight-light icon-only has-tooltip=bottom>
-              <mi>bookmark_stacks</mi>
-              <div ttooltip text semibold>In o. aus Bib</div>
+        <div fl alic jucsb gap=smol w100>
+          <div fl alic gap=smoler>
+            <p text smol semibold regular ttup background=<?= $Album::COLOR ?> color=<?= $Album::COLOR; ?>-text pr14 pl10 pblock6 rounded=std fl alic gap=smol>
+              <mi midler>album</mi>
+              Release
+            </p>
+          </div>
+
+          <div fl alic gap=smol jucend>
+            <form <?= $Album->bookmark
+                    ? 'request="bookmark:delete" interchange-action="bookmark:create"'
+                    : 'request="bookmark:create" interchange-action="bookmark:delete"'
+                  ?> update-library toggle-button-active responder=simple>
+              <input type=hidden name=id value=<?= $Album->id ?> />
+              <input type=hidden name=type value=album />
+              <mbutton <?= $Album->bookmark ? "active" : "" ?> submit-closest material icon-only has-tooltip=bottom>
+                <mi>bookmark_stacks</mi>
+                <div ttooltip text semibold>In o. aus Bib</div>
+              </mbutton>
+            </form>
+
+            <mbutton request-get="album:edit" data-id="<?= $Album->id ?>" material icon-only has-tooltip=bottom>
+              <mi>edit</mi>
+              <div ttooltip text semibold>Bearbeiten</div>
             </mbutton>
-          </form>
 
-          <mbutton request-get="album:edit" data-id="<?= $Album->id ?>" material background=slight-light icon-only has-tooltip=bottom>
-            <mi>edit</mi>
-            <div ttooltip text semibold>Bearbeiten</div>
-          </mbutton>
-
-          <mbutton request-get="album:track:new" data-id="<?= $Album->id ?>" material icon-only background=slight-light hoverable has-tooltip=bottom>
-            <mi>list_alt_add</mi>
-            <div ttooltip text semibold>Mehr Musik bitte</div>
-          </mbutton>
-
-          <form request="album:delete" redirect="/" update-library responder=simple>
-            <input type=hidden name=id value="<?= $Album->id ?>" />
-            <mbutton submit-closest material icon-only background=primary color=light-red no-hover-shadow has-tooltip=bottom>
-              <mi>delete_forever</mi>
-              <div ttooltip text semibold>Löschen</div>
+            <mbutton request-get="album:track:new" data-id="<?= $Album->id ?>" material icon-only has-tooltip=bottom>
+              <mi>list_alt_add</mi>
+              <div ttooltip text semibold>Mehr Musik bitte</div>
             </mbutton>
-          </form>
 
-          <p pr18 pl12 pblock12 ml8 background=hover-dark rounded=wide text smol fl alic gap=smol>
-            <mi>directory_sync</mi>
-            <?= Time::ago($Album->updated_at ?? $Album->created_at); ?>
-          </p>
+            <dot-divider></dot-divider>
+
+            <form request="album:delete" redirect="/" update-library responder=simple>
+              <input type=hidden name=id value="<?= $Album->id ?>" />
+              <mbutton submit-closest material icon-only has-tooltip=bottom>
+                <mi>delete_forever</mi>
+                <div ttooltip text semibold>Löschen</div>
+              </mbutton>
+            </form>
+
+            <dot-divider></dot-divider>
+
+            <p pr18 pl12 pblock12 window-light text smol fl alic gap=smol>
+              <mi>directory_sync</mi>
+              <?= Time::ago($Album->updated_at ?? $Album->created_at); ?>
+            </p>
+          </div>
         </div>
 
         <div fl fldircol alistart gap=smol>
@@ -110,15 +123,9 @@ else :
 
           ?>
 
-          <p album-name text <?= $title_size ?> bold lh1 word-break><?= $Album->name ?></p>
+          <p album-name text <?= $title_size ?> bold lh1 word-break>
+            <?= $Album->name ?></p>
           <div fl alic gap=smoler>
-            <a href="/albums">
-              <p text smol regular ttup background=quadro color=quadro-text pr12 pl8 pblock6 rounded=smol fl alic gap=smol>
-                <mi midler>album</mi>
-                Album
-              </p>
-            </a>
-
             <?php
 
             /**
@@ -126,15 +133,12 @@ else :
              */
             $Artists = $Album->artists();
 
-            /**
-             * @var bool
-             */
             $has_many_artists = $Artists->count() - 1;
 
             if ($Artists->count()) : ?>
               <a href="<?= "/artist/" . $Artists->first()->id ?>">
-                <p text ttup smol regular fl alic gap=smol pr12 pl8 pblock6 rounded=smol background=slight-light hoverable>
-                  <mi midler>artist</mi>
+                <p text ttup smol regular fl alic gap=smol pl10 pr16 pblock6 rounded=std background=slighter-light hoverable>
+                  <mi midler color=<?= Artist::COLOR ?>>artist</mi>
                   <?= $Artists->first()->name . ($has_many_artists ? " & $has_many_artists more" : "") ?>
                 </p>
               </a>

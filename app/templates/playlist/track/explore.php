@@ -50,7 +50,7 @@ $Tracks = Track::where("title", "LIKE", "%$input%")
 ob_start();
 
 foreach ($Tracks as $Track) :
-  include TEMPLATE . "/playlist/track/_track_preview.php";
+  include TEMPLATE . "/playlist/track/_track-preview.php";
 endforeach;
 
 die($Request->success("Deine Tracks Bruder ;)", data: ob_get_clean()));
