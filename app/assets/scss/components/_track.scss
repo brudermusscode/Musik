@@ -25,11 +25,15 @@ song {
       [content] {
         margin-block: 4px;
         padding: 4px;
-        background: $slight-green;
-        border: 1px dashed $green;
+        background: $slighter-green;
+        border-radius: 62px 32px 32px 62px;
       }
 
       album-art {
+        margin-top: -2px;
+        margin-bottom: -2px;
+        margin-left: -2px;
+
         picture {
           border: 2px solid white;
           border-radius: 50%;
