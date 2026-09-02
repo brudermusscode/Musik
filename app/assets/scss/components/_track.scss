@@ -83,6 +83,9 @@ song {
   }
 
   &[in-album] {
+    [content] {
+      padding-block: 10px;
+    }
   }
 
   &:not([in-album], [in-library]) {

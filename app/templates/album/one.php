@@ -3,12 +3,13 @@
 use Illuminate\Support\Collection;
 use Bruder\Model\Album;
 use Bruder\Model\Artist;
+use Bruder\Model\Track;
 use Bruder\Time\Time;
 
 /**
  * @var int
  */
-$id = filter_var($GLOBALS["route_param_id"], FILTER_DEFAULT);
+$id = filter_var($GLOBALS["route_param_id"]);
 
 /**
  * @var ?Album
@@ -67,11 +68,11 @@ else :
             <form <?= $Album->bookmark
                     ? 'request="bookmark:delete" interchange-action="bookmark:create"'
                     : 'request="bookmark:create" interchange-action="bookmark:delete"'
-                  ?> update-library toggle-button-active responder=simple>
+                  ?> update-library reload toggle-button-active responder=simple>
               <input type=hidden name=id value=<?= $Album->id ?> />
               <input type=hidden name=type value=album />
               <mbutton <?= $Album->bookmark ? "active" : "" ?> submit-closest material icon-only has-tooltip=bottom>
-                <mi>bookmark_stacks</mi>
+                <mi><?= $Album->bookmark ? "remove" : "add" ?></mi>
                 <div ttooltip text semibold>In o. aus Bib</div>
               </mbutton>
             </form>
@@ -95,13 +96,6 @@ else :
                 <div ttooltip text semibold>Löschen</div>
               </mbutton>
             </form>
-
-            <dot-divider></dot-divider>
-
-            <p pr18 pl12 pblock12 window-light text smol fl alic gap=smol>
-              <mi>directory_sync</mi>
-              <?= Time::ago($Album->updated_at ?? $Album->created_at); ?>
-            </p>
           </div>
         </div>
 
@@ -125,35 +119,60 @@ else :
 
           <p album-name text <?= $title_size ?> bold lh1 word-break>
             <?= $Album->name ?></p>
-          <div fl alic gap=smoler>
-            <?php
-
-            /**
-             * @var ?Collection<Artist>
-             */
-            $Artists = $Album->artists();
-
-            $has_many_artists = $Artists->count() - 1;
-
-            if ($Artists->count()) : ?>
-              <a href="<?= "/artist/" . $Artists->first()->id ?>">
-                <p text ttup smol regular fl alic gap=smol pl10 pr16 pblock6 rounded=std background=slighter-light hoverable>
-                  <mi midler color=<?= Artist::COLOR ?>>artist</mi>
-                  <?= $Artists->first()->name . ($has_many_artists ? " & $has_many_artists more" : "") ?>
-                </p>
-              </a>
-            <?php endif ?>
-          </div>
         </div>
       </div>
     </top-banner>
 
-    <playlist-action-bar fl aliend jucsb gap dno>
+    <playlist-action-bar fl aliend jucsb gap pinline12>
       <div fl alic gap=smol>
+        <?php
 
+        /**
+         * @var ?Collection<Artist>
+         */
+        $Artists = $Album->artists();
+
+        $has_many_artists = $Artists->count() - 1;
+
+        if ($Artists->count()) : ?>
+          <a href="<?= "/artist/" . $Artists->first()->id ?>">
+            <p text ttup smol regular fl alic gap=smol pl10 pr16 pblock6 rounded=std background=slighter-light hoverable>
+              <mi midler color=<?= Artist::COLOR ?>>artist</mi>
+              <?= $Artists->first()->name . ($has_many_artists ? " & $has_many_artists more" : "") ?>
+            </p>
+          </a>
+        <?php endif ?>
       </div>
-      <div fl alic gap=smol>
 
+      <div fl alic gap=smol>
+        <?php if ($Album->tracks->count()) : ?>
+          <p background=slighter-light pinline14 pblock10 rounded=std text smol semibold><?= $Album->tracks->count() ?? 0 ?> track<?= $Album->tracks->count() > 1 ? "s" : "" ?></p>
+
+          <p text smol bold>&middot;</p>
+
+          <?php
+
+          $sum = $Album->tracks->sum("length_seconds") / 60;
+          $sum_explode = explode(".", $sum);
+          $sum_minutes = $sum_explode[0];
+          $sum_seconds = $sum_explode[1] % 60;
+
+          ?>
+          <div fl alic gap=smoler has-tooltip=left curwhat>
+            <mi>motion_play</mi>
+            <p text smol><?= $sum_minutes . "min, " . $sum_seconds . "sec" ?></p>
+            <div ttooltip text semibold>Gesamte Spiellänge</div>
+          </div>
+
+          <p text smol bold>&middot;</p>
+        <?php endif; ?>
+
+        <div fl alic gap=smoler has-tooltip=left curwhat>
+          <mi>directory_sync</mi>
+          <p text smol>
+            <?= Time::ago($Album->updated_at ?? $Album->created_at); ?></p>
+          <div ttooltip text semibold>Letztes Update</div>
+        </div>
       </div>
     </playlist-action-bar>
 
@@ -163,14 +182,14 @@ else :
      * + No Tracks
      */
     if (!$Album->tracks->count()) : ?>
-      <div style="border:2px dotted #de54fc;" background=hover-dark fl fldircol jucc alic gap pblock62 rounded=wide>
+      <div background=slight-dark fl fldircol jucc alic gap pblock62 rounded=wide>
         <div fl fldircol gap=smolest tac>
-          <p text midler semibold>Bruder, nichts drin.</p>
+          <p text semibold>Bruder, nichts drin.</p>
           <p text>Such was schönes aus</p>
         </div>
         <mbutton request-get="album:track:new" data-id="<?= $Album->id ?>"
-          material size=mid background=primary color=primary-text icon-only ovhid>
-          <mi style="font-size:52px;position:absolute;bottom:-12px;left:-12px;">list_alt_add</mi>
+          material size=mid icon-only ovhid>
+          <mi style="font-size:42px;position:absolute;bottom:-6px;left:-4px;">list_alt_add</mi>
         </mbutton>
       </div>
     <?php endif; ?>

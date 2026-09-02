@@ -150,7 +150,7 @@ include __DIR__ . "/_show_active.php";
 
       <div fl alic gap=smol+ flone>
         <div fl fldircol style="margin-top:-6px;">
-          <p title text <?= strlen($Track->title) > 40 ? "std" : "stdplus" ?> semibold trimt>
+          <p title text semibold trimt>
             <?= $Track->title ?>
           </p>
           <div fl alic gap=smoler>
