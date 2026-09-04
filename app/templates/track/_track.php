@@ -28,59 +28,16 @@ $Albums = $Track->albums;
  */
 $Album = $Albums?->first();
 
-/**
- * @var bool
- */
 $track_playable ??= true;
-
-/**
- * @var bool
- */
 $show_count ??= false;
-
-/**
- * @var bool
- */
 $song_playlist_index ??= 0;
-
-/**
- * @var bool
- */
 $show_menu ??= true;
-
-/**
- * @var bool
- */
 $show_playing ??= true;
-
-/**
- * @var bool
- */
 $show_listens ??= false;
-
-/**
- * @var int
- */
 $length_minutes = $Track->length_seconds / 60;
-
-/**
- * @var bool
- */
 $in_playlist = $Playlist->id ?? null;
-
-/**
- * @var bool
- */
 $in_album = CURRENT_PAGE === "album";
-
-/**
- * @var bool
- */
 $in_artist = CURRENT_PAGE === "artist";
-
-/**
- * @var bool
- */
 $no_left_action = !$in_playlist && !$show_count && !$in_album && !$in_artist;
 
 /**

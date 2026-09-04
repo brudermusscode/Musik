@@ -5,7 +5,7 @@
 
 responder {
   display: block;
-  bottom: calc(-1 * ($main-distance - 4px));
+  bottom: 2px;
   left: 50%;
   translate: -50% 0;
   position: fixed;
@@ -69,5 +69,9 @@ responder {
     scale: 1;
     opacity: 1;
     bottom: $main-distance;
+
+    @media screen and (max-width: $laptop-max-width) {
+      bottom: $main-distance-smol;
+    }
   }
 }

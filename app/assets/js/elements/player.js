@@ -668,44 +668,14 @@ export const init_current_track = async () => {
  * Mutes the volume but keeps running.
  */
 export const mute = () => {
-  let volume = 0.0;
-  let volume_controls = document.find("volume-controls");
-
-  // Local storage
-  localStorage.setItem("__player_volume", volume);
-
-  // Global player
-  __player.volume = volume;
-
-  // <audio>-Element
-  if (__player.Track.id && __player.Track.audio)
-    __player.Track.audio.volume = volume;
-
-  // Frontend Player
-  volume_controls.setAttribute("volume", volume);
+  set_volume(0.0);
 };
 
 /**
  * When unmuting, set the volume to the default.
  */
 export const unmute = () => {
-  let volume = DEFAULT_VOLUME;
-  let volume_controls = document.find("volume-controls");
-
-  // Persistent cookie
-  localStorage.setItem("__player_volume", volume);
-
-  // Global player
-  __player.volume = volume;
-
-  // <audio>-Element
-  if (__player.Track.audio && __player.Track.audio)
-    __player.Track.audio.volume = volume;
-
-  // Frontend Player
-  volume_controls.setAttribute("volume", volume);
-
-  Frontend.create_responder("Volume: " + volume * 100 + " %");
+  set_volume(DEFAULT_VOLUME);
 };
 
 /**

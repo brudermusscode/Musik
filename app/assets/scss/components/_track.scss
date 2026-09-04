@@ -157,6 +157,10 @@ song {
       scale: 0.99;
     }
 
+    [title] {
+      font-size: $font-size-std-plus;
+    }
+
     [artist] {
       opacity: 0.6;
     }

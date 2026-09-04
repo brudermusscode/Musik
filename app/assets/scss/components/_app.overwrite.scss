@@ -121,23 +121,6 @@ dot-divider {
   width: 6px;
 }
 
-top-banner {
-  @extend .window;
-
-  display: block;
-  border-radius: 30px;
-  padding: $cover-from-border-padding;
-  position: fixed;
-  top: $bruder-distance;
-  z-index: 10;
-  width: $content-width;
-  transition: $trans-cubic;
-
-  &[scrolled="true"] {
-    border-radius: 34px;
-  }
-}
-
 main {
   width: calc($content-width + 2 * $main-distance);
   margin: 0 auto;
@@ -155,6 +138,31 @@ main {
 
   @media screen and (max-width: $hide-sidebar-max-width) {
     width: calc(100vw - (6 * $main-distance));
+  }
+}
+
+top-banner {
+  @extend .window;
+
+  display: block;
+  position: fixed;
+  border-radius: 30px;
+  width: calc($content-width + 2 * $main-distance);
+  padding: $cover-from-border-padding;
+  top: $bruder-distance;
+  z-index: 10;
+  transition: $trans-cubic;
+
+  @media screen and (max-width: $laptop-max-width) {
+    width: $content-laptop-width;
+  }
+
+  @media screen and (min-width: calc($laptop-max-width + 200px)) {
+    width: $content-width;
+  }
+
+  &[scrolled="true"] {
+    border-radius: 34px;
   }
 }
 
