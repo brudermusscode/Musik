@@ -704,6 +704,8 @@ export const unmute = () => {
 
   // Frontend Player
   volume_controls.setAttribute("volume", volume);
+
+  Frontend.create_responder("Volume: " + volume * 100 + " %");
 };
 
 /**
@@ -723,6 +725,8 @@ export const set_volume = (volume) => {
   console.log(`Volume: ${Math.round(__player.volume * 100)}%`);
 
   if (__player.Track.audio) __player.Track.audio.volume = parsed_volume;
+
+  Frontend.create_responder("<strong>" + parsed_volume * 100 + " %</strong>");
 };
 
 export const volume_up = () => {
@@ -931,7 +935,7 @@ $(function () {
     let time = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 
     label.activate();
-    label.style.left = x - 14 + "px";
+    label.style.left = x + 10 + "px";
     label.innerHTML = time;
   });
 

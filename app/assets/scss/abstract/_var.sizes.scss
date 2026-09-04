@@ -5,15 +5,23 @@ $mbutton-std-plus-size: 48px;
 $mbutton-mid-size: 56px;
 $mbutton-wide-size: 74px;
 
-$main-distance: 8px;
+$main-distance: 32px;
+$main-distance-smol: 12px;
+
+$laptop-max-width: 1480px;
+$hide-sidebar-max-width: 1176px;
 
 $collapsed-max-width: 1400px;
-$hide-sidebar-max-width: 1176px;
+$sidebar-width: 500px;
+$sidebar-laptop-width: 372px;
+
+$content-width: calc(100vw - (2 * $sidebar-width + 2 * $main-distance));
+$content-laptop-width: calc(
+  100vw - (2 * $sidebar-laptop-width + 2 * $main-distance-smol)
+);
 
 $player-height: 82px;
 $bruder-height: 70px;
-$sidebar-width: 350px;
-$content-width: calc(100% - (2 * 350px + 2 * $main-distance));
 $hide-sidebar-sidebar-width: 100px;
 $hide-sidebar-content-width: calc(
   100vw - 2 * $hide-sidebar-sidebar-width - 2 * $main-distance

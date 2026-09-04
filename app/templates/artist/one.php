@@ -61,18 +61,19 @@ else :
             <form <?= $Artist->bookmark
                     ? 'request="bookmark:delete" interchange-action="bookmark:create"'
                     : 'request="bookmark:create" interchange-action="bookmark:delete"'
-                  ?> update-library toggle-button-active responder=simple>
+                  ?> update-library reload toggle-button-active responder=simple>
               <input type=hidden name=id value=<?= $Artist->id ?> />
               <input type=hidden name=type value=artist />
               <mbutton material <?= $Artist->bookmark ? "active" : "" ?> submit-closest icon-only has-tooltip=bottom>
-                <mi>add</mi>
-                <div ttooltip text semibold>Zur/aus Bib</div>
+                <mi><?= $Artist->bookmark ? "remove" : "add" ?></mi>
+                <div ttooltip text semibold>
+                  <?= $Artist->bookmark ? "aus bib" : "in bib" ?></div>
               </mbutton>
             </form>
 
             <mbutton material request-get="artist:edit" data-id="<?= $Artist->id ?>" icon-only has-tooltip=bottom>
               <mi>edit</mi>
-              <div ttooltip text semibold>Bearbeiten</div>
+              <div ttooltip text semibold>bearrrbeiten</div>
             </mbutton>
 
             <dot-divider></dot-divider>

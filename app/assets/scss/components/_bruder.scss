@@ -65,8 +65,8 @@ bruder {
     cursor: default;
     min-height: calc(100vh - $main-distance);
     max-height: calc(100vh - $main-distance);
-    width: calc(100vw - 2 * $main-distance);
-    max-width: calc(100vw - 2 * $main-distance);
+    width: calc(100vw - $main-distance);
+    max-width: calc(100vw - $main-distance);
     overflow: auto;
 
     input {

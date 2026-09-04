@@ -253,7 +253,6 @@ $(function () {
     let x = mouse_x - slider_rect.left;
     let value = x / slider_rect.width;
 
-    console.log(x, value.toFixed(0));
     slider.style.width = value.toFixed(0) + "%";
   });
 

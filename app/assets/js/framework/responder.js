@@ -20,12 +20,11 @@ export class Responder {
         <responder ${type} fl alic rounded elevated>
           <div fl alic jucsb flexone gap>
             <div fl alic gap=smol+>
-              <mi>info</mi>
               <p message text>${message}</p>
             </div>
           </div>
         </responder>
-        `
+        `,
       );
 
       array = {

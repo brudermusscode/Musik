@@ -121,7 +121,7 @@ include __DIR__ . "/_show_active.php";
     <?= $no_left_action ? "style=\"padding:4px;padding-right:14px;pointer-events:none;border-radius: 14px 12px 12px 14px;\" background=slighter-light" : "" ?>
     <?= $track_playable ? 'play-track="' . $Track->id . '"' : "" ?>
     content fl alic jucsb gap=smol+ style=flex:1;>
-    <div fl alic <?= $no_left_action ? "gap=smol" : "gap" ?> flone>
+    <div fl alic <?= $no_left_action ? "gap=smol" : "gap" ?> flone flex-truncate>
       <?php if ($show_count) : ?>
         <p text smol style=width:40px;rotate:-90deg;margin-left:-10px;margin-right:-11px; text smoler ttup bold tac><?= $count++; ?></p>
       <?php endif; ?>
@@ -148,8 +148,8 @@ include __DIR__ . "/_show_active.php";
         </album-art>
       <?php endif; ?>
 
-      <div fl alic gap=smol+ flone>
-        <div fl fldircol style="margin-top:-6px;">
+      <div fl alic gap=smol+ flone flex-truncate>
+        <div fl fldircol style="margin-top:-6px;" flex-truncate>
           <p title text semibold trimt>
             <?= $Track->title ?>
           </p>

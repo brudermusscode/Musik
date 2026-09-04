@@ -32,14 +32,14 @@ popup-close {
 
 popup-container {
   display: flex;
+  position: absolute;
   flex-direction: column;
   gap: $gap-smol-plus;
-  position: absolute;
   top: 50%;
   left: 50%;
   translate: -50% -50%;
-  margin-block: $main-distance;
-  max-height: calc(100vh - 3 * $main-distance);
+  margin-block: 0 $main-distance;
+  max-height: calc(100vh - 2 * $main-distance);
 
   popup-container__content {
     border-radius: 42px;

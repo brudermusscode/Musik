@@ -16,14 +16,6 @@ use Bruder\Model\Album;
     <library view=<?= Cookie::get("__lib_view") ?>>
 
       <div fl alic jucsb p4 dno>
-        <div fl alic gap=smoler>
-          <mbutton has-tooltip="right" material rounded=smol icon-only
-            background="slighter-light" request-get="playlist:new" no-hover-shadow>
-            <mi>add</mi>
-            <div ttooltip="">Playlist erstellen</div>
-          </mbutton>
-        </div>
-
         <library-view fl alic jucend gap=smoler>
           <p <?= Cookie::get("__lib_view") === "list" ? "active" : "" ?> view=list hoverable pinline8 pblock6 rounded=smol>
             <mi midler>view_day</mi>
@@ -42,8 +34,7 @@ use Bruder\Model\Album;
     </library>
   </section>
 
-  <mbutton material size=mid rounded=std mid window has-icon=left
-    minline8 bold window-lighter
+  <mbutton material size=mid rounded=std mid window has-icon=left bold window-lighter
     request-get="playlist:new">
     <mi>add</mi>
   </mbutton>

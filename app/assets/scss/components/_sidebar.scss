@@ -12,16 +12,24 @@ sidebar {
   &[left] {
     top: $bruder-distance;
     width: $sidebar-width;
-    // width: calc((100% - $content-width) / 2 - $window-overflow-content / 2);
     min-width: 285px;
+    max-height: calc(
+      100vh - $bruder-height - 2 * $main-distance - ($main-distance/2)
+    );
+    padding-inline: $main-distance;
     display: flex;
     flex-direction: column;
     gap: $gap-smol;
     transition: $trans-cubic;
-    max-height: calc(100vh - $bruder-height - 6 * $main-distance);
+
+    @media screen and (max-width: $laptop-max-width) {
+      width: $sidebar-laptop-width;
+      max-height: calc(100vh - $bruder-height - 4 * $main-distance-smol - 4px);
+      padding-inline: $main-distance-smol;
+    }
 
     > section {
-      margin-inline: $main-distance;
+      border-radius: 26px;
       transition: $trans-cubic;
       scrollbar-width: none;
     }
@@ -31,8 +39,7 @@ sidebar {
     right: 0;
 
     @media screen and (max-width: $hide-sidebar-max-width) {
-      right: 0px;
-      right: calc(-1 * ($sidebar-width - $hide-sidebar-sidebar-width));
+      right: calc(-1 * ($sidebar-laptop-width - 3 * $main-distance));
 
       &:hover {
         right: 0;
@@ -40,10 +47,8 @@ sidebar {
     }
 
     section {
-      border-radius: 20px;
       padding: $cover-from-border-padding;
       overflow: auto;
-      max-height: calc(100vh - $bruder-height - 6 * $main-distance);
     }
 
     current-track {
@@ -101,11 +106,13 @@ sidebar {
             z-index: 2;
             display: block;
             content: "";
-            background: #000000;
+            background: #101012;
             background: linear-gradient(
               0deg,
-              rgba(0, 0, 0, 1) 0%,
-              rgba(0, 0, 0, 0) 100%
+              rgba(16, 16, 18, 0.8) 0%,
+              rgba(16, 16, 18, 0.5) 10%,
+              rgba(16, 16, 18, 0.2) 20%,
+              rgba(16, 16, 18, 0) 32%
             );
           }
 
@@ -214,8 +221,7 @@ sidebar {
     align-items: stretch;
 
     @media screen and (max-width: $hide-sidebar-max-width) {
-      left: 0px;
-      left: calc(-1 * ($sidebar-width - $hide-sidebar-sidebar-width));
+      left: calc(-1 * ($sidebar-laptop-width - 3 * $main-distance));
 
       &:hover {
         left: 0;
@@ -226,7 +232,6 @@ sidebar {
       max-height: calc(100vh - $bruder-distance - $main-distance);
       overflow: auto;
       scrollbar-width: none;
-      border-radius: 26px;
       padding-top: 2px;
     }
 

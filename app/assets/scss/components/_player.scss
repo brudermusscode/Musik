@@ -229,16 +229,20 @@ player {
 
     player-overflow {
       display: block;
-      position: absolute;
+      position: fixed;
       overflow: hidden;
       top: 0;
-      left: 0;
-      margin-inline: $main-distance;
+      left: 50%;
+      translate: -50% 0;
       background: $slight-light;
       border-radius: 0 0 12px 12px;
-      width: calc(100% - 2 * $main-distance);
+      width: calc(100vw - 4 * $main-distance);
       height: 8px;
       cursor: pointer;
+
+      @media screen and (max-width: $laptop-max-width) {
+        width: calc(100vw - $main-distance-smol * 4);
+      }
 
       &:hover {
         height: 12px;

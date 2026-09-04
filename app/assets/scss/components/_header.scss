@@ -11,13 +11,19 @@ header {
   height: $bruder-height + 48px;
   z-index: 99;
   padding: $main-distance;
-  padding-inline: calc($main-distance * 2 + 5px);
+  padding-inline: calc($main-distance * 2)
+    calc(2 * $main-distance + ($main-distance/1.6));
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  @media screen and (max-width: 1000px) {
-    padding-inline: $main-distance + 6px $main-distance * 2 + 6px;
+  @media screen and (max-width: $laptop-max-width) {
+    padding-inline: calc($main-distance-smol * 2)
+      calc($main-distance-smol * 2 + 6px);
+  }
+
+  @media screen and (max-width: $hide-sidebar-max-width) {
+    padding-inline: $main-distance-smol;
   }
 }
 

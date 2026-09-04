@@ -133,25 +133,28 @@ top-banner {
   width: $content-width;
   transition: $trans-cubic;
 
-  @media screen and (max-width: $hide-sidebar-max-width) {
-    width: $hide-sidebar-content-width;
-  }
-
   &[scrolled="true"] {
     border-radius: 34px;
   }
 }
 
 main {
-  // max-width: calc($content-width + 2 * $main-distance);
-  width: $content-width;
+  width: calc($content-width + 2 * $main-distance);
   margin: 0 auto;
-  // padding-inline: $main-distance;
   padding-top: $bruder-distance;
-  padding-bottom: 4 * $main-distance;
+  padding-bottom: $main-distance;
+
+  @media screen and (max-width: $laptop-max-width) {
+    width: $content-laptop-width;
+    padding-bottom: $main-distance-smol;
+  }
+
+  @media screen and (min-width: calc($laptop-max-width + 200px)) {
+    width: $content-width;
+  }
 
   @media screen and (max-width: $hide-sidebar-max-width) {
-    width: $hide-sidebar-content-width;
+    width: calc(100vw - (6 * $main-distance));
   }
 }
 

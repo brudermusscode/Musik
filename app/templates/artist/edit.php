@@ -84,11 +84,11 @@ ob_start(); ?>
           <?php endforeach; ?>
         </div>
 
-        <div slider>
+        <div slider dno>
           <slider>
             <nibble></nibble>
           </slider>
-          <input type=hidden name=weight value="0.00" />
+          <!--<input type=hidden name=weight value="0.00" />-->
         </div>
       </div>
 
