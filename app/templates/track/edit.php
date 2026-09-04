@@ -27,7 +27,7 @@ ob_start(); ?>
       <select-media trigger-file-input fl alic jucc>
         <video src autoplay loop muted></video>
         <div fl alic jucc gap=smol+>
-          <mbutton size=wide material icon-only background=tertiary color=tertiary-text>
+          <mbutton size=wide material icon-only>
             <mi>add</mi>
           </mbutton>
         </div>

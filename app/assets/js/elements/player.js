@@ -905,7 +905,7 @@ $(function () {
     let time = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 
     label.activate();
-    label.style.left = x + 10 + "px";
+    label.style.left = x + 38 + "px";
     label.innerHTML = time;
   });
 

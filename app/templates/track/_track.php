@@ -111,23 +111,26 @@ include __DIR__ . "/_show_active.php";
             <?= $Track->title ?>
           </p>
           <div fl alic gap=smoler>
-            <p text smoler ttup regular fl alic gap=smoler>
+            <p artist text ttup regular fl alic gap=smoler>
               <mi stdplus color=secondary>artist</mi>
               <?= $Track->artistt->name ?>
             </p>
-            <?php if ($show_listens && $Track->listens) : ?>
-              <p text smoler regular fl alic gap=smol>
-                ×
-                <mi color=primary>earbud_right</mi>
-                <?= $Track->listens ?: 0  ?>
-              </p>
-            <?php endif ?>
           </div>
         </div>
       </div>
     </div>
     <div fl alic gap=smol>
       <div right-info text smol fl alic gap=smoler>
+        <div window-light pinline12 pblock8 rounded=smolplus has-tooltip=left>
+          <p text smol semibold fl alic gap=smol>
+            <mi color=primary>earbud_right</mi>
+            <?= $Track->listens ?: 0  ?>
+          </p>
+          <div ttooltip text semibold>
+            Wie oft gehört
+          </div>
+        </div>
+
         <p text smol semibold window-light pblock8 rounded=smolplus no-word-wrap style=width:5.4em; tac>
           <?= $Track->length_formatted(); ?> mins
         </p>
