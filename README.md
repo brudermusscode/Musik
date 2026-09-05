@@ -11,7 +11,7 @@ einzelnen Tracks hochladen (WOW!)!
 
 Eine kleine Preview gefällig? Bitteschön:
 
-<video src="https://cdn.savedly.net/ytagsknv" width="100%"></video>
+![Sehr gut und schön](https://i.ibb.co/yFTX07XH/Screenshot-From-2026-09-05-08-51-48.png)](https://cdn.savedly.net/ytagsknv)
 
 <br>
 
