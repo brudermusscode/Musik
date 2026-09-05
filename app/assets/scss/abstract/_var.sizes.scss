@@ -19,6 +19,7 @@ $content-width: calc(100vw - (2 * $sidebar-width + 2 * $main-distance));
 $content-laptop-width: calc(
   100vw - (2 * $sidebar-laptop-width + 2 * $main-distance-smol)
 );
+$content-hide-sidebar-width: calc(100vw - 6 * $main-distance);
 
 $player-height: 82px;
 $bruder-height: 70px;

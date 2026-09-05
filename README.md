@@ -11,7 +11,7 @@ einzelnen Tracks hochladen (WOW!)!
 
 Eine kleine Preview gefällig? Bitteschön:
 
-https://github.com/user-attachments/assets/a451f78d-d819-4bec-8dd2-4c5f7b30a982
+https://cdn.savedly.net/sdqrxrar
 
 <br>
 

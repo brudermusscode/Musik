@@ -18,14 +18,9 @@ bruder {
   padding: 14px 17px;
   min-height: $bruder-height;
   width: 445px;
-  max-width: $content-width;
   overflow: hidden;
   z-index: 99;
   cursor: pointer;
-
-  @media screen and (max-width: $hide-sidebar-max-width) {
-    max-width: $hide-sidebar-content-width;
-  }
 
   &[scrolled="true"] {
     // top: -$bruder-height - 48px;

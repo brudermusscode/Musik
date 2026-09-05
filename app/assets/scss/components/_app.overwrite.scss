@@ -137,7 +137,7 @@ main {
   }
 
   @media screen and (max-width: $hide-sidebar-max-width) {
-    width: calc(100vw - (6 * $main-distance));
+    width: calc(100vw - 6 * $main-distance);
   }
 }
 
@@ -159,6 +159,10 @@ top-banner {
 
   @media screen and (min-width: calc($laptop-max-width + 200px)) {
     width: $content-width;
+  }
+
+  @media screen and (max-width: $hide-sidebar-max-width) {
+    width: $content-hide-sidebar-width;
   }
 
   &[scrolled="true"] {
