@@ -11,7 +11,7 @@ einzelnen Tracks hochladen (WOW!)!
 
 Eine kleine Preview gefällig? Bitteschön:
 
-![Sehr gut und schön](https://cdn.savedly.net/ytagsknv)
+![Sehr gut und schön]()(https://cdn.savedly.net/ytagsknv)
 
 <br>
 
