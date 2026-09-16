@@ -93,17 +93,17 @@ export const update_current_track = async (
   relation_id = null,
   relation_type = null,
   init = false,
-  use_cookies = false,
+  use_localStorage = false,
 ) => {
   return new Promise((resolve) => {
     clearTimeout(__update_track_timeout);
 
     let sidebar = document.find("sidebar [current-track]");
-    relation_id = use_cookies
-      ? Cookie.get("__player_Track_relation_id")
+    relation_id = use_localStorage
+      ? localStorage.getItem("__player_Track_relation_id")
       : relation_id;
-    relation_type = use_cookies
-      ? Cookie.get("__player_Track_relation_type")
+    relation_type = use_localStorage
+      ? localStorage.getItem("__player_Track_relation_type")
       : relation_type;
 
     /**
@@ -134,30 +134,6 @@ export const update_current_track = async (
             if (__player.fullscreen)
               document.find("current-track[has-video] video")?.pause();
 
-            /**
-             * Set __player attributes for the Relation.
-             */
-            // __player.Track.relation.id = relation_id;
-            // __player.Track.relation.type = relation_type;
-
-            /**
-             * On site load up, resolve here already. No need for
-             * setting any new cookies or removing them.
-             */
-            // if (init) return resolve(1);
-
-            /**
-             * Set cookies for persistence or delete them, if a
-             * track was played outside of a list.
-             */
-            // if (relation_id && relation_type) {
-            //   Cookie.set("__player_Track_relation_id", relation_id, 365);
-            //   Cookie.set("__player_Track_relation_type", relation_type, 365);
-            // } else {
-            //   Cookie.remove("__player_Track_relation_id");
-            //   Cookie.remove("__player_Track_relation_type");
-            // }
-
             return resolve(1);
           }
 
@@ -182,23 +158,6 @@ $(function () {
       document.body.setAttribute("theme", "dark");
       Cookie.set("__theme", "dark", 365);
     }
-  });
-
-  $(document).on("click", "library-view [view]", function (e) {
-    let lib = this.closest("library");
-    let view = this.getAttribute("view");
-
-    lib.setAttribute("view", view);
-
-    this.closest("library-view")
-      .find_all("[view]")
-      .forEach((elem) => {
-        elem.deactivate();
-      });
-
-    this.activate();
-
-    Cookie.set("__lib_view", view);
   });
 
   $(document).on("click", "menu option", function (e) {
@@ -317,8 +276,7 @@ $(function () {
 
       let menu = e.target.closest("[has-menu]")?.find("menu");
 
-      if (menu && menu.hasAttribute("active"))
-        return;
+      if (menu && menu.hasAttribute("active")) return;
 
       bulk_close_contextmenu();
 

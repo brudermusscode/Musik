@@ -13,7 +13,7 @@ use Bruder\Model\Album;
 
 <sidebar left>
   <section window-light>
-    <library view=<?= Cookie::get("__lib_view") ?>>
+    <library view=list>
 
       <div fl alic jucsb p4 dno>
         <library-view fl alic jucend gap=smoler>

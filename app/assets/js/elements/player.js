@@ -74,28 +74,20 @@ export const play_track = async (
     remove_current_audio();
     reset_duration_track();
 
-    /**
-     * Create a new Audio Object with the requested Track.
-     */
+    // Create a new Audio Object with the requested Track.
     let audio = new Audio(public_url);
     audio.volume = __player.volume;
 
-    /**
-     * Set global __player variable values.
-     */
+    // Set global __player variable values.
     __player.Track.id = Track.id;
     __player.Track.audio = audio;
 
-    /**
-     * Set the toggled state of the frontend's player to playing
-     * when it's ready. Readyness is checked by loaded metadata state.
-     */
+    // Set the toggled state of the frontend's player to playing
+    // when it's ready. Readyness is checked by loaded metadata state.
     audio.addEventListener("loadedmetadata", () => {
       activate_track_HTMLobjects(Track.id, init ? true : false);
 
-      /**
-       * Return here on initialization of the app.
-       */
+      // Return here on initialization of the app.
       if (init) return resolve(1);
 
       set_track(Track);
@@ -107,15 +99,11 @@ export const play_track = async (
 
       playing();
 
-      /**
-       * Pause video if the fullscreen player is active.
-       */
+      // Pause video if the fullscreen player is active.
       if (__player.fullscreen)
         document.find("current-track[has-video] video")?.pause();
 
-      /**
-       * Add +1 listens.
-       */
+      // Add +1 listens.
       let formdata = new FormData();
       formdata.append("id", Track.id);
       formdata.append("listens", 1);
@@ -143,6 +131,7 @@ export const play_track = async (
  * @param {object} Track
  */
 export const set_track = (Track) => {
+  localStorage.setItem("__player_Track", Track.id);
   Cookie.set("__player_Track", Track.id, 365);
 };
 
@@ -159,8 +148,8 @@ export const set_track_relation = (init = false) => {
    * Only set relation to the __player object on page startup.
    */
   if (init) {
-    relation_id = Cookie.get("__player_Track_relation_id");
-    relation_type = Cookie.get("__player_Track_relation_type");
+    relation_id = localStorage.getItem("__player_Track_relation_id");
+    relation_type = localStorage.getItem("__player_Track_relation_type");
     __player.Track.relation = {
       id: parseInt(relation_id),
       type: relation_type,
@@ -180,8 +169,8 @@ export const set_track_relation = (init = false) => {
    * everything related to null.
    */
   if (!relation_type || !relation_id) {
-    Cookie.remove("__player_Track_relation_id");
-    Cookie.remove("__player_Track_relation_type");
+    localStorage.removeItem("__player_Track_relation_id");
+    localStorage.removeItem("__player_Track_relation_type");
     __player.Track.relation = {
       id: null,
       type: null,
@@ -195,8 +184,8 @@ export const set_track_relation = (init = false) => {
     type: relation_type,
   };
 
-  Cookie.set("__player_Track_relation_id", relation_id, 365);
-  Cookie.set("__player_Track_relation_type", relation_type, 365);
+  localStorage.setItem("__player_Track_relation_id", relation_id, 365);
+  localStorage.setItem("__player_Track_relation_type", relation_type, 365);
 };
 
 /**
@@ -330,7 +319,7 @@ export const queue_play_previous = async () => {
  */
 export const playing = () => {
   __player.active = true;
-  Cookie.set("__player_active", 1, 365);
+  localStorage.setItem("__player_active", 1);
 };
 
 /**
@@ -338,7 +327,7 @@ export const playing = () => {
  */
 export const not_playing = () => {
   __player.active = false;
-  Cookie.set("__player_active", 0, 365);
+  localStorage.setItem("__player_active", 0);
 };
 
 /**
@@ -569,15 +558,16 @@ export const init_player_state = async () => {
     __player.volume = parsed_volume;
     if (__player.Track.audio) __player.Track.audio.volume = parsed_volume;
 
-    /**
-     * Set a cookie for persistence.
-     */
-    Cookie.set("__player_volume", parsed_volume, 365);
+    localStorage.setItem("__player_volume", parsed_volume);
 
     // ? Shuffle
-    if (Cookie.get("__player_shuffle") == null)
-      Cookie.set("__player_shuffle", 0, 365);
-    __player.shuffle = parseInt(Cookie.get("__player_shuffle"));
+    if (localStorage.getItem("__player_shuffle") == null)
+      localStorage.setItem("__player_shuffle", 0);
+
+    __player.shuffle = parseInt(localStorage.getItem("__player_shuffle"));
+    let shuffle_obj = document.find("[player-shuffle]");
+    if (__player.shuffle) shuffle_obj?.activate();
+    else shuffle_obj.deactivate();
 
     console.log(
       `%c▒ Shuffle is ${__player.shuffle ? "enabled" : "disabled"}.`,
@@ -585,10 +575,17 @@ export const init_player_state = async () => {
     );
 
     // ? Repeat::all/single
-    let repeat = Cookie.get("__player_repeat");
+    let repeat = localStorage.getItem("__player_repeat");
     if (repeat !== null && repeat !== "single" && repeat !== "all")
       repeat = null;
+
+    localStorage.setItem("__player_repeat", repeat);
     __player.repeat = repeat;
+    let repeat_obj = document.find("[player-repeat]");
+    if (__player.repeat) {
+      repeat_obj?.activate();
+      repeat_obj?.setAttribute("repeat", repeat);
+    }
 
     console.log(
       `%c▒ Repeat is ${
@@ -612,7 +609,7 @@ export const init_player_state = async () => {
  */
 export const init_current_track = async () => {
   return new Promise(async (resolve) => {
-    let track_id = Cookie.get("__player_Track");
+    let track_id = localStorage.getItem("__player_Track");
 
     /**
      * No cookie set with a recent track id?
@@ -644,8 +641,8 @@ export const init_current_track = async () => {
     /**
      * Get song info in right sidebar.
      */
-    let relation_id = Cookie.get("__player_Track_relation_id");
-    let relation_type = Cookie.get("__player_Track_relation_type");
+    let relation_id = localStorage.getItem("__player_Track_relation_id");
+    let relation_type = localStorage.getItem("__player_Track_relation_type");
 
     await Global.update_current_track(relation_id, relation_type, true);
 
@@ -691,7 +688,6 @@ export const set_volume = (volume) => {
   __player.volume = parsed_volume;
   controls.setAttribute("volume", parsed_volume);
   localStorage.setItem("__player_volume", parsed_volume);
-  Cookie.set("__player_volume", parsed_volume, 365);
   console.log(`Volume: ${Math.round(__player.volume * 100)}%`);
 
   if (__player.Track.audio) __player.Track.audio.volume = parsed_volume;
@@ -711,13 +707,13 @@ export const volume_down = () => {
  * Toggles shuffle mode.
  */
 export const shuffle = () => {
-  if (Cookie.get("__player_shuffle") == 1) {
-    Cookie.set("__player_shuffle", 0, 365);
+  if (localStorage.getItem("__player_shuffle") == 1) {
+    localStorage.setItem("__player_shuffle", 0);
     __player.shuffle = 0;
 
     return 0;
   } else {
-    Cookie.set("__player_shuffle", 1, 365);
+    localStorage.setItem("__player_shuffle", 1);
     __player.shuffle = 1;
 
     return 1;
@@ -729,15 +725,15 @@ export const shuffle = () => {
  * not at all.
  */
 export const repeat = () => {
-  let cookie = "__player_repeat";
-  let repeat = Cookie.get(cookie);
+  let name = "__player_repeat";
+  let repeat = localStorage.getItem(name);
 
   if (repeat == "all") repeat = "single";
   else if (repeat == "single") repeat = null;
   else repeat = "all";
 
   __player.repeat = repeat;
-  Cookie.set(cookie, repeat, 365);
+  localStorage.setItem(name, repeat);
 
   return repeat;
 };
@@ -817,16 +813,8 @@ export const track = () => {
 };
 
 document.addEventListener("DOMContentLoaded", async function () {
-  /**
-   * Set lib view.
-   */
-  if (!Cookie.get("__lib_view")) {
-    document.find("library").setAttribute("view", "list");
-    document.find("library-view [view=list]").activate();
-    Cookie.set("__lib_view", "list", 365);
-  }
-
-  Cookie.set("__player_active", 0, 365);
+  // Init the app with player being not active.
+  localStorage.setItem("__player_active", 0);
 
   set_track_relation(true);
   await init_player_state();
@@ -881,12 +869,12 @@ $(function () {
     let relation_id = this.closest("page")?.dataset.id ?? null;
     let relation_type = this.closest("page")?.dataset.type ?? null;
 
-    // The shuffle will always prioritize the cookie, which will
-    // be set to 0 if not set at all. The __player object will
-    // always take the value of the cookie.
-    let cookie_shuffle = parseInt(Cookie.get("__player_shuffle") ?? "0");
+    // Should we shuffle the queue or not? Prioritize the entry in local storage.
+    let cookie_shuffle = parseInt(
+      localStorage.getItem("__player_shuffle") ?? "0",
+    );
     if (__player.shuffle !== cookie_shuffle) {
-      Cookie.set("__player_shuffle", cookie_shuffle, 365);
+      localStorage.setItem("__player_shuffle", cookie_shuffle);
       __player.shuffle = cookie_shuffle;
     }
 
@@ -1021,23 +1009,6 @@ $(function () {
       }
     },
   );
-
-  /**
-   * Toggles the players visibility.
-   */
-  $(document).on("click", "[data-action='player:hide']", function (e) {
-    let show_button = document.find("show-player");
-
-    if (!Player.hasAttribute("collapsed")) {
-      Player.setAttribute("collapsed", true);
-      show_button.setAttribute("collapsed", true);
-      Cookie.set("__player_collapsed", 1, 365);
-    } else {
-      Player.removeAttribute("collapsed");
-      show_button.removeAttribute("collapsed");
-      Cookie.set("__player_collapsed", 0, 365);
-    }
-  });
 
   /**
    * Toggle play/pause.
