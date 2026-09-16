@@ -132,6 +132,8 @@ export const play_track = async (
  */
 export const set_track = (Track) => {
   localStorage.setItem("__player_Track", Track.id);
+
+  // We need to set a cookie with the current track as php can only read cookies.
   Cookie.set("__player_Track", Track.id, 365);
 };
 
@@ -567,7 +569,7 @@ export const init_player_state = async () => {
     __player.shuffle = parseInt(localStorage.getItem("__player_shuffle"));
     let shuffle_obj = document.find("[player-shuffle]");
     if (__player.shuffle) shuffle_obj?.activate();
-    else shuffle_obj.deactivate();
+    else shuffle_obj?.deactivate();
 
     console.log(
       `%c▒ Shuffle is ${__player.shuffle ? "enabled" : "disabled"}.`,

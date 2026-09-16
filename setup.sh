@@ -144,7 +144,19 @@ chmod a+rw -R storage public sql
 chmod a+rw sql/last_migration
 ciecho "$GREY" "Environment erstellen…"
 cp .env.example .env
-# } >>"$LOG_FILE" 2>&1
+
+DOMAIN="localhost"
+PORT="6789"
+
+# Ask for the user to set a domain/ip address to access the app.
+read -p "$(echo -e "${GREY}╟${NOCO}  ${YELLOW}Deine Server-Adresse?$NOCO */[localhost] ⌨️  ")" domain </dev/tty
+
+if [ !"$domain" ]; then
+	domain="$DOMAIN"
+fi
+
+sed -i "s|%DOMAIN%|${domain}|g" .env
+sed -i "s|%SERVER_ADDRESS%|${domain}:${PORT}|g" .env
 
 # + Link Music Directory
 MUSIC_DIR="$HOME_DIR/Music"
