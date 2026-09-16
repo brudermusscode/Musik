@@ -34,7 +34,7 @@ include TEMPLATE . "/global/_current-playlist.php";
    */
   $Tracks = $User->tracks()
     ->with("albums")
-    ->orderBy("id", "DESC")
+    ->orderBy("listens", "DESC")
     ->get();
 
   foreach ($Tracks as $index => $Track) :

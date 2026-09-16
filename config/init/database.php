@@ -12,20 +12,37 @@ $user = _env("MYSQL_USER");
 $pass = _env("MYSQL_PASSWORD");
 $db   = _env("MYSQL_DATABASE");
 
-/**
- * As of the 27th of April 2026, I have been developing this app
- * without a public version in mind. Now this just checks if the
- * base database structure is in place. An automatic updating
- * system will be implemented.
- */
-// TODO: Implement basic mysql migration system.
-if (file_get_contents(_root() . "/sql/last_migration") !== "009_create_1st_user.sql") :
+# Here we check, if new migrations have to be applied.
+$sql_dir = _root() . "/sql";
+$last_migration_file_path =  "$sql_dir/last_migration";
+$last_migration = file_get_contents($last_migration_file_path);
+$last_migration_sql_path = $last_migration ? trim($last_migration) : null;
+$migrations = scandir($sql_dir);
 
-  /**
-   * Use a seperate try for just connecting as it might take some
-   * time to establish it when mysql is still botting up. So you
-   * know to just reload the page in some seconds.
-   */
+foreach ($migrations as $key => $sql_path) {
+
+  # Unset all files that are not .sql.
+  if (!str_contains($sql_path, ".sql"))
+    unset($migrations[$key]);
+}
+
+if ($last_migration) {
+  foreach ($migrations as $key => $sql_path) {
+    unset($migrations[$key]);
+
+    if ($last_migration_sql_path !== $sql_path) {
+      continue;
+    } else
+      break;
+  }
+}
+
+/**
+ * Use a seperate try for just connecting as it might take some
+ * time to establish it when mysql is still booting up. So you
+ * know to just reload the page in some seconds.
+ */
+if ($migrations) :
   try {
 
     /**
@@ -37,51 +54,45 @@ if (file_get_contents(_root() . "/sql/last_migration") !== "009_create_1st_user.
     exit();
   }
 
-
-
   try {
 
-    /**
-     * Create the database.
-     */
+    # Create the database.
     $sql = "CREATE DATABASE IF NOT EXISTS $db CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci; USE $db;";
     $pdo->exec($sql);
-    $pdo->beginTransaction();
 
-    /**
-     * PDO::exec() commits automatically, so we need to turn it off
-     * as we want to process everything in one transaction.
-     */
+    # PDO::exec() commits automatically, so we need to turn it off
+    # as we want to process everything in one transaction.
     $pdo->exec("SET autocommit = 0");
 
+    $pdo->beginTransaction();
+
     $file_name = null;
-    $sql_dir = _root() . "/sql";
 
-    /**
-     * Apply migrations.
-     */
-    foreach (scandir($sql_dir) as $sql_file) :
-      if (!str_contains($sql_file, ".sql"))
-        continue;
+    # Apply migrations.
+    foreach ($migrations as $key => $sql_file) :
+      $content = file_get_contents("$sql_dir/$sql_file");
 
-      $pdo->exec(file_get_contents("$sql_dir/$sql_file"));
+      if (!$content) continue;
+
+      $pdo->exec($content);
       $file_name = $sql_file;
     endforeach;
 
-    /**
-     * # Commit!
-     */
-    $pdo->commit();
+    if ($pdo->inTransaction())
+      $pdo->commit();
 
+    unset($pdo);
 
-    /**
-     * Set the last migration's file name to the last_migration so
-     * this script won't run a second time.
-     */
-    $last_migration_file_path =  "$sql_dir/last_migration";
-    file_put_contents($last_migration_file_path, $file_name);
+    # Set the last migration's file name to the last_migration so this script won't run
+    # a second time.
+    if ($file_name) {
+      file_put_contents($last_migration_file_path, $file_name);
 
-    unset($pdo, $last_migration_file_path);
+      echo "Alles erstellt, Seite wird neu geladen mein Freund!";
+
+      # Reload the page! Everything should be fine now.
+      header("location: /");
+    }
   } catch (\PDOException $e) {
 
     if (isset($pdo)) {
@@ -93,11 +104,4 @@ if (file_get_contents(_root() . "/sql/last_migration") !== "009_create_1st_user.
 
     die($e);
   }
-
-  echo "Alles erstellt, Seite wird neu geladen mein Freund!";
-
-  /**
-   * Reload the page! Everything should be fine now.
-   */
-  header("location: /");
 endif;

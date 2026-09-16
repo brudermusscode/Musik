@@ -1,4 +1,4 @@
-CREATE TABLE `genres` (
+CREATE TABLE IF NOT EXISTS `genres` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(124) NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,

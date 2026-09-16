@@ -1,5 +1,5 @@
-CREATE TABLE `tracks` (
-  `id` int NOT NULL,
+CREATE TABLE IF NOT EXISTS `tracks` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `user_id` int DEFAULT '1',
   `artist_id` int DEFAULT NULL,
   `file_name` varchar(324) NOT NULL,
@@ -15,9 +15,3 @@ CREATE TABLE `tracks` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-ALTER TABLE `tracks`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `tracks`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;

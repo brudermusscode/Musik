@@ -1,5 +1,5 @@
-CREATE TABLE `bookmarks` (
-  `id` int NOT NULL,
+CREATE TABLE IF NOT EXISTS `bookmarks` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `reference_id` int NOT NULL,
   `type` varchar(24) NOT NULL,
   `view_index` int DEFAULT NULL,
@@ -9,8 +9,4 @@ CREATE TABLE `bookmarks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 ALTER TABLE `bookmarks`
-  ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `reference_id` (`reference_id`,`type`);
-
-ALTER TABLE `bookmarks`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;

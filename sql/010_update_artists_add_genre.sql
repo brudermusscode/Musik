@@ -1,2 +1,0 @@
-ALTER TABLE artists
-  ADD COLUMN genre VARCHAR(234) NULL AFTER art;

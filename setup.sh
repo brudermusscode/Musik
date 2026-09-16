@@ -62,7 +62,7 @@ echo -e "//  //  //  //   //  //  //  //  //     //  // "
 sleep 0.05
 echo -e "////    //   //   ////   ////    /////  //   //"
 sleep 0.05
-echo -e "Dein Bruder der Musik (I use Arch btw)$NOCO\n"
+echo -e "Dein Bruder der Musik (i use arch btw)$NOCO\n"
 sleep 0.05
 
 read -p "Hast du Bock? Schreib [ja] oder [nein] ⌨️  " you_in </dev/tty
@@ -120,7 +120,7 @@ if [ -d "musikbruder" ]; then
 fi
 
 # + Clone GitHub
-REPO="https://github.com/brudermusscode/MusikBruder.git"
+REPO="https://github.com/brudermusscode/Musik.git"
 BRANCH="deploy"
 [ -n "$TESTING" ] && BRANCH="test"
 ciecho "$GREY" "Kloniere $REPO (Branch: $BRANCH)…"

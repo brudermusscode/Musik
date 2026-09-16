@@ -1,4 +1,4 @@
-CREATE TABLE `moods` (
+CREATE TABLE IF NOT EXISTS `moods` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(124) NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -6,7 +6,7 @@ CREATE TABLE `moods` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `artist_moods` (
+CREATE TABLE IF NOT EXISTS `artist_moods` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `artist_id` INT NOT NULL,
   `mood_id` INT NOT NULL,

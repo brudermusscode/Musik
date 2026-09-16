@@ -1,8 +1,6 @@
-CREATE TABLE IF NOT EXISTS `playlists` (
+CREATE TABLE IF NOT EXISTS `testing` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `name` varchar(255) NOT NULL,
-  `subtext` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `art` varchar(82) DEFAULT NULL,
+  `name` VARCHAR(124) NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP

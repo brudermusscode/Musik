@@ -150,6 +150,8 @@ $(function () {
       let track_id = this.closest("[track]").getAttribute("track");
 
       __player.priority_queue.push(parseInt(track_id));
+
+      Frontend.create_responder("In Warteschlange");
     },
   );
 
