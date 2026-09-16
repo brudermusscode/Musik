@@ -149,12 +149,16 @@ DOMAIN="localhost"
 PORT="6789"
 
 # Ask for the user to set a domain/ip address to access the app.
-read -p "$(echo -e "${GREY}╟${NOCO}  ${YELLOW}Deine Server-Adresse?$NOCO */[localhost] ⌨️  ")" domain </dev/tty
+read -p "$(echo -e "${GREY}╟${NOCO}  ${YELLOW}Adresse des Servers (ohne http://)?$NOCO */[localhost] ⌨️  ")" domain </dev/tty
 
 domain="${domain:-$DOMAIN}"
+server_address="http://${domain}:${PORT}"
 
 sed -i "s|%DOMAIN%|${domain}|g" .env
-sed -i "s|%SERVER_ADDRESS%|${domain}:${PORT}|g" .env
+sed -i "s|%SERVER_ADDRESS%|${server_address}|g" .env
+
+ciecho "$GREY" "Setze Port ${PORT}…"
+ciecho "$GREY" "Server-Adresse ist ${server_address}…"
 
 # + Link Music Directory
 MUSIC_DIR="$HOME_DIR/Music"
@@ -199,9 +203,8 @@ ciecho "$GREY" "App hochfahren…"
 docker compose -f compose.deploy.yml up -d >>"$LOG_FILE" 2>&1
 
 # Wait for the app to return status 200.
-URL="http://localhost:6789"
 printf "\r$GREY╟$NOCO ${GREY}Auf Status 200 warten "
-while [ "$(curl -s -o /dev/null -w "%{http_code}" "$URL")" != "200" ]; do
+while [ "$(curl -s -o /dev/null -w "%{http_code}" "$server_address")" != "200" ]; do
 	printf "▓"
 	sleep 1
 done
@@ -218,7 +221,7 @@ section_end
 
 # # DONE
 if [ -n $MUSIC_DIR_LINKED ]; then
-	cecho "$GREEN" "🤝 Fertig! Geh zu $URL - Musik wird automatisch aus deinem lokalen Musik-Ordner synchronisiert! ❤️"
+	cecho "$GREEN" "🤝 Fertig! Geh zu $server_address - Musik wird automatisch aus deinem lokalen Musik-Ordner synchronisiert! ❤️"
 else
-	cecho "$GREEN" "🤝 Fertig! Geh zu $URL ❤️"
+	cecho "$GREEN" "🤝 Fertig! Geh zu $server_address ❤️"
 fi
