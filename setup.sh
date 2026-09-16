@@ -151,9 +151,7 @@ PORT="6789"
 # Ask for the user to set a domain/ip address to access the app.
 read -p "$(echo -e "${GREY}╟${NOCO}  ${YELLOW}Deine Server-Adresse?$NOCO */[localhost] ⌨️  ")" domain </dev/tty
 
-if [ !"$domain" ]; then
-	domain="$DOMAIN"
-fi
+domain="${domain:-$DOMAIN}"
 
 sed -i "s|%DOMAIN%|${domain}|g" .env
 sed -i "s|%SERVER_ADDRESS%|${domain}:${PORT}|g" .env
