@@ -2,6 +2,11 @@
 
 use Bruder\Http\Request;
 
+function global_param(mixed $key)
+{
+  return $GLOBALS[$key] ?? null;
+}
+
 /**
  * @param ?string $message
  * @param ?mixed $data

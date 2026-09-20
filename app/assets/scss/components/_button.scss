@@ -162,7 +162,7 @@ mbutton {
 
       i:not([size]),
       mi:not([size]) {
-        font-size: $font-size-midler;
+        font-size: $font-size-std-plus;
       }
 
       &:not([icon-only]) {

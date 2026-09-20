@@ -71,7 +71,7 @@ if ($PreviousPlaylist || $NextPlaylist)
         <?= isset($Album) ? $Album->name : "Alle Alben" ?>
       <?php elseif (in_array(CURRENT_PAGE, ["artists", "artist"])) : ?>
         <?= isset($Artist) ? $Artist->name : "Alle Künstler" ?>
-      <?php elseif (CURRENT_PAGE === "") : ?>
+      <?php elseif (CURRENT_PAGE === "" || CURRENT_PAGE === "home") : ?>
         Alle Songs
       <?php endif; ?>
     </p>

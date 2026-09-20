@@ -52,6 +52,7 @@ bruder {
   }
 
   &[active] {
+    background: $hover-dark;
     top: calc($main-distance / 2);
     align-items: flex-start;
     scale: 1;
@@ -62,10 +63,10 @@ bruder {
       width 0.4s $cubic,
       transform 0s;
     cursor: default;
-    min-height: calc(100vh - $main-distance);
-    max-height: calc(100vh - $main-distance);
-    width: calc(100vw - $main-distance);
-    max-width: calc(100vw - $main-distance);
+    min-height: calc(100vh - $main-distance/1.2);
+    max-height: calc(100vh - $main-distance/1.2);
+    width: calc(100vw - $main-distance/2);
+    max-width: calc(100vw - $main-distance/2);
     overflow: auto;
 
     input {

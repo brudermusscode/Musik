@@ -12,6 +12,8 @@ use Bruder\Application\Router;
 
 $Router->get("/not-found", "error/404", title: "Bruder, was geht jetzt?");
 $Router->get("/", "home/index", title: APP_NAME);
+$Router->get("/home", "home/index", title: APP_NAME);
+$Router->get("/home/:sort", "home/index", title: APP_NAME);
 
 /**
  * Elements.
