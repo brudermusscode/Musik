@@ -5,19 +5,20 @@
 
 responder {
   display: block;
-  bottom: 2px;
+  bottom: calc($main-distance/1.2);
   left: 50%;
   translate: -50% 0;
   position: fixed;
   z-index: $endless-z-index + 2001;
-  transition: all 0.1s $cubic;
+  transition: all 0.04s linear;
   max-width: 48em;
-  padding-inline: 24px;
-  padding-block: 18px;
+  padding-inline: 32px;
+  padding-block: 20px;
   scale: 0.98;
   opacity: 0;
-
-  @extend .window-light;
+  background: $bg-light;
+  color: $text-dark;
+  border-radius: 28px;
 
   // * You can add styling for &[error] … &[success] as those
   // * attributes will be set depending on the request status that
@@ -35,6 +36,7 @@ responder {
   [message] {
     letter-spacing: -0.04em;
     font-size: 1em;
+    font-weight: 600;
 
     a {
       font-weight: 600;

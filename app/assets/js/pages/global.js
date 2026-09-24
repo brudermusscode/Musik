@@ -26,13 +26,19 @@ export const bulk_close_contextmenu = () => {
   });
 };
 
-export const open_bruder = () => {
-  document.find("bruder").activate();
-  // document.find("player").style.bottom = "42px";
+/**
+ *
+ * @param {string} search
+ */
+export const open_bruder = (search) => {
+  let search_input = document.find("bruder input");
+  let bruder = document.find("bruder");
 
-  setTimeout(() => {
-    document.find("bruder input")?.focus();
-  }, 100);
+  if (!search_input || bruder.hasAttribute("active")) return;
+
+  bruder.activate();
+  search_input.focus();
+  search_input.value = search;
 };
 
 export const close_bruder = () => {
@@ -144,8 +150,6 @@ export const update_current_track = async (
     }, 0);
   });
 };
-
-// document.addEventListener("DOMContentLoaded", async (e) => {});
 
 $(function () {
   $(document).on("click", "theme-switcher", function (e) {

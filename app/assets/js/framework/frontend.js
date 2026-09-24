@@ -1,5 +1,6 @@
 import * as Responder from "./responder";
 import * as Player from "../elements/player";
+import { open_bruder } from "../pages/global";
 
 /**
  * Sets the frontend to be loading.
@@ -277,11 +278,34 @@ $(function () {
     close_overlays();
   });
 
+  let __control_pressed = false;
+
   /**
-   * * · Generalize keyboard shortcut event triggering ¬
+   * When tabbing out with ctrl, the ctrl key stays pressed when coming back. Set it
+   * to be not pressed when tabbing out -
+   */
+  $(document).on("blur", function (e) {
+    __control_pressed = false;
+  });
+
+  /**
+   * @event keypress
+   */
+  document.addEventListener("keypress", (e) => {
+    if (!e.key) return;
+
+    if (!__control_pressed && !input_focused()) {
+      open_bruder(e.key);
+    }
+  });
+
+  /**
+   * @event keyup
    */
   document.addEventListener("keyup", (e) => {
     if (!e.key) return;
+
+    if (e.key.toLowerCase() === "control") __control_pressed = false;
 
     // This will just close all open overlays and possible popups, that allow being
     // closed by an escape action.
@@ -302,28 +326,42 @@ $(function () {
     }
 
     // Mute track playing.
-    else if (e.key.toLowerCase() === "m" && !input_focused()) {
+    else if (
+      __control_pressed &&
+      e.key.toLowerCase() === "m" &&
+      !input_focused()
+    ) {
       let volume = parseFloat(localStorage.getItem("__player_volume"));
       if (volume < 0.1) Player.set_volume(0.5);
       else Player.mute();
     }
 
     // Play next track.
-    else if (e.key.toLowerCase() === "arrowright" && !input_focused()) {
+    else if (
+      __control_pressed &&
+      e.key.toLowerCase() === "arrowright" &&
+      !input_focused()
+    ) {
       Player.queue_play_next();
     }
 
     // Play previous track.
-    else if (e.key.toLowerCase() === "arrowleft" && !input_focused()) {
+    else if (
+      __control_pressed &&
+      e.key.toLowerCase() === "arrowleft" &&
+      !input_focused()
+    ) {
       Player.queue_play_previous();
     }
   });
 
   /**
-   * @event keypress
+   * @event keydown
    */
   document.addEventListener("keydown", (e) => {
     if (!e.key) return;
+
+    if (e.key.toLowerCase() === "control") __control_pressed = true;
 
     if (e.key.toLowerCase() === " " && !input_focused()) {
       e.preventDefault();
@@ -331,12 +369,22 @@ $(function () {
     }
 
     // Increase volume.
-    else if (e.key.toLowerCase() === "+" && !input_focused()) {
+    else if (
+      __control_pressed &&
+      e.key.toLowerCase() === "+" &&
+      !input_focused()
+    ) {
+      e.preventDefault();
       Player.volume_up();
     }
 
     // Decrease volume.
-    else if (e.key.toLowerCase() === "-" && !input_focused()) {
+    else if (
+      __control_pressed &&
+      e.key.toLowerCase() === "-" &&
+      !input_focused()
+    ) {
+      e.preventDefault();
       Player.volume_down();
     }
   });

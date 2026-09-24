@@ -17,7 +17,7 @@ export class Responder {
       $append.insertAdjacentHTML(
         "beforeend",
         `
-        <responder ${type} fl alic rounded elevated>
+        <responder ${type} fl alic>
           <div fl alic jucsb flexone gap>
             <div fl alic gap=smol+>
               <p message text>${message}</p>
