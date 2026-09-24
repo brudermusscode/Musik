@@ -38,7 +38,7 @@ export const routes = {
   },
 
   artist: {
-    params: "/:id",
+    params: "/:id/:sub",
     mark: "artists",
     execute_last: (url, Route) => {
       let extracted_params = extract_params(url, Route);
@@ -99,15 +99,18 @@ export const extract_params = (url, Route) => {
   // Remove the first array key as it is an empty string.
   Route_param_split.shift();
 
-  if (url_split.length !== Route_param_split.length)
-    throw new Error("uri split length doesn't match Route param split length!");
+  // if (url_split.length !== Route_param_split.length)
+  // console.log("uri split length doesn't match Route param split length!");
+  // throw new Error("uri split length doesn't match Route param split length!");
 
   let final = { page: page };
 
   url_split.forEach((param, index) => {
-    let key = Route_param_split[index].replace(":", "");
+    let key = Route_param_split[index]?.replace(":", "");
     final[key] = param;
   });
+
+  // console.log(final);
 
   return final;
 };

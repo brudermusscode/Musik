@@ -61,10 +61,9 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
 </head>
 
 <body toggled="true" initialized="false" mobile="false"
-  theme="<?= Cookie::get("__theme") === "light" ? "light" : "dark" ?>"
-  style="background-image: url(/assets/images/purple.jpg);">
+  theme="<?= Cookie::get("__theme") === "light" ? "light" : "dark" ?>">
 
-  <background-blur></background-blur>
+  <!--<background-blur></background-blur>-->
 
   <ajax-response></ajax-response>
 

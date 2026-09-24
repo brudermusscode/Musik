@@ -26,6 +26,8 @@ if (!$Artist) :
   include UNAVAILABLE;
 else :
 
+  $base_url = "/artist/$Artist->id";
+
   /**
    * @var Collection<Track>
    */
@@ -134,7 +136,15 @@ else :
 
     if ($Albums->count()) : ?>
       <div fl fldircol gap=smol+>
-        <p text bold std ttup pinline16>Von <?= $Artist->name ?></p>
+        <div fl alic jucsb gap>
+          <p text bold std ttup pinline16>Von <?= $Artist->name ?></p>
+          <a href="<?= $base_url ?>/discography">
+            <mbutton material std has-icon=right text semibold>
+              Discographie
+              <mi>arrow_forward</mi>
+            </mbutton>
+          </a>
+        </div>
         <div fl gap=smol flex-wrap>
           <?php foreach ($Albums as $Album) :
 

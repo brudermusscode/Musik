@@ -36,9 +36,10 @@ $show_playing ??= true;
 $show_listens ??= false;
 $length_minutes = $Track->length_seconds / 60;
 $in_playlist = $Playlist->id ?? null;
-$in_album = CURRENT_PAGE === "album";
-$in_artist = CURRENT_PAGE === "artist";
+$in_album ??= CURRENT_PAGE === "album";
+$in_artist ??= CURRENT_PAGE === "artist";
 $no_left_action = !$in_playlist && !$show_count && !$in_album && !$in_artist;
+$show_cover ??= true;
 
 /**
  * Includes the variable $show_active to make the track appear
@@ -89,7 +90,7 @@ include __DIR__ . "/_show_active.php";
         </move-track>
       <?php endif; ?>
 
-      <?php if (!$in_album) :
+      <?php if (!$in_album && $show_cover) :
 
         $track_art = $Track->art_link();
 

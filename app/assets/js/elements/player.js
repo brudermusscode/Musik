@@ -5,6 +5,8 @@ import * as Frontend from "../framework/frontend";
 import * as Cookie from "../framework/cookie";
 import * as Global from "../pages/global";
 
+const ADD_LISTEN_TIMEOUT_MS = 10000;
+const __add_listen_timeout = null;
 const __duration_track_interval = null;
 const __duration_track_reset_timeout = null;
 const DEFAULT_VOLUME = 0.2;
@@ -70,6 +72,8 @@ export const play_track = async (
   return new Promise((resolve) => {
     let player_metadata = Player.find("player-metadata");
 
+    clearTimeout(__add_listen_timeout);
+
     pause();
     remove_current_audio();
     reset_duration_track();
@@ -103,23 +107,25 @@ export const play_track = async (
       if (__player.fullscreen)
         document.find("current-track[has-video] video")?.pause();
 
-      // Add +1 listens.
-      let formdata = new FormData();
-      formdata.append("id", Track.id);
-      formdata.append("listens", 1);
-
-      $.ajax({
-        url: "/track/update",
-        data: formdata,
-        method: "POST",
-      });
-
       document.title = `🎶 ${Track.artist} × ${Track.title}`;
 
       console.log(
         `%c▒ Playing Track ID::${Track.id}\n${Track.title}\n${Track.artist}\nDuration: ${(Track.length_seconds / 60).toFixed(2)}min\nVolume: ${__player.volume * 100}%\nQueue: ${priority ? "Priority" : "Regular"}`,
         `color: ${success_color};`,
       );
+
+      // Add +1 listens after 10 seconds of listening.
+      __add_listen_timeout = setTimeout(() => {
+        let formdata = new FormData();
+        formdata.append("id", Track.id);
+        formdata.append("listens", 1);
+
+        $.ajax({
+          url: "/track/update",
+          data: formdata,
+          method: "POST",
+        });
+      }, ADD_LISTEN_TIMEOUT_MS);
 
       return resolve(1);
     });
@@ -322,6 +328,9 @@ export const queue_play_previous = async () => {
 export const playing = () => {
   __player.active = true;
   localStorage.setItem("__player_active", 1);
+
+  // To show the track playing in view, we need a cookie as PHP can only read cookies.
+  Cookie.set("__player_active", 1, 365);
 };
 
 /**
@@ -330,6 +339,9 @@ export const playing = () => {
 export const not_playing = () => {
   __player.active = false;
   localStorage.setItem("__player_active", 0);
+
+  // To show the track playing in view, we need a cookie as PHP can only read cookies.
+  Cookie.set("__player_active", 0, 365);
 };
 
 /**

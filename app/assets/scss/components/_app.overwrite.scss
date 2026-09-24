@@ -25,12 +25,16 @@ body {
   }
 
   &[theme="dark"] {
+    background-color: $bg;
+    color: $text;
     background-blur {
       background: rgba(0, 0, 0, 0.72);
     }
   }
 
   &[theme="light"] {
+    background-color: $bg-light;
+    color: $text-dark;
     background-blur {
       background: rgba(255, 255, 255, 0.08);
       // background: rgba(0, 0, 0, 0.08);

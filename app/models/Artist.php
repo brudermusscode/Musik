@@ -91,6 +91,9 @@ class Artist extends Bruder
     return $this->hasMany(Album::class);
   }
 
+  /**
+   * @return Collection<Album>
+   */
   public function all_albums()
   {
 

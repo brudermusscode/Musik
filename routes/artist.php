@@ -19,6 +19,18 @@ $Router->get(
     return $Artist->name;
   },
 );
+$Router->get(
+  "/artist/:id/discography",
+  "artist/discography",
+  constraints: ["id" => "\d+",],
+  title: function ($params) {
+    $Artist = Artist::find($params["id"]);
+
+    if (!$Artist) return "Bruder wo?";
+
+    return $Artist->name . " / Discography";
+  },
+);
 
 $Router->get("/artists", "artist/index", title: "Alle Künstler");
 $Router->get("/artist/edit", "artist/edit", return: "JSON");

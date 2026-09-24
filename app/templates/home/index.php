@@ -28,7 +28,6 @@ include TEMPLATE . "/global/_current-playlist.php";
 <div fl fldircol gap=smol+>
   <div fl alic gap=smol jucsb z>
     <div></div>
-
     <div fl alic gap=smol>
       <a href="/home/latest">
         <mbutton material icon-only has-tooltip=bottom
