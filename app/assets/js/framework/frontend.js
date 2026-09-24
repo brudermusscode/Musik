@@ -326,16 +326,18 @@ $(function () {
     }
 
     // Mute track playing.
-    else if (
-      __control_pressed &&
-      e.key.toLowerCase() === "m" &&
-      !input_focused()
-    ) {
-      let volume = parseFloat(localStorage.getItem("__player_volume"));
-      if (volume < 0.1) Player.set_volume(0.5);
-      else Player.mute();
-    }
-
+    // // Useless as the browser is muting the whole tab on ctrl + m.
+    // else if (
+    //   __control_pressed &&
+    //   e.key.toLowerCase() === "m" &&
+    //   !input_focused()
+    // ) {
+    //   e.preventDefault();
+    //   let volume = parseFloat(localStorage.getItem("__player_volume"));
+    //   if (volume < 0.1) Player.set_volume(0.5);
+    //   else Player.mute();
+    // }
+    //
     // Play next track.
     else if (
       __control_pressed &&

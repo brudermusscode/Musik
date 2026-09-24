@@ -1,5 +1,5 @@
 let __responder_close_timeout;
-let __responder_close_timeout_time = 12000;
+let __responder_close_timeout_time = 3000;
 
 export class Responder {
   add(append, message, type = "success") {

@@ -67,13 +67,13 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
 
   <ajax-response></ajax-response>
 
-  <responder success fl alic active>
+  <!--<responder success fl alic active>
     <div fl alic jucsb flexone gap>
       <div fl alic gap=smol+>
         <p message text>50 %</p>
       </div>
     </div>
-  </responder>
+  </responder>-->
 
   <?php
 
