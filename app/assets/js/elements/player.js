@@ -78,7 +78,8 @@ export const play_track = async (
     reset_duration_track();
 
     // Create a new Audio Object with the requested Track.
-    let audio = new Audio(public_url);
+    let audio = __player.Track.audio;
+    audio.src = public_url;
     audio.volume = __player.volume;
 
     // Set global __player variable values.
@@ -439,7 +440,7 @@ export const remove_current_audio = () => {
   }
 
   __player.Track.id = null;
-  __player.Track.audio = null;
+  __player.Track.audio = new Audio();
 };
 
 /**
@@ -621,9 +622,7 @@ export const init_current_track = async () => {
   return new Promise(async (resolve) => {
     let track_id = localStorage.getItem("__player_Track");
 
-    /**
-     * No cookie set with a recent track id?
-     */
+    // No cookie set with a recent track id?
     if (!track_id || isNaN(track_id)) {
       console.log(`%c▒ No recent Track found.`, `color: ${init_color};`);
       return resolve(1);
@@ -631,17 +630,13 @@ export const init_current_track = async () => {
 
     let Track_response = await get_Track(track_id);
 
-    /**
-     * Any error loading current/last track?
-     */
+    // Any error loading current/last track?
     if (!Track_response.status) {
       console.log(`%c▒ Error loading current track.`, `color: ${error_color};`);
       return resolve(1);
     }
 
-    /**
-     * Play the current track with an init flag.
-     */
+    // Play the current track with an init flag.
     await play_track(
       Track_response.data.Track,
       Track_response.data.track_public_url,
@@ -651,18 +646,13 @@ export const init_current_track = async () => {
     let time_saved = localStorage.getItem("__player_Track_currentTime");
     if (time_saved) set_time(time_saved);
 
-    /**
-     * Get song info in right sidebar.
-     */
+    // Get song info in right sidebar.
     let relation_id = localStorage.getItem("__player_Track_relation_id");
     let relation_type = localStorage.getItem("__player_Track_relation_type");
 
     await Global.update_current_track(relation_id, relation_type, true);
 
-    /**
-     * Pause the video in right sidebar. It should only play when
-     * the song is playing.
-     */
+    // Pause the video in right sidebar. It should only play when the song is playing.
     document.find(current_track_video_path)?.pause();
 
     console.log(`%c▒ Recent Track found and loaded.`, `color: ${init_color};`);
@@ -825,6 +815,10 @@ export const track = () => {
 document.addEventListener("DOMContentLoaded", async function () {
   // Init the app with player being not active.
   localStorage.setItem("__player_active", 0);
+
+  __player.Track.audio = new Audio(undefined);
+
+  console.log(__player.Track.audio);
 
   set_track_relation(true);
   await init_player_state();

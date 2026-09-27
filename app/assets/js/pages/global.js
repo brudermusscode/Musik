@@ -39,7 +39,7 @@ export const open_bruder = (search) => {
 
   bruder.activate();
   search_input.focus();
-  search_input.value = search;
+  search_input.value = search !== undefined ? search : "";
 };
 
 export const close_bruder = () => {

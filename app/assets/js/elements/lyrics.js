@@ -70,6 +70,9 @@ export const start = () => {
   audio?.addEventListener("timeupdate", () => {
     let current_track_time = parseFloat(audio.currentTime);
     let lyrics = document.find("lyrics");
+
+    if (!lyrics) return false;
+
     let lyrics_fullscreen = lyrics.hasAttribute("active");
     let lines = lyrics.find_all("line");
     let next_line_time = __lyrics_next_line
