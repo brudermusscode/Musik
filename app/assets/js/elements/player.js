@@ -4,6 +4,7 @@
 import * as Frontend from "../framework/frontend";
 import * as Cookie from "../framework/cookie";
 import * as Global from "../pages/global";
+import * as Lyrics from "../elements/lyrics";
 
 const ADD_LISTEN_TIMEOUT_MS = 10000;
 const __add_listen_timeout = null;
@@ -70,8 +71,6 @@ export const play_track = async (
   priority = false,
 ) => {
   return new Promise((resolve) => {
-    let player_metadata = Player.find("player-metadata");
-
     clearTimeout(__add_listen_timeout);
 
     pause();
@@ -98,7 +97,6 @@ export const play_track = async (
       kick_duration_track(audio, true);
 
       audio.play();
-
       Player.activate();
 
       playing();
@@ -152,9 +150,6 @@ export const set_track_relation = (init = false) => {
   let relation_id = null;
   let relation_type = null;
 
-  /**
-   * Only set relation to the __player object on page startup.
-   */
   if (init) {
     relation_id = localStorage.getItem("__player_Track_relation_id");
     relation_type = localStorage.getItem("__player_Track_relation_type");
@@ -166,16 +161,11 @@ export const set_track_relation = (init = false) => {
     return;
   }
 
-  /**
-   * Set the relations.
-   */
+  // Anything, that doesn't belong to the initialization process.
   relation_type = document.find("page")?.dataset.type ?? null;
   relation_id = document.find("page")?.dataset.id ?? null;
 
-  /**
-   * If no relation was found, delete the cookies and set
-   * everything related to null.
-   */
+  // If no relation was found, delete the cookies and set everything related to null.
   if (!relation_type || !relation_id) {
     localStorage.removeItem("__player_Track_relation_id");
     localStorage.removeItem("__player_Track_relation_type");
@@ -191,7 +181,6 @@ export const set_track_relation = (init = false) => {
     id: parseInt(relation_id),
     type: relation_type,
   };
-
   localStorage.setItem("__player_Track_relation_id", relation_id, 365);
   localStorage.setItem("__player_Track_relation_type", relation_type, 365);
 };
@@ -442,6 +431,13 @@ export const set_paused_HTMLobjects = () => {
  * deletes it.
  */
 export const remove_current_audio = () => {
+  let audio = __player.Track.audio;
+
+  if (audio) {
+    audio.pause();
+    audio.currentTime = 0;
+  }
+
   __player.Track.id = null;
   __player.Track.audio = null;
 };
@@ -652,6 +648,9 @@ export const init_current_track = async () => {
       true,
     );
 
+    let time_saved = localStorage.getItem("__player_Track_currentTime");
+    if (time_saved) set_time(time_saved);
+
     /**
      * Get song info in right sidebar.
      */
@@ -665,9 +664,6 @@ export const init_current_track = async () => {
      * the song is playing.
      */
     document.find(current_track_video_path)?.pause();
-
-    let time_saved = localStorage.getItem("__player_Track_currentTime");
-    if (time_saved) set_time(time_saved);
 
     console.log(`%c▒ Recent Track found and loaded.`, `color: ${init_color};`);
 
@@ -851,6 +847,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   sync_files();
 });
 
+let __loading_new_track = false;
+
 $(function () {
   //
   //
@@ -862,12 +860,13 @@ $(function () {
    * @model Track
    */
   $(document).on("click", "[play-track]", async function (e) {
-    let track_id = this.getAttribute("play-track");
+    if (__loading_new_track) return;
 
-    /**
-     * If the same Track saved in __player is clicked, just resume
-     * it and return.
-     */
+    let track_id = this.getAttribute("play-track");
+    let relation_id = this.closest("page")?.dataset.id ?? null;
+    let relation_type = this.closest("page")?.dataset.type ?? null;
+
+    // If the same Track saved in __player is clicked, just resume it and return.
     if (track_id == __player.Track.id)
       return document.find("player [play]")?.click();
 
@@ -877,11 +876,6 @@ $(function () {
     if (!response.status) return Frontend.create_responder(response.error);
 
     // ? Play Track
-    await play_track(response.data.Track, response.data.track_public_url);
-
-    // ? Queue + Current Track
-    let relation_id = this.closest("page")?.dataset.id ?? null;
-    let relation_type = this.closest("page")?.dataset.type ?? null;
 
     // Should we shuffle the queue or not? Prioritize the entry in local storage.
     let cookie_shuffle = parseInt(
@@ -892,7 +886,8 @@ $(function () {
       __player.shuffle = cookie_shuffle;
     }
 
-    set_track_relation(false);
+    set_track_relation(false); // init = false
+    await play_track(response.data.Track, response.data.track_public_url);
     await create_queue(relation_type, relation_id, track_id, cookie_shuffle);
     await Global.update_current_track(relation_id, relation_type);
   });
@@ -939,6 +934,7 @@ $(function () {
     let new_audio_time_sec = duration * (percent_width / 100);
 
     set_time(new_audio_time_sec);
+    Lyrics.start();
   });
 
   /**

@@ -1,6 +1,7 @@
+import * as Prototype from "../abstract/prototypes";
 import * as Frontend from "../framework/frontend";
 import * as Cookie from "../framework/cookie";
-import * as Prototype from "../abstract/prototypes";
+import * as Lyrics from "../elements/lyrics";
 
 /**
  * Set some defaults for future ajax requests.
@@ -87,7 +88,7 @@ export const update_library = () => {
   });
 };
 
-let __update_track_timeout;
+let __update_current_track = null;
 
 /**
  *
@@ -101,9 +102,7 @@ export const update_current_track = async (
   init = false,
   use_localStorage = false,
 ) => {
-  return new Promise((resolve) => {
-    clearTimeout(__update_track_timeout);
-
+  return new Promise((resolve, reject) => {
     let sidebar = document.find("sidebar [current-track]");
     relation_id = use_localStorage
       ? localStorage.getItem("__player_Track_relation_id")
@@ -127,27 +126,30 @@ export const update_current_track = async (
 
     sidebar.load();
 
-    __update_track_timeout = setTimeout(() => {
-      $.ajax({
-        url: url,
-        success: function (data) {
-          if (data.status) {
-            sidebar.innerHTML = data.data;
-            sidebar.unload();
+    __update_current_track = $.ajax({
+      url: url,
+      success: function (data) {
+        if (data.status) {
+          sidebar.innerHTML = data.data;
+          sidebar.unload();
 
-            Frontend.reload_images();
+          Frontend.reload_images();
 
-            if (__player.fullscreen)
-              document.find("current-track[has-video] video")?.pause();
+          if (__player.fullscreen)
+            document.find("current-track[has-video] video")?.pause();
 
-            return resolve(1);
-          }
+          Lyrics.start();
 
-          Frontend.ajax_response("error");
-          return resolve(0);
-        },
-      });
-    }, 0);
+          return resolve(1);
+        }
+
+        Frontend.ajax_response("error");
+        return resolve(0);
+      },
+      error: function (err) {
+        reject(0);
+      },
+    });
   });
 };
 

@@ -47,8 +47,9 @@ else :
             <img src="/data/user/1/art/<?= $Release->art ?>" />
           </picture>
 
-          <div fl fldircol gap=smoler pb24>
-            <p text midplus bold><?= $Release->name ?></p>
+          <div fl fldircol gap=smol pb24 pr24 flex-truncate>
+            <p text <?= strlen($Release->name) < 26 ? "midplus" : "stdplus" ?>
+              bold lh1 trimt><?= $Release->name ?></p>
             <div fl alic gap=smol>
               <?php if ($track_count === 1) : ?>
                 <p text smol semibold regular ttup background=<?= Album::COLOR ?>

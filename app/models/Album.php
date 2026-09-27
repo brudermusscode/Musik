@@ -250,6 +250,16 @@ class Album extends Bruder
   }
 
   /**
+   * @return ?string
+   */
+  public function art_link()
+  {
+    $album_art = $this->art;
+
+    return $album_art ? "/data/user/1/art/$album_art" : null;
+  }
+
+  /**
    * Uses cURL to fetch song information from musicbrainz.
    *
    * @param string $artist

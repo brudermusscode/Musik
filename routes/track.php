@@ -24,6 +24,7 @@ $Router->post(
 );
 
 $Router->get("/track/edit", return: "JSON");
+$Router->get("/track/edit-lyrics", return: "JSON");
 $Router->get("/track/explore", return: "JSON");
 $Router->get("/track/add-to", return: "JSON");
 $Router->get("/track/add-to-explore", return: "JSON");

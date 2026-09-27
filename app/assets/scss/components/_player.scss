@@ -55,7 +55,7 @@ player-contain {
   display: block;
   position: fixed;
   z-index: 101;
-  top: $main-distance;
+  top: $main-distance + 4px;
   right: calc(2 * $main-distance + (1 * ($main-distance/1.2)));
 
   @media screen and (max-width: $laptop-max-width) {
@@ -608,6 +608,123 @@ volume-controls {
       visibility: visible;
       opacity: 1;
       margin-top: -1px;
+    }
+  }
+}
+
+$lyrics-base-height: 320px;
+
+lyrics-placeholder {
+  @extend .window-light;
+  display: none;
+  height: $lyrics-base-height;
+
+  &[active] {
+    display: block;
+  }
+}
+
+lyrics {
+  display: block;
+  position: relative;
+  height: $lyrics-base-height;
+  overflow: hidden;
+  transition: $trans-cubic;
+
+  &:not([active]) {
+    @extend .window-light;
+    border-radius: 24px;
+    border-top-right-radius: 32px;
+  }
+
+  &[active] {
+    @extend .window;
+    position: fixed;
+    z-index: 102;
+    top: calc(($bruder-distance - 6px) + $main-distance-smol / 2);
+    left: calc($main-distance-smol / 2);
+    width: calc(100vw - (2 * $main-distance-smol) / 2);
+    height: calc(
+      100svh - $bruder-distance - (2 * $main-distance-smol) / 2 + 6px
+    );
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    [title],
+    &:after {
+      background: transparent;
+    }
+
+    lyrics-content {
+      overflow: auto;
+      margin-inline: auto;
+      max-width: 600px;
+      padding-block: 82px;
+      gap: $gap-std-plus;
+    }
+
+    line {
+      font-size: $font-size-mid-plus;
+    }
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    z-index: 1;
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 18px;
+    background: #4a402d;
+    background: linear-gradient(0deg, #4a402d 42%, rgba(88, 79, 61, 0) 100%);
+  }
+
+  [title] {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    padding: 16px 18px 16px 18px;
+    width: 100%;
+    background: #4a402d;
+    background: linear-gradient(180deg, #4a402d 52%, rgba(88, 79, 61, 0) 100%);
+  }
+
+  lyrics-content {
+    padding-inline: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: $gap-smol-plus;
+    overflow: hidden;
+    min-height: calc(100%);
+    max-height: calc(100%);
+    padding-block: 72px 20px;
+    transition: $trans-cubic;
+
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  line {
+    font-size: $font-size-midler;
+    font-weight: 800;
+    opacity: 0.4;
+
+    &[active] {
+      opacity: 1;
+      color: $tertiary;
+    }
+
+    timestamp {
+      display: none;
     }
   }
 }

@@ -35,7 +35,7 @@ ob_start(); ?>
                       ? 'src="' . $Artist->art_link() . '"'
                       : "src" ?> />
               <mi cover color=quadro>face_3</mi>
-              <mbutton trigger-file-input blur=smol material background=hover-dark size=mid icon-only>
+              <mbutton trigger-file-input blur=smol material window size=mid icon-only>
                 <input type=file accept="image/*" name=art hidden />
                 <mi>edit</mi>
               </mbutton>

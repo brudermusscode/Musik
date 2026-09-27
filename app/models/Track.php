@@ -33,6 +33,7 @@ class Track extends Bruder
     "year",
     "mime",
     "length_seconds",
+    "lyrics_w_timestamps",
     "deleted_at",
     "updated_at",
   ];
@@ -50,9 +51,7 @@ class Track extends Bruder
     if (isset($params->listens) && $params->listens == 1)
       $this->listens += 1;
 
-    /**
-     * ? Video
-     */
+    # ? Video
     if (!empty($params->video)) {
 
       /**
@@ -81,9 +80,13 @@ class Track extends Bruder
       }
     }
 
-    /**
-     * ? Title
-     */
+    # ? Title
+
+
+    # ? Lyrics with timestamps
+    if (isset($params->lyrics_w_timestamps)) {
+      $this->lyrics_w_timestamps = $params->lyrics_w_timestamps ?: null;
+    }
 
     $this->save();
 

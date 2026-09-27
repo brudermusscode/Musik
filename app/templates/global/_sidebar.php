@@ -34,16 +34,14 @@ use Bruder\Model\Album;
     </library>
   </section>
 
-  <mbutton material size=mid rounded=std mid window has-icon=left bold window-lighter
+  <mbutton material size=mid mid has-icon=left bold
     request-get="playlist:new">
     <mi>add</mi>
   </mbutton>
 </sidebar>
 
 <sidebar right>
-  <section current-track window-light>
-    <get-content from="/get/current-track">
-      <?php include TEMPLATE . "/global/_loader.php"; ?>
-    </get-content>
+  <section current-track>
+    <!--- Will be filled by js --->
   </section>
 </sidebar>
