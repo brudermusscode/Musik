@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Bruder\Utils\Str;
 
 class Track extends Bruder
 {
@@ -44,6 +45,8 @@ class Track extends Bruder
    */
   public function edit(object $params)
   {
+
+    $return_data = [];
 
     /**
      * ? Listens
@@ -84,13 +87,49 @@ class Track extends Bruder
 
 
     # ? Lyrics with timestamps
-    if (isset($params->lyrics_w_timestamps)) {
+    if (
+      isset($params->lyrics_w_timestamps)
+      && !isset($params->lyrics_w_timestamp_update_single_line)
+    ) {
       $this->lyrics_w_timestamps = $params->lyrics_w_timestamps ?: null;
+    }
+
+    # It's possible to edit a single line of the lyrics, which requires all the fol-
+    # lowing params to be set -
+    if (isset(
+      $params->lyrics_w_timestamp_update_single_line,
+      $params->lyrics_line_key,
+      $params->lyrics_line_timestamp,
+      $params->lyrics_line_content,
+    ) && $this->lyrics_w_timestamps) {
+      $lyrics = $this->lyrics_formatted();
+
+      if (!$lyrics[$params->lyrics_line_key]) return error();
+
+      $lyrics[$params->lyrics_line_key]->timestamp = $params->lyrics_line_timestamp;
+      $lyrics[$params->lyrics_line_key]->content = $params->lyrics_line_content;
+
+      $lyrics_deformatted = [];
+
+      foreach ($lyrics as $line) {
+        $lyrics_deformatted[] = $line->timestamp . "&#13;&#10;" . $line->content;
+      }
+
+      $this->lyrics_w_timestamps = implode("&#13;&#10;&#13;&#10;", $lyrics_deformatted);
+
+      $return_data["line"] = [
+        "timestamp" => $params->lyrics_line_timestamp,
+        "timestamp_seconds" =>
+        Str::timestamp_to_seconds($params->lyrics_line_timestamp),
+        "content" => $params->lyrics_line_content,
+      ];
     }
 
     $this->save();
 
-    return success(data: $this);
+    $return_data["Track"] = $this;
+
+    return success(data: $return_data);
   }
 
   /**
@@ -467,5 +506,26 @@ class Track extends Bruder
     $minutes = floor($this->length_seconds / 60);
 
     return $minutes;
+  }
+
+  /**
+   * @return null|list<object{timestamp: string, content: string}>
+   */
+  public function lyrics_formatted()
+  {
+    if (!$this->lyrics_w_timestamps) return null;
+
+    $lines_raw = explode("&#13;&#10;&#13;&#10;", $this->lyrics_w_timestamps ?: "");
+    $lines = [];
+
+    foreach ($lines_raw as $raw_line) {
+      $line = explode("&#13;&#10;", $raw_line);
+      $lines[] = (object) [
+        "timestamp" => $line[0],
+        "content" => $line[1]
+      ];
+    }
+
+    return $lines;
   }
 }

@@ -17,7 +17,20 @@ class TracksController extends Controller
 
     $this->validate_params(
       strict: ["id"],
-      optional: ["title", "artist", "file_name", "video", "genre", "year", "listens", "lyrics_w_timestamps"],
+      optional: [
+        "title",
+        "artist",
+        "file_name",
+        "video",
+        "genre",
+        "year",
+        "listens",
+        "lyrics_w_timestamps",
+        "lyrics_w_timestamp_update_single_line",
+        "lyrics_line_key",
+        "lyrics_line_content",
+        "lyrics_line_timestamp"
+      ],
     );
 
     /**

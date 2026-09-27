@@ -278,8 +278,6 @@ $(function () {
     close_overlays();
   });
 
-  let __control_pressed = false;
-
   /**
    * When tabbing out with ctrl, the ctrl key stays pressed when coming back. Set it
    * to be not pressed when tabbing out -

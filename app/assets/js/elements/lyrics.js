@@ -1,3 +1,7 @@
+import * as Frontend from "../framework/frontend";
+import * as Player from "../elements/player";
+import * as Global from "../pages/global";
+
 const init_color = "#ff47ff";
 const error_color = "#ff4769";
 const success_color = "#23e934";
@@ -12,7 +16,7 @@ const scroll_to_current_line = () => {
   let lyrics_fullscreen = lyrics?.hasAttribute("active");
   let line_offset =
     __lyrics_current_line.offsetTop -
-    (!lyrics_fullscreen ? 72 : lyrics.clientHeight / 2);
+    (!lyrics_fullscreen ? 72 : lyrics.clientHeight / 2 - 72);
 
   lyrics.find("lyrics-content")?.scrollTo({
     top: line_offset,
@@ -95,23 +99,190 @@ export const start = () => {
   });
 };
 
+export const fullscreen = () => {
+  let lyrics = document.find("lyrics");
+  let placeholder = document.find("lyrics-placeholder");
+
+  if (!lyrics) return;
+
+  lyrics.activate();
+  placeholder.activate();
+  __player.lyrics.fullscreen = true;
+
+  setTimeout(() => {
+    scroll_to_current_line();
+  }, 300);
+};
+
+export const close_fullscreen = () => {
+  let lyrics = document.find("lyrics");
+  let placeholder = document.find("lyrics-placeholder");
+
+  if (!lyrics) return;
+
+  lyrics.deactivate();
+  placeholder.deactivate();
+  __player.lyrics.fullscreen = false;
+
+  setTimeout(() => {
+    scroll_to_current_line();
+  }, 300);
+};
+
 $(function () {
   $(document).on("click", '[data-action="lyrics:fullscreen"]', function (e) {
     let lyrics = document.find("lyrics");
-    let placeholder = document.find("lyrics-placeholder");
 
-    if (!lyrics) return;
-
-    if (lyrics.hasAttribute("active")) {
-      lyrics.deactivate();
-      placeholder.deactivate();
+    if (lyrics?.hasAttribute("active")) {
+      close_fullscreen();
     } else {
-      lyrics.activate();
-      placeholder.activate();
+      fullscreen();
     }
+  });
 
-    setTimeout(() => {
-      scroll_to_current_line();
-    }, 300);
+  $(document).on("click", "edit-lyrics line:not([active])", function (e) {
+    this.activate();
+  });
+
+  $(document).on("click", "lyrics[active] line", function (e) {
+    let lyrics = this.closest("lyrics");
+    let lines = lyrics.find_all("line");
+    let timestamp = this.getAttribute("timestamp");
+    let content = this.find("p").innerHTML;
+    let formatted_timestamp = this.find("timestamp").innerHTML;
+
+    let stop_editing_all_lines = (lines) => {
+      if (!lyrics.hasAttribute("editing")) return;
+
+      lines.forEach((line) => {
+        line.removeAttribute("editing");
+        line.removeAttribute("show-actions");
+      });
+
+      lyrics.removeAttribute("editing", true);
+    };
+
+    if (!this.hasAttribute("editing"))
+      Player.set_time(parseFloat(timestamp), __control_pressed ? true : false);
+
+    if (__control_pressed) {
+      stop_editing_all_lines(lines);
+
+      this.setAttribute("editing", true);
+      lyrics.setAttribute("editing", true);
+    } else if (!__control_pressed && !this.hasAttribute("editing")) {
+      stop_editing_all_lines(lines);
+    }
+  });
+
+  /**
+   * Show more actions when hovering a line in fullscreen when control key is pressed.
+   */
+  $(document).on("keydown", function (e) {
+    let key = e.key.toLowerCase();
+
+    if (key === "control") {
+      let hovered_line = document.find("lyrics line:hover");
+      if (hovered_line && __player.lyrics.fullscreen)
+        hovered_line.setAttribute("show-actions", true);
+    }
+  });
+
+  $(document).on("keyup", function (e) {
+    if (!__player.lyrics.fullscreen) return;
+
+    let key = e.key.toLowerCase();
+
+    if (key === "control") {
+      document.find_all("lyrics line").forEach((line) => {
+        line.removeAttribute("show-actions");
+      });
+    }
+  });
+
+  $(document).on("mouseover", "lyrics[active] line", function (e) {
+    if (!__control_pressed) return;
+
+    this.setAttribute("show-actions", true);
+  });
+
+  $(document).on("mouseout", "lyrics[active] line", function (e) {
+    if (this.hasAttribute("show-actions")) this.removeAttribute("show-actions");
+  });
+
+  /**
+   * For updating a single line inside the lyrics fullscreen.
+   */
+  $(document).on(
+    "submit",
+    '[data-form="track:lyrics-update-inline"]',
+    function (e) {
+      e.preventDefault();
+
+      let form = this;
+      let button = this.find("mbutton[submit-closest]");
+      let formdata = new FormData(this);
+      let line = this.closest("line");
+      let lyrics = this.closest("lyrics");
+      let timestamp = this.find("timestamp");
+      let content = this.find("p");
+
+      button.disable();
+
+      formdata.append("lyrics_w_timestamp_update_single_line", true);
+
+      $.ajax({
+        url: "/track/update",
+        data: formdata,
+        method: "POST",
+        success: function (data) {
+          console.log(data);
+
+          button.enable();
+          timestamp.innerHTML = data.data.line.timestamp;
+          content.innerHTML = data.data.line.content;
+          line.setAttribute("timestamp", data.data.line.timestamp_seconds);
+          line.removeAttribute("show-actions");
+          line.removeAttribute("editing");
+          lyrics.removeAttribute("editing");
+
+          Player.resume();
+        },
+      });
+    },
+  );
+
+  /**
+   * For a single line to be updated in the lyrics through the full edit window.
+   */
+  $(document).on("submit", "[data-form='track:lyrics-update']", function (e) {
+    e.preventDefault();
+
+    let button = this.find("[submit-closest]");
+    let form = this;
+    let formdata = new FormData(this);
+    let line = form.find("line");
+    let timestamp = line.find("timestamp");
+    let content = line.find("content");
+
+    button.disable();
+
+    formdata.append("lyrics_w_timestamp_update_single_line", true);
+
+    $.ajax({
+      url: "/track/update",
+      data: formdata,
+      method: "POST",
+      success: function (data) {
+        button.enable();
+        line.deactivate();
+        timestamp.find("p").innerHTML = timestamp.find("input").value;
+        content.find("p").innerHTML = content.find("input").value;
+
+        // TODO: Update lyrics section only.
+        Global.update_current_track();
+        Frontend.ajax_response(data.status ? "success" : "error");
+      },
+    });
   });
 });

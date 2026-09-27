@@ -24,10 +24,12 @@ $Router->post(
 );
 
 $Router->get("/track/edit", return: "JSON");
-$Router->get("/track/edit-lyrics", return: "JSON");
 $Router->get("/track/explore", return: "JSON");
 $Router->get("/track/add-to", return: "JSON");
 $Router->get("/track/add-to-explore", return: "JSON");
 
 $Router->post("/track/update", return: "JSON");
 $Router->post("/track/delete", return: "JSON");
+
+$Router->get("/track/lyrics-add", return: "JSON");
+$Router->get("/track/lyrics-edit", return: "JSON");

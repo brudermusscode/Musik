@@ -6,6 +6,25 @@ class Str
 {
 
   /**
+   * Turns a timestamp in format 12:28.21 into seconds as a float.
+   *
+   * @return float
+   */
+  public static function timestamp_to_seconds(string $timestamp)
+  {
+    $ts_explode = explode(":", $timestamp);
+    // $is_hours = count($ts_explode) === 3; // later
+    $seconds = 0;
+
+    foreach ($ts_explode as $key2 => $part) {
+      if ($key2 === 0) $seconds += (float) $part * 60;
+      else $seconds += (float) $part;
+    }
+
+    return (float) $seconds;
+  }
+
+  /**
    * Checks if all of the gioven $characters are existent in $string.
    *
    * @param string $string

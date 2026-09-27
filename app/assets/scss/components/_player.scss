@@ -661,13 +661,77 @@ lyrics {
     lyrics-content {
       overflow: auto;
       margin-inline: auto;
-      max-width: 600px;
+      max-width: 800px;
       padding-block: 82px;
-      gap: $gap-std-plus;
+      padding-inline: 82px;
+      gap: 0;
     }
 
     line {
-      font-size: $font-size-mid-plus;
+      cursor: pointer;
+      padding: 12px 28px 12px;
+      border-radius: 24px;
+      border: 1px solid transparent;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &[editing] {
+        padding-block: 18px 28px;
+        margin-block: 6px;
+        border-color: $tertiary;
+        display: flex;
+        flex-direction: column;
+        gap: $gap-smol;
+
+        p {
+          display: none;
+        }
+
+        input {
+          display: block;
+        }
+
+        mbutton {
+          display: flex !important;
+        }
+
+        timestamp {
+          display: none;
+        }
+      }
+
+      &[editing],
+      &[show-actions] {
+        opacity: 1;
+
+        line-actions {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+
+      &[show-actions] {
+        border-color: $slight-light;
+
+        timestamp {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+
+      input {
+        width: 100%;
+      }
+
+      p {
+        font-size: $font-size-mid-plus;
+      }
+
+      timestamp {
+        display: block;
+      }
     }
   }
 
@@ -704,7 +768,6 @@ lyrics {
   }
 
   lyrics-content {
-    padding-inline: 18px;
     display: flex;
     flex-direction: column;
     gap: $gap-smol-plus;
@@ -712,7 +775,8 @@ lyrics {
     min-height: calc(100%);
     max-height: calc(100%);
     padding-block: 72px 20px;
-    transition: $trans-cubic;
+    padding-inline: 18px;
+    transition: padding 0s linear;
 
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
@@ -723,16 +787,94 @@ lyrics {
   }
 
   line {
-    font-size: $font-size-midler;
-    font-weight: 800;
     opacity: 0.4;
+    position: relative;
+    border-color: transparent;
+    transition:
+      padding 0s linear,
+      opacity 0.1s linear,
+      color 0.1s linear,
+      border 0.1s linear;
 
     &[active] {
       opacity: 1;
-      color: $tertiary;
+
+      p {
+        color: $tertiary;
+      }
+    }
+
+    p {
+      font-size: $font-size-midler;
+      font-weight: 800;
+    }
+
+    input {
+      display: none;
+    }
+
+    mbutton {
+      display: none !important;
+      position: absolute;
+      left: calc(100% + 18px);
+      top: 50%;
+      translate: 0 -50%;
     }
 
     timestamp {
+      display: none;
+      opacity: 0;
+      visibility: hidden;
+      color: $tertiary;
+    }
+
+    line-actions {
+      opacity: 0;
+      visibility: hidden;
+      position: absolute;
+      top: 50%;
+      right: calc(100% + 24px);
+      translate: 0 -50%;
+    }
+  }
+}
+
+edit-lyrics {
+  line {
+    display: block;
+    position: relative;
+    padding: 24px;
+    border-radius: 24px;
+
+    &[active] {
+      mbutton {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      p {
+        display: none;
+      }
+
+      input:not([type="hidden"]) {
+        display: block;
+      }
+    }
+
+    mbutton {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background-color: $slight-green;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    p {
+      display: block;
+    }
+
+    input {
       display: none;
     }
   }

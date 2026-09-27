@@ -21,7 +21,7 @@ ob_start(); ?>
   <popup-container>
     <popup-container__content stdplus posrel style=z-index:2; elevated p42 fl fldircol gap>
       <div fl fldircol gap=smol>
-        <p text smol ttup bold color=primary>Lyrics bearbeiten</p>
+        <p text smol ttup bold color=primary>Lyrics hinzufügen</p>
         <?php
 
         /**

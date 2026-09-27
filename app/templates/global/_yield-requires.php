@@ -34,6 +34,9 @@
     shuffle: true,
     repeat: false,
     fullscreen: false,
+    lyrics: {
+      fullscreen: false,
+    },
     Track: {
       relation: {
         id: null,
@@ -59,6 +62,7 @@
     priority_queue: [],
   };
 
+  let __control_pressed = false;
   let __current_overlay = null;
   let __current_second_overlay;
   let __current_audio_element;

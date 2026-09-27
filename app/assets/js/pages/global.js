@@ -37,6 +37,8 @@ export const open_bruder = (search) => {
 
   if (!search_input || bruder.hasAttribute("active")) return;
 
+  Lyrics.close_fullscreen();
+
   bruder.activate();
   search_input.focus();
   search_input.value = search !== undefined ? search : "";
@@ -134,11 +136,10 @@ export const update_current_track = async (
           sidebar.unload();
 
           Frontend.reload_images();
-
-          if (__player.fullscreen)
-            document.find("current-track[has-video] video")?.pause();
-
           Lyrics.start();
+
+          if (!__player.active)
+            document.find("current-track[has-video] video")?.pause();
 
           return resolve(1);
         }
@@ -175,6 +176,7 @@ $(function () {
 
     if (key === "escape") {
       close_bruder();
+      Lyrics.close_fullscreen();
     }
 
     /**

@@ -360,8 +360,7 @@ export const replay = async () => {
 export const resume = () => {
   if (!__player.Track.audio || !__player.Track.id) return;
 
-  // Play the video.
-  if (!__player.fullscreen) document.find(current_track_video_path)?.play();
+  document.find(current_track_video_path)?.play();
 
   __player.Track.audio.play();
 
@@ -782,7 +781,7 @@ export const create_queue = async (
   });
 };
 
-export const set_time = (seconds) => {
+export const set_time = (seconds, keep_paused) => {
   let track = document.find("player duration-track");
   let percent_width = (seconds * 100) / __player.Track.audio.duration;
   let should_resume = __player.active;
@@ -799,10 +798,12 @@ export const set_time = (seconds) => {
   localStorage.setItem("__player_Track_currentTime", seconds);
 
   // Waiting 120 ms to not interfere with the css animations.
-  if (should_resume)
+  if (should_resume && !keep_paused)
     setTimeout(() => {
       resume();
     }, 120);
+
+  Lyrics.start();
 };
 
 /**
@@ -886,6 +887,10 @@ $(function () {
     await Global.update_current_track(relation_id, relation_type);
   });
 
+  $(document).on("click", "[player-stop]", function (e) {
+    pause();
+  });
+
   /**
    * Show a time label when hovering over a part of the player overflow holding the
    * duration-track to indicate, where the song will start playing when clicking.
@@ -928,7 +933,6 @@ $(function () {
     let new_audio_time_sec = duration * (percent_width / 100);
 
     set_time(new_audio_time_sec);
-    Lyrics.start();
   });
 
   /**

@@ -108,10 +108,10 @@ else :
            */
           $album_strlen = strlen($Album->name);
           $title_size = match (true) {
-            $album_strlen >= 24 => "midplus",
-            $album_strlen >= 16 => "wide",
-            $album_strlen >= 14 => "wider",
-            $album_strlen >= 10 => "widest",
+            $album_strlen >= 22 => "midplus",
+            $album_strlen >= 14 => "wide",
+            $album_strlen >= 12 => "wider",
+            $album_strlen >= 8 => "widest",
             default => "widester"
           };
 
