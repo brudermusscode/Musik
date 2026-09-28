@@ -260,6 +260,52 @@ class Album extends Bruder
   }
 
   /**
+   * Analyzes the album art using GD lib and gets the most common color as rgb value
+   * li 21,21,21.
+   *
+   * @return ?string
+   */
+  public function most_common_art_color()
+  {
+
+    $album_art = $this->art;
+    $art_link = ROOT . "/public/data/user/1/art/" . $album_art;
+
+    $image = match (explode(".", $album_art)[1]) {
+      "jpeg",
+      "jpg" => imagecreatefromjpeg($art_link),
+      "png" => imagecreatefrompng($art_link),
+      "webp" => imagecreatefromwebp($art_link),
+      "gif" => imagecreatefromgif($art_link),
+      default => null,
+    };
+
+    if (!$image) return null;
+
+    $width  = imagesx($image);
+    $height = imagesy($image);
+
+    $colors = [];
+
+    for ($x = 0; $x < $width; $x++) {
+      for ($y = 0; $y < $height; $y++) {
+        $rgb = imagecolorat($image, $x, $y);
+
+        $r = ($rgb >> 16) & 0xFF;
+        $g = ($rgb >> 8) & 0xFF;
+        $b = $rgb & 0xFF;
+
+        $color = "$r,$g,$b";
+        $colors[$color] = ($colors[$color] ?? 0) + 1;
+      }
+    }
+
+    arsort($colors);
+
+    return array_key_first($colors);
+  }
+
+  /**
    * Uses cURL to fetch song information from musicbrainz.
    *
    * @param string $artist

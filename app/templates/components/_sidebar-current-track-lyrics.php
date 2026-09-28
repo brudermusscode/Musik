@@ -18,7 +18,7 @@ use Bruder\Utils\Str;
 if ($CurrentTrack->lyrics_w_timestamps) : ?>
 
   <lyrics-placeholder></lyrics-placeholder>
-  <lyrics>
+  <lyrics animation=zoom-in>
     <div title fl alic jucsb>
       <p window-light pinline14 pblock8 text smol ttup semibold>Lyrics</p>
       <div fl alic gap=smol>
@@ -57,9 +57,9 @@ if ($CurrentTrack->lyrics_w_timestamps) : ?>
             <p><?= $line->content; ?></p>
 
             <input type=hidden name="lyrics_line_key" crazy value="<?= $key; ?>" />
-            <input type=text name="lyrics_line_timestamp" crazy
+            <input type=text name="lyrics_line_timestamp" enter-submitable crazy
               value="<?= $line->timestamp; ?>" />
-            <input type=text name="lyrics_line_content" crazy
+            <input type=text name="lyrics_line_content" enter-submitable crazy
               value="<?= $line->content; ?>" />
             <input type=hidden name="id" value="<?= $CurrentTrack->id; ?>" />
             <mbutton material icon-only submit-closest>
@@ -81,8 +81,8 @@ if ($CurrentTrack->lyrics_w_timestamps) : ?>
       style="position:absolute;bottom:-18px;left:-6px;font-size:52px;">
       lyrics</mi>
     <div fl alic flone gap=smol jucsb>
-      <p text smol semibold trimt>Lyrics hinzufügen</p>
-      <mi>arrow_forward</mi>
+      <p text semibold trimt>Lyrics hinzufügen</p>
+      <mi>add</mi>
     </div>
   </div>
 

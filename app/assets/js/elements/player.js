@@ -781,7 +781,7 @@ export const create_queue = async (
   });
 };
 
-export const set_time = (seconds, keep_paused) => {
+export const set_time = (seconds, keep_paused = false) => {
   let track = document.find("player duration-track");
   let percent_width = (seconds * 100) / __player.Track.audio.duration;
   let should_resume = __player.active;

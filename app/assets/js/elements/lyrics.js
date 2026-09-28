@@ -246,6 +246,7 @@ $(function () {
           line.removeAttribute("editing");
           lyrics.removeAttribute("editing");
 
+          Player.set_time(data.data.line.timestamp_seconds, false);
           Player.resume();
         },
       });

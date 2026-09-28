@@ -16,7 +16,7 @@ use Bruder\Model\Playlist;
 
 if ($Relation && $track_relates) : ?>
 
-  <div window-light rounded=midler p4 fl fldircol gap=smol>
+  <div window-light rounded=midler p4 fl fldircol gap=smol animatino=zoom-in>
     <p pinline18 pt14 pb6 text smoler semibold ttup>Läuft in</p>
 
     <?php
@@ -30,13 +30,18 @@ if ($Relation && $track_relates) : ?>
     ?>
 
     <a href="/<?= $type ?>/<?= $id ?>">
-      <div pr18 pl52 pblock14 hoverable rounded=std background=slighter-dark ovhid posrel>
+      <div pr14 pl52 pblock14 hoverable rounded=std background=slighter-dark ovhid posrel>
         <mi color=secondary style="position:absolute;bottom:-12px;left:-12px;font-size:52px;">
           <?= $icon ?></mi>
-        <p text semibold trimt><?= $Relation->name ?></p>
-        <div fl alic gap=smoler>
-          <p text smoler semibold ttup><?= ucfirst($type) ?> &middot;</p>
-          <p text smoler regular ttup><?= $Relation->tracks->count() ?> Tracks</p>
+        <div fl jucsb alic>
+          <div>
+            <p text semibold trimt><?= $Relation->name ?></p>
+            <div fl alic gap=smoler>
+              <p text smoler semibold ttup><?= ucfirst($type) ?> &middot;</p>
+              <p text smoler regular ttup><?= $Relation->tracks->count() ?> Tracks</p>
+            </div>
+          </div>
+          <mi>arrow_forward</mi>
         </div>
       </div>
     </a>

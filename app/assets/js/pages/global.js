@@ -184,11 +184,12 @@ $(function () {
      * pressing enter will submit the closest form, basically just
      * clicking the button.
      */
-    if (
-      e.key.toLowerCase() === "enter" &&
-      e.target?.tagName.toLowerCase() === "mbutton"
-    )
-      e.target.click();
+    if (e.key.toLowerCase() === "enter") {
+      if (e.target?.tagName.toLowerCase() === "mbutton") e.target.click();
+
+      if (e.target?.hasAttribute("enter-submitable"))
+        e.target.closest("form")?.find("[submit-closest]")?.click();
+    }
   });
 
   $(document).on("scroll", function (e) {

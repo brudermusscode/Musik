@@ -64,8 +64,8 @@ use Bruder\Model\Playlist;
       <mi color=<?= Artist::COLOR ?>
         style="position:absolute;bottom:-12px;left:-6px;font-size:52px;"><?= Artist::ICON ?></mi>
       <div fl alic flone gap=smol jucsb>
-        <p text smol semibold trimt>Künstler bearbeiten</p>
-        <mi>arrow_forward</mi>
+        <p text semibold trimt>Künstler bearbeiten</p>
+        <mi>add</mi>
       </div>
     </div>
   <?php endif ?>

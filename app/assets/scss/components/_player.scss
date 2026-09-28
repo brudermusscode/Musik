@@ -637,7 +637,12 @@ lyrics {
     border-top-right-radius: 32px;
   }
 
+  // fullscreen mode
   &[active] {
+    $fullscreen-height: calc(
+      100svh - $bruder-distance - (2 * $main-distance-smol) / 2 + 6px
+    );
+
     @extend .window;
     background: rgba(0, 0, 0, 0.8);
     position: fixed;
@@ -645,9 +650,7 @@ lyrics {
     top: calc(($bruder-distance - 6px) + $main-distance-smol / 2);
     left: calc($main-distance-smol / 2);
     width: calc(100vw - (2 * $main-distance-smol) / 2);
-    height: calc(
-      100svh - $bruder-distance - (2 * $main-distance-smol) / 2 + 6px
-    );
+    height: $fullscreen-height;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
@@ -662,7 +665,7 @@ lyrics {
       overflow: auto;
       margin-inline: auto;
       max-width: 800px;
-      padding-block: 82px;
+      padding-block: calc($fullscreen-height / 2 - 72px);
       padding-inline: 82px;
       gap: 0;
     }
