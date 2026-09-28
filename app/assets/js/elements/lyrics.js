@@ -105,13 +105,15 @@ export const fullscreen = () => {
 
   if (!lyrics) return;
 
-  lyrics.activate();
-  placeholder.activate();
-  __player.lyrics.fullscreen = true;
-
   setTimeout(() => {
-    scroll_to_current_line();
-  }, 300);
+    lyrics.activate();
+    placeholder.activate();
+    __player.lyrics.fullscreen = true;
+
+    setTimeout(() => {
+      scroll_to_current_line();
+    }, 300);
+  }, 20);
 };
 
 export const close_fullscreen = () => {
@@ -170,6 +172,12 @@ $(function () {
 
       this.setAttribute("editing", true);
       lyrics.setAttribute("editing", true);
+      setTimeout(() => {
+        console.log("focusing input!");
+        let input = this.find("input[name=lyrics_line_timestamp]");
+        input.focus();
+        input.setSelectionRange(input.value.length, input.value.length);
+      }, 100);
     } else if (!__control_pressed && !this.hasAttribute("editing")) {
       stop_editing_all_lines(lines);
     }

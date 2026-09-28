@@ -292,7 +292,11 @@ $(function () {
   document.addEventListener("keypress", (e) => {
     if (!e.key) return;
 
-    if (!__control_pressed && !input_focused()) {
+    if (
+      !__control_pressed &&
+      !input_focused() &&
+      e.key.toLowerCase() !== "enter"
+    ) {
       open_bruder(e.key);
     }
   });
