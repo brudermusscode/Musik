@@ -56,8 +56,7 @@ export const sync_files = () => {
 };
 
 /**
- * Pass a track from PHP to set it as the currently playing track
- * in the frontend's player.
+ * Play a track. Manipulates the frontend and sets all attributes to global __player.
  *
  * @param {JSON} Track
  * @param {string} public_source_url
@@ -117,6 +116,8 @@ export const play_track = async (
       __add_listen_timeout = setTimeout(() => {
         let formdata = new FormData();
         formdata.append("id", Track.id);
+        formdata.append("relation_id", __player.Track.relation.id);
+        formdata.append("relation_type", __player.Track.relation.type);
         formdata.append("listens", 1);
 
         $.ajax({
@@ -143,33 +144,35 @@ export const set_track = (Track) => {
 };
 
 /**
- * This searches the DOM for a page tag that has an attribute of
- * either [playlist] or [album] and uses the dataset attributes to
- * set the relation of a played song.
+ * Get the saved relation from local storage.
  */
-export const set_track_relation = (init = false) => {
+export const init_track_relation = () => {
+  let relation_id = localStorage.getItem("__player_Track_relation_id");
+  let relation_type = localStorage.getItem("__player_Track_relation_type");
+
+  __player.Track.relation = {
+    id: relation_id ? parseInt(relation_id) : null,
+    type: relation_type,
+  };
+};
+
+/**
+ * Searches the DOM for <track-relation> and uses it's datasets to set a relation
+ * between a played song and the relation, it was played through.
+ */
+export const set_track_relation = (closest_to_element) => {
+  let relation = closest_to_element.closest("track-relation");
   let relation_id = null;
   let relation_type = null;
+  let storage_keys = [
+    "__player_Track_relation_id",
+    "__player_Track_relation_type",
+  ];
 
-  if (init) {
-    relation_id = localStorage.getItem("__player_Track_relation_id");
-    relation_type = localStorage.getItem("__player_Track_relation_type");
-    __player.Track.relation = {
-      id: parseInt(relation_id),
-      type: relation_type,
-    };
-
-    return;
-  }
-
-  // Anything, that doesn't belong to the initialization process.
-  relation_type = document.find("page")?.dataset.type ?? null;
-  relation_id = document.find("page")?.dataset.id ?? null;
-
-  // If no relation was found, delete the cookies and set everything related to null.
-  if (!relation_type || !relation_id) {
-    localStorage.removeItem("__player_Track_relation_id");
-    localStorage.removeItem("__player_Track_relation_type");
+  // If no relation was found, delete all keys from the storage and reset __player.
+  if (!relation) {
+    localStorage.removeItem(storage_keys[0]);
+    localStorage.removeItem(storage_keys[1]);
     __player.Track.relation = {
       id: null,
       type: null,
@@ -178,12 +181,15 @@ export const set_track_relation = (init = false) => {
     return;
   }
 
+  relation_id = relation.dataset.id;
+  relation_type = relation.dataset.type;
+
   __player.Track.relation = {
     id: parseInt(relation_id),
     type: relation_type,
   };
-  localStorage.setItem("__player_Track_relation_id", relation_id, 365);
-  localStorage.setItem("__player_Track_relation_type", relation_type, 365);
+  localStorage.setItem(storage_keys[0], relation_id);
+  localStorage.setItem(storage_keys[1], relation_type);
 };
 
 /**
@@ -817,18 +823,14 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Init the app with player being not active.
   localStorage.setItem("__player_active", 0);
 
-  __player.Track.audio = new Audio(undefined);
+  __player.Track.audio = new Audio();
 
-  console.log(__player.Track.audio);
-
-  set_track_relation(true);
+  init_track_relation();
   await init_player_state();
   await init_current_track();
 
-  /**
-   * On page initialization, create the queue from saved Track and
-   * Relation saved in cookies. Skip, if either of one doesn't exist.
-   */
+  // On page initialization, create the queue from saved Track and Relation saved in
+  // cookies. Skip, if either of one doesn't exist.
   if (__player.Track.id)
     await create_queue(
       __player.Track.relation.type,
@@ -846,7 +848,6 @@ let __loading_new_track = false;
 
 $(function () {
   //
-  //
   /**
    * Clicking on a Track HTML object!
    *
@@ -858,19 +859,14 @@ $(function () {
     if (__loading_new_track) return;
 
     let track_id = this.getAttribute("play-track");
-    let relation_id = this.closest("page")?.dataset.id ?? null;
-    let relation_type = this.closest("page")?.dataset.type ?? null;
 
     // If the same Track saved in __player is clicked, just resume it and return.
     if (track_id == __player.Track.id)
       return document.find("player [play]")?.click();
 
-    // Get the Track.
     let response = await get_Track(track_id);
 
     if (!response.status) return Frontend.create_responder(response.error);
-
-    // ? Play Track
 
     // Should we shuffle the queue or not? Prioritize the entry in local storage.
     let cookie_shuffle = parseInt(
@@ -881,10 +877,22 @@ $(function () {
       __player.shuffle = cookie_shuffle;
     }
 
-    set_track_relation(false); // init = false
+    set_track_relation(this);
+
     await play_track(response.data.Track, response.data.track_public_url);
-    await create_queue(relation_type, relation_id, track_id, cookie_shuffle);
-    await Global.update_current_track(relation_id, relation_type);
+
+    if (__player.Track.relation.id)
+      await create_queue(
+        __player.Track.relation.type,
+        __player.Track.relation.id,
+        track_id,
+        cookie_shuffle,
+      );
+
+    await Global.update_current_track(
+      __player.Track.relation.id,
+      __player.Track.relation.type,
+    );
   });
 
   $(document).on("click", "[player-stop]", function (e) {

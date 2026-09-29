@@ -112,7 +112,7 @@ else :
 
     <!--- MOSTE LISTENED SONGS --->
     <div fl fldircol gap=smol+>
-      <p text bold std pinline16 ttup>Meist gehört</p>
+      <p text bold smol pinline16 ttup>Meist gehört</p>
       <div fl fldircol gap=smoler>
         <?php
 
@@ -137,7 +137,7 @@ else :
     if ($Albums->count()) : ?>
       <div fl fldircol gap=smol+>
         <div fl alic jucsb gap>
-          <p text bold std ttup pinline16>Von <?= $Artist->name ?></p>
+          <p text bold smol ttup pinline16>Von <?= $Artist->name ?></p>
           <a href="<?= $base_url ?>/discography">
             <mbutton material std has-icon=right text semibold>
               Discographie

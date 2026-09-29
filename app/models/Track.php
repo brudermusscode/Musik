@@ -48,11 +48,28 @@ class Track extends Bruder
 
     $return_data = [];
 
-    /**
-     * ? Listens
-     */
-    if (isset($params->listens) && $params->listens == 1)
+    # ? Listens
+    if (isset($params->listens) && $params->listens == 1) {
       $this->listens += 1;
+
+      $RelationClass = match ($params->relation_type ?? null) {
+        "album" => Album::class,
+        "playlist" => Playlist::class,
+        default => null,
+      };
+
+      /**
+       * @var null|Album|Playlist
+       */
+      $Relation = $RelationClass
+        ? $RelationClass::find($params->relation_id ?? 0)
+        : null;
+
+      $this->listens()->create([
+        "relation_id" => $Relation ? $params->relation_id : null,
+        "relation_type" => $Relation ? $params->relation_type : null,
+      ]);
+    }
 
     # ? Video
     if (!empty($params->video)) {
@@ -84,7 +101,7 @@ class Track extends Bruder
     }
 
     # ? Title
-
+    // aaaaaaaaaa
 
     # ? Lyrics with timestamps
     if (
@@ -276,7 +293,6 @@ class Track extends Bruder
          */
         $file_analyzed = (new getID3)->analyze($temp_file_path);
 
-
         /**
          * Write to log file if adding fails and return.
          */
@@ -364,6 +380,16 @@ class Track extends Bruder
         $Track->mime = $return_data["mime"] ?? null; // will return an error if null!
         $Track->length_seconds = $return_data["length_seconds"];
 
+        // TODO: $Track->created_at should be filemtime() (file last modified)
+        //   $file_last_modified = filemtime(ROOT . "/public/data/user/1/tracks/"
+        //   . $Track->file_name);
+        //
+        //   $created_at = date("Y-m-d H:i:s", $file_last_modified ?: 0);
+        //
+        //   $Track->created_at = $created_at;
+        //   $Track->save();
+
+
         /**
          * Get the Artist or create a new one.
          * @var ?Artist
@@ -424,6 +450,14 @@ class Track extends Bruder
   public function user()
   {
     return $this->belongsTo(User::class);
+  }
+
+  /**
+   * @return HasMany<Listen>
+   */
+  public function listens()
+  {
+    return $this->hasMany(Listen::class);
   }
 
   /**

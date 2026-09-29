@@ -34,15 +34,17 @@ else :
 
 ?>
 
-  <div fl fldircol gap=mid>
+  <div fl fldircol gap=wide>
     <?php foreach ($Releases as $Release) :
 
       $track_count = $Release->tracks->count();
 
     ?>
 
-      <page album data-type=album data-id=<?= $Release->id ?> fl fldircol gap=smol+ style=padding-top:0;>
-        <div window-light p2 rounded=mid fl aliend gap>
+      <page album data-type=album data-id=<?= $Release->id ?>
+        fl fldircol gap=smol+ style=padding-top:0;>
+
+        <div window p2 rounded=mid fl aliend gap>
           <picture ovhid wider rounded=mid>
             <img src="/data/user/1/art/<?= $Release->art ?>" />
           </picture>
@@ -76,7 +78,7 @@ else :
           </div>
         </div>
 
-        <div fl fldircol>
+        <div fl fldircol gap=smoler>
           <?php
 
           $in_album = true;

@@ -350,7 +350,7 @@ sidebar {
     right: 0;
 
     @media screen and (max-width: $hide-sidebar-max-width) {
-      // right: calc(-1 * ($sidebar-laptop-width - 3 * $main-distance));
+      right: calc(-1 * ($sidebar-laptop-width - 3 * $main-distance));
 
       &:hover {
         right: 0;

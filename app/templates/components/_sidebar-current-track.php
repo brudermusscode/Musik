@@ -75,9 +75,9 @@ $title_size = match (true) {
 
   <div track-metadata fl fldircol gap=smolest alistart>
     <p title text <?= $title_size ?> bold trimt><?= $CurrentTrack->title ?></p>
-    <a href="/artist/<?= $CurrentTrack->artistt->id ?>" fl alic gap=smoler hoverable background=slighter-light rounded=smol pl6 pr10 pblock4 maxw100>
+    <a href="/artist/<?= $CurrentTrack->artistt->id ?>" fl alic gap=smoler hoverable background=slighter-light rounded=smolplus pl6 pr10 pblock4 maxw100>
       <mi text std color=<?= Artist::COLOR ?>><?= Artist::ICON ?></mi>
-      <p text smol ttup regular style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+      <p text smol ttup semibold style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
         <?= $CurrentTrack->artistt->name ?>
       </p>
     </a>

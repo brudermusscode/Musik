@@ -25,6 +25,8 @@ class TracksController extends Controller
         "genre",
         "year",
         "listens",
+        "relation_id",
+        "relation_type",
         "lyrics_w_timestamps",
         "lyrics_w_timestamp_update_single_line",
         "lyrics_line_key",

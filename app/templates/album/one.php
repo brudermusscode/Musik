@@ -33,13 +33,11 @@ else :
    */
   include TEMPLATE . "/global/_current-playlist.php"; ?>
 
-  <?php
+  <page album>
 
-  /**
-   * This will be used to show additional informatin about this
-   * album in the right sidebar.
-   */ ?>
-  <page album data-type=album data-id=<?= $Album->id ?>>
+    <!---
+    This is used to set the relationship between the played song and this album --->
+    <track-relation data-type=album data-id=<?= $Album->id ?>></track-relation>
 
     <top-banner scroll-manipulated fl jucstart alistretch>
       <picture art elevated=smol posrel>

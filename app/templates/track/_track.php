@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use Bruder\Model\Track;
 use Bruder\Model\Album;
 use Bruder\Model\Playlist;
+use Bruder\Time\Time;
 
 /**
  * @var Track $Track
@@ -75,13 +76,13 @@ include __DIR__ . "/_show_active.php";
   if ($show_menu)
     include __DIR__ . "/_menu.php"; ?>
 
-  <div
+  <div window
     <?= $no_left_action ? "style=\"padding:4px;padding-right:14px;pointer-events:none;border-radius: 14px 12px 12px 14px;\" background=slighter-light" : "" ?>
     <?= $track_playable ? 'play-track="' . $Track->id . '"' : "" ?>
-    content fl alic jucsb gap=smol+ style=flex:1;>
+    content fl alic jucsb gap=smol+ flone>
     <div fl alic <?= $no_left_action ? "gap=smol" : "gap" ?> flone flex-truncate>
       <?php if ($show_count) : ?>
-        <p text smol track-count style=width:40px;rotate:-90deg;margin-left:-10px;margin-right:-11px; text smoler ttup bold tac><?= $count++; ?></p>
+        <p text smol track-count style=width:40px;rotate:-90deg;margin-left:-10px;margin-right:-14px; text smoler ttup bold tac><?= $count++; ?></p>
       <?php endif; ?>
 
       <?php if ($in_playlist): ?>
@@ -107,37 +108,32 @@ include __DIR__ . "/_show_active.php";
       <?php endif; ?>
 
       <div fl alic gap=smol+ flone flex-truncate>
-        <div fl fldircol style="margin-top:-6px;" flex-truncate>
-          <p title text semibold trimt>
-            <?= $Track->title ?>
-          </p>
-          <div fl alic gap=smoler>
-            <p artist text ttup regular fl alic gap=smoler>
-              <mi stdplus color=secondary>artist</mi>
-              <?= $Track->artistt->name ?>
-            </p>
+        <div fl alic jucsb gap flex-truncate>
+          <div flex-truncate>
+            <div fl alic gap=smol>
+              <p text smoler ttup regular>
+                <?= $Track->artistt->name ?></p>
+            </div>
+            <p title text semibold trimt style="line-height:1.2;">
+              <?= $Track->title ?></p>
+          </div>
+          <div right-info fl fldircol aliend jucsb gap=smol>
+            <div fl alic gap=smoler>
+              <div window pinline8 pblock4 rounded=smol>
+                <p text smoler semibold><?= $Track->length_formatted(); ?> mins</p>
+              </div>
+              <div window pl6 pr8 pblock4 rounded=smol fl alic gap=smoler>
+                <mi smoler color=primary>earbud_right</mi>
+                <p text smoler semibold><?= $Track->listens ?: 0  ?></p>
+              </div>
+            </div>
+            <p text regular smoler slight>
+              vor <?= Time::ago($Track->created_at); ?></p>
           </div>
         </div>
       </div>
     </div>
-    <div fl alic gap=smol>
-      <div right-info text smol fl alic gap=smoler>
-        <div window-light pinline12 pblock8 rounded=smolplus has-tooltip=left>
-          <p text smol semibold fl alic gap=smol>
-            <mi color=primary>earbud_right</mi>
-            <?= $Track->listens ?: 0  ?>
-          </p>
-          <div ttooltip text semibold>
-            Wie oft gehört
-          </div>
-        </div>
-
-        <p text smol semibold window-light pblock8 rounded=smolplus no-word-wrap style=width:5.4em; tac>
-          <?= $Track->length_formatted(); ?> mins
-        </p>
-      </div>
-      <mi status-icon mid></mi>
-    </div>
+    <mi status-icon mid></mi>
   </div>
 </song>
 

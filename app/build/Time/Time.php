@@ -27,19 +27,27 @@ class Time
     $diff = $now->diff($ago);
 
     $diffString = [
-      'y' => 'year',
-      'm' => 'month',
-      'd' => 'day',
-      'h' => 'hour',
-      'i' => 'minute',
-      's' => 'second',
+      'y' => 'Jahr',
+      'm' => 'Monat',
+      'd' => 'Tag',
+      'h' => 'Stund',
+      'i' => 'Minut',
+      's' => 'Sekund',
     ];
 
-    foreach ($diffString as $key => &$value)
-      if ($diff->$key)
-        return $diff->$key . ($key == "i" ? "min" : ($key == "s" ? "sec" : $key)) . ($full ? " her" : "");
+    // Start by years and go down to seconds.
+    foreach ($diffString as $key => &$value) {
 
-    return 'just now';
+      $many = $diff->$key > 1;
+
+      // The first that is above 0 will be returned, so we get the highest time.
+      if ($diff->$key)
+        return $diff->$key . " "
+          . ($many && !$full ? $value . "en " : ($many ? $value . "e " : $value . " "))
+          . ($full ? "alt" : "");
+    }
+
+    return 'Jetzt';
   }
 
   /**

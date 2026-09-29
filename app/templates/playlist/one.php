@@ -38,6 +38,10 @@ else :
 
   <page playlist data-type=playlist data-id=<?= $Playlist->id ?>>
 
+    <!---
+    This is used to set the relationship between the played song and this album --->
+    <track-relation data-type=playlist data-id=<?= $Playlist->id ?>></track-relation>
+
     <playlist-action-bar fl aliend jucsb gap pinline4>
       <div fl alic gap=smol>
 
