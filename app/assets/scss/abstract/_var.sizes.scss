@@ -23,10 +23,10 @@ $content-hide-sidebar-width: calc(100vw - 6 * $main-distance);
 
 $player-height: 90px;
 $bruder-height: 70px;
+$bruder-distance: calc(2 * 24px + $bruder-height);
 $hide-sidebar-sidebar-width: 100px;
 $hide-sidebar-content-width: calc(
   100vw - 2 * $hide-sidebar-sidebar-width - 2 * $main-distance
 );
-$bruder-distance: calc(2 * 22px + $bruder-height);
 
 $cover-from-border-padding: 2px;

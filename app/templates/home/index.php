@@ -25,47 +25,64 @@ include TEMPLATE . "/global/_current-playlist.php";
 
 ?>
 
-<div fl fldircol gap=smol+>
-  <div flone fl alic gap=smol jucc pt6 pb2 z>
-    <div fl alic gap=smol>
-      <a href="/home/latest">
-        <mbutton material icon-only has-tooltip=bottom
-          <?= $sort === "latest" || !$sort ? "active" : "" ?>>
-          <mi>hourglass_arrow_down</mi>
-          <div ttooltip>
-            Neuste
-          </div>
-        </mbutton>
-      </a>
-      <a href="/home/oldest">
-        <mbutton material icon-only has-tooltip=bottom
-          <?= $sort === "oldest" ? "active" : "" ?>>
-          <mi>hourglass_arrow_up</mi>
-          <div ttooltip>
-            Älteste
-          </div>
-        </mbutton>
-      </a>
-      <a href="/home/alphabetical">
-        <mbutton material icon-only has-tooltip=bottom
-          <?= $sort === "alphabetical" ? "active" : "" ?>>
-          <mi>sort_by_alpha</mi>
-          <div ttooltip>
-            Alphabetisch
-          </div>
-        </mbutton>
-      </a>
-      <a href="/home/listens">
-        <mbutton material icon-only has-tooltip=bottom
-          <?= $sort === "listens" ? "active" : "" ?>>
-          <mi>earbud_right</mi>
-          <div ttooltip>
-            Liebste
-          </div>
-        </mbutton>
-      </a>
-    </div>
-  </div>
+<div fl fldircol gap=smol>
+  <sort fl alic jucsb>
+    <a href="/home/latest" flone>
+      <mbutton material has-icon=left has-tooltip=bottom
+        style="border-radius:24px 0 0 24px;border-right:1px solid rgba(255,255,255,.08);"
+        <?= $sort === "latest" || !$sort ? "active" : "" ?>>
+        <mi>hourglass_arrow_down</mi>
+        Neuste
+        <div ttooltip>
+          Neuste
+        </div>
+      </mbutton>
+    </a>
+    <a href="/home/oldest" flone>
+      <mbutton material has-icon=left has-tooltip=bottom
+        style="border-radius:0;border-right:1px solid rgba(255,255,255,.08);"
+        <?= $sort === "oldest" ? "active" : "" ?>>
+        <mi>hourglass_arrow_up</mi>
+        Älteste
+        <div ttooltip>
+          Älteste
+        </div>
+      </mbutton>
+    </a>
+    <a href="/home/title" flone>
+      <mbutton material has-icon=left has-tooltip=bottom
+        style="border-radius:0;border-right:1px solid rgba(255,255,255,.08);"
+        <?= $sort === "title" ? "active" : "" ?>>
+        <mi>sort_by_alpha</mi>
+        Titel
+        <div ttooltip>
+          Titel
+        </div>
+      </mbutton>
+    </a>
+    <a href="/home/artist" flone>
+      <mbutton material has-icon=left has-tooltip=bottom
+        style="border-radius:0;border-right:1px solid rgba(255,255,255,.08);"
+        <?= $sort === "artist" ? "active" : "" ?>>
+        <mi>artist</mi>
+        Artist
+        <div ttooltip>
+          Artist
+        </div>
+      </mbutton>
+    </a>
+    <a href="/home/listens" flone>
+      <mbutton material has-icon=left has-tooltip=bottom no-word-wrap
+        style="border-radius:0 24px 24px 0"
+        <?= $sort === "listens" ? "active" : "" ?>>
+        <mi>earbud_right</mi>
+        Meist gehört
+        <div ttooltip>
+          Meist gehört
+        </div>
+      </mbutton>
+    </a>
+  </sort>
 
   <div fl fldircol gap=smoler>
     <?php
@@ -74,7 +91,8 @@ include TEMPLATE . "/global/_current-playlist.php";
     $count = 1;
 
     $sort_map = match ($sort) {
-      "alphabetical" => ["title", "ASC"],
+      "title" => ["title", "ASC"],
+      "artist" => ["artist", "ASC"],
       "listens" => ["listens", "DESC"],
       "oldest" => ["created_at", "ASC"],
       "latest" => ["created_at", "DESC"],

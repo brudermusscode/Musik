@@ -208,3 +208,9 @@ top-banner {
 [window] {
   @extend .window;
 }
+
+sort {
+  position: sticky;
+  top: calc($bruder-distance - 12px);
+  z-index: 10;
+}

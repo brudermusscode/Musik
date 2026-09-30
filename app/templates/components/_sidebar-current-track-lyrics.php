@@ -15,9 +15,18 @@ use Bruder\Utils\Str;
  * @var bool $track_relates
  */
 
-if ($CurrentTrack->lyrics_w_timestamps) : ?>
+if ($CurrentTrack->lyrics_w_timestamps) :
+
+  // Get the most common color of the first album or relation the track belongs to, so
+  // we can set it as the background of the lyrics.
+  $lyrics_color = $Relation && ($Relation instanceof Album)
+    ? $Relation->most_common_art_color() : $CurrentTrack->most_common_art_color();
+  $lyrics_color
+
+?>
 
   <lyrics-placeholder></lyrics-placeholder>
+
   <lyrics animation=zoom-in>
     <div title fl alic jucsb>
       <p window-light pinline14 pblock8 text smol ttup semibold>Lyrics</p>

@@ -22,7 +22,7 @@ sidebar {
     );
     display: flex;
     flex-direction: column;
-    gap: $gap-smol;
+    gap: $gap-smol-plus;
     transition: $trans-cubic;
 
     @media screen and (max-width: $laptop-max-width) {

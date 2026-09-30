@@ -136,7 +136,7 @@ else :
 
     if ($Albums->count()) : ?>
       <div fl fldircol gap=smol+>
-        <div fl alic jucsb gap>
+        <div fl aliend jucsb gap>
           <p text bold smol ttup pinline16>Von <?= $Artist->name ?></p>
           <a href="<?= $base_url ?>/discography">
             <mbutton material std has-icon=right text semibold>
@@ -169,7 +169,7 @@ else :
     if ($SimiliarArtists->count()) : ?>
 
       <div fl fldircol gap=smol+>
-        <p text bold std ttup pinline16>Ähnliche Künstler</p>
+        <p text bold smol ttup pinline16>Ähnliche Künstler</p>
         <div fl gap=smol flex-wrap>
           <?php foreach ($SimiliarArtists as $SimArtist) :
 

@@ -513,6 +513,17 @@ class Track extends Bruder
   }
 
   /**
+   * Analyzes the album art using GD lib and gets the most common color as rgb value
+   * li 21,21,21.
+   *
+   * @return ?string
+   */
+  public function most_common_art_color()
+  {
+    return $this->albums->first()?->most_common_art_color();
+  }
+
+  /**
    * @return ?string
    */
   public function art_link()
