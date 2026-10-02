@@ -33,11 +33,7 @@ else :
    */
   include TEMPLATE . "/global/_current-playlist.php"; ?>
 
-  <page album>
-
-    <!---
-    This is used to set the relationship between the played song and this album --->
-    <track-relation data-type=album data-id=<?= $Album->id ?>></track-relation>
+  <page album track-relation data-type=album data-id=<?= $Album->id ?>>
 
     <top-banner scroll-manipulated fl jucstart alistretch>
       <picture art elevated=smol posrel>

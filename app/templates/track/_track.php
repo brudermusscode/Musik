@@ -119,6 +119,11 @@ include __DIR__ . "/_show_active.php";
           </div>
           <div right-info fl fldircol aliend jucsb gap=smol>
             <div fl alic gap=smoler>
+              <?php if ($Track->lyrics_w_timestamps) : ?>
+                <div window pinline8 pblock4 rounded=smol>
+                  <mi color=tertiary smoler>lyrics</mi>
+                </div>
+              <?php endif; ?>
               <div window pinline8 pblock4 rounded=smol>
                 <p text smoler semibold><?= $Track->length_formatted(); ?> mins</p>
               </div>

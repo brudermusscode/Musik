@@ -25,7 +25,7 @@ include TEMPLATE . "/global/_current-playlist.php";
 
 ?>
 
-<div fl fldircol gap=smol>
+<div fl fldircol gap=smol+>
   <sort fl alic jucsb>
     <a href="/home/latest" flone>
       <mbutton material has-icon=left has-tooltip=bottom

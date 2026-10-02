@@ -161,7 +161,7 @@ export const init_track_relation = () => {
  * between a played song and the relation, it was played through.
  */
 export const set_track_relation = (closest_to_element) => {
-  let relation = closest_to_element.closest("track-relation");
+  let relation = closest_to_element.closest("[track-relation]");
   let relation_id = null;
   let relation_type = null;
   let storage_keys = [

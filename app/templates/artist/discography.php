@@ -41,7 +41,7 @@ else :
 
     ?>
 
-      <page album data-type=album data-id=<?= $Release->id ?>
+      <page album track-relation data-type=album data-id=<?= $Release->id ?>
         fl fldircol gap=smol+ style=padding-top:0;>
 
         <div window p2 rounded=mid fl aliend gap>

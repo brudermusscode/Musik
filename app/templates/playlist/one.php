@@ -36,7 +36,7 @@ else :
    */
   include TEMPLATE . "/global/_current-playlist.php"; ?>
 
-  <page playlist data-type=playlist data-id=<?= $Playlist->id ?>>
+  <page playlist track-relation data-type=playlist data-id=<?= $Playlist->id ?>>
 
     <!---
     This is used to set the relationship between the played song and this album --->

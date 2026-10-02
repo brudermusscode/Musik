@@ -8,8 +8,8 @@ $window-border-radius: 42px;
 .window {
   backdrop-filter: $window-blur;
   background: rgba(36, 36, 36, 0.38);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: $window-border-radius;
 
   &[hoverable]:hover {
