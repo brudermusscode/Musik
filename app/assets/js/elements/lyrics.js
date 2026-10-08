@@ -131,6 +131,20 @@ export const close_fullscreen = () => {
   }, 300);
 };
 
+export const stop_editing_all_lines = (lines) => {
+  let lyrics = lines[0].closest("lyrics");
+
+  if (!lyrics.hasAttribute("editing")) return;
+
+  lines.forEach((line) => {
+    line.removeAttribute("editing");
+    line.removeAttribute("show-actions");
+  });
+
+  lyrics.removeAttribute("editing", true);
+  __player.lyrics.editing = false;
+};
+
 $(function () {
   $(document).on("click", '[data-action="lyrics:fullscreen"]', function (e) {
     let lyrics = document.find("lyrics");
@@ -150,35 +164,25 @@ $(function () {
     let lyrics = this.closest("lyrics");
     let lines = lyrics.find_all("line");
     let timestamp = this.getAttribute("timestamp");
-    let content = this.find("p").innerHTML;
-    let formatted_timestamp = this.find("timestamp").innerHTML;
 
-    let stop_editing_all_lines = (lines) => {
-      if (!lyrics.hasAttribute("editing")) return;
+    // Set the selected line as the timestamp.
+    Player.set_time(parseFloat(timestamp), __control_pressed ? true : false);
 
-      lines.forEach((line) => {
-        line.removeAttribute("editing");
-        line.removeAttribute("show-actions");
-      });
+    // If the clicked line is not being edited right now, we want to stop editing
+    // all other lines.
+    if (!this.hasAttribute("editing")) stop_editing_all_lines(lines);
 
-      lyrics.removeAttribute("editing", true);
-    };
-
-    if (!this.hasAttribute("editing"))
-      Player.set_time(parseFloat(timestamp), __control_pressed ? true : false);
-
+    // When control is pressed while clicking on a line, we want to enable editing.
     if (__control_pressed) {
-      stop_editing_all_lines(lines);
-
       this.setAttribute("editing", true);
       lyrics.setAttribute("editing", true);
+      __player.lyrics.editing = true;
       setTimeout(() => {
-        console.log("focusing input!");
         let input = this.find("input[name=lyrics_line_timestamp]");
         input.focus();
         input.setSelectionRange(input.value.length, input.value.length);
-      }, 100);
-    } else if (!__control_pressed && !this.hasAttribute("editing")) {
+      }, 10);
+    } else if (!__control_pressed && !__player.lyrics.editing) {
       stop_editing_all_lines(lines);
     }
   });
@@ -191,7 +195,11 @@ $(function () {
 
     if (key === "control") {
       let hovered_line = document.find("lyrics line:hover");
-      if (hovered_line && __player.lyrics.fullscreen)
+      if (
+        hovered_line &&
+        __player.lyrics.fullscreen &&
+        !hovered_line.hasAttribute("editing")
+      )
         hovered_line.setAttribute("show-actions", true);
     }
   });
@@ -211,7 +219,7 @@ $(function () {
   $(document).on("mouseover", "lyrics[active] line", function (e) {
     if (!__control_pressed) return;
 
-    this.setAttribute("show-actions", true);
+    if (!this.hasAttribute("editing")) this.setAttribute("show-actions", true);
   });
 
   $(document).on("mouseout", "lyrics[active] line", function (e) {

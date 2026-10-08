@@ -4,30 +4,30 @@
 @use "../abstract" as *;
 
 header {
-  @media screen and (max-width: $mobile-max-width) {
-    display: none !important;
-  }
-
   position: fixed;
-  top: 0;
+  top: $main-distance-smol;
   left: 0;
-  width: 100%;
-  height: $bruder-height + 48px;
+  width: $header-width;
+  height: calc(100vh - $main-distance-smol);
   z-index: 99;
-  padding: $main-distance;
-  padding-inline: calc($main-distance * 2)
-    calc(2 * $main-distance + ($main-distance/1.6));
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  padding-block: $main-distance;
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-right: 2px;
+  border-radius: 0 26px 0 0;
 
   @media screen and (max-width: $laptop-max-width) {
-    padding-inline: calc($main-distance-smol * 2)
-      calc($main-distance-smol * 2 + 6px);
+    padding-block: calc($main-distance-smol);
+    width: $header-width-smol;
   }
 
   @media screen and (max-width: $hide-sidebar-max-width) {
-    padding-inline: $main-distance-smol;
+  }
+
+  @media screen and (max-width: $mobile-max-width) {
+    width: $header-width;
+    left: -$header-width;
   }
 }
 

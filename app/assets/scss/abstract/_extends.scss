@@ -28,8 +28,8 @@ $window-border-radius: 42px;
 .window-light {
   backdrop-filter: $window-blur;
   background: rgba(255, 255, 255, 0.09);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: $window-border-radius;
 
   &[hoverable]:hover {
@@ -40,8 +40,8 @@ $window-border-radius: 42px;
 
   &[active] {
     background: rgba(255, 255, 255, 0.38);
-    border-top: 1px solid rgba(255, 255, 255, 0.42);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.24);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   }
 }
 

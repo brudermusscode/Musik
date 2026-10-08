@@ -477,7 +477,7 @@ export const get_Track = async (id) => {
  */
 export const reset_duration_track = () => {
   let Player = document.find("player");
-  let player_track_duration = document.find("player duration-track");
+  let player_track_duration = document.find("player-overflow duration-track");
 
   Player.deactivate();
 
@@ -496,7 +496,7 @@ export const reset_duration_track = () => {
  */
 export const kick_duration_track = (audio_element, reset = false) => {
   let duration = audio_element.duration;
-  let overflow = Player.find("player player-overflow");
+  let overflow = document.find("player-overflow");
   let track = overflow.find("duration-track");
 
   let overflow_w = parseFloat(getComputedStyle(overflow).width);
@@ -788,7 +788,7 @@ export const create_queue = async (
 };
 
 export const set_time = (seconds, keep_paused = false) => {
-  let track = document.find("player duration-track");
+  let track = document.find("player-overflow duration-track");
   let percent_width = (seconds * 100) / __player.Track.audio.duration;
   let should_resume = __player.active;
 

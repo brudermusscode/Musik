@@ -14,21 +14,19 @@ sidebar {
 
   &[right],
   &[left] {
-    top: $bruder-distance;
+    top: $main-distance;
     width: $sidebar-width;
     min-width: 285px;
-    max-height: calc(
-      100vh - $bruder-height - 2 * $main-distance - ($main-distance/2)
-    );
+    max-height: calc(100vh - ($main-distance + 2 * $main-distance-smol));
     display: flex;
     flex-direction: column;
     gap: $gap-smol-plus;
     transition: $trans-cubic;
 
     @media screen and (max-width: $laptop-max-width) {
+      top: $main-distance-smol;
       width: $sidebar-laptop-width;
-      max-height: calc(100vh - $bruder-height - 4 * $main-distance-smol - 4px);
-      padding-inline: $main-distance-smol;
+      max-height: calc(100vh - 3 * $main-distance-smol);
     }
 
     > section {
@@ -39,21 +37,26 @@ sidebar {
   }
 
   &[left] {
-    left: 0;
+    left: calc($header-width + $main-distance);
     display: flex;
     flex-direction: column;
     align-items: stretch;
 
+    @media screen and (max-width: $laptop-max-width) {
+      left: calc($header-width-smol + $main-distance-smol);
+    }
+
     @media screen and (max-width: $hide-sidebar-max-width) {
-      left: calc(-1 * ($sidebar-laptop-width - 3 * $main-distance));
+      left: calc(
+        -1 * ($sidebar-laptop-width - 3 * $main-distance - $header-width-smol)
+      );
 
       &:hover {
-        left: 0;
+        left: calc($header-width-smol + $main-distance-smol);
       }
     }
 
     section {
-      max-height: calc(100vh - $bruder-distance - $main-distance);
       overflow: auto;
       scrollbar-width: none;
       padding-top: 2px;
@@ -347,7 +350,11 @@ sidebar {
   }
 
   &[right] {
-    right: 0;
+    right: $main-distance;
+
+    @media screen and (max-width: $laptop-max-width) {
+      right: $main-distance-smol;
+    }
 
     @media screen and (max-width: $hide-sidebar-max-width) {
       right: calc(-1 * ($sidebar-laptop-width - 3 * $main-distance));

@@ -5,26 +5,26 @@
 bruder {
   @extend .window-light;
 
-  @media screen and (max-width: $mobile-max-width) {
-    display: none !important;
-  }
-
   content: "";
   display: block;
-  position: fixed;
-  top: 24px;
-  left: 50%;
-  translate: -50% 0;
-  transition:
-    all 0.6s $cubic,
-    height 0.18s $cubic;
-  border-radius: 62px;
-  padding: 14px 17px;
-  min-height: $bruder-height;
-  width: 445px;
-  overflow: hidden;
+  transition: $trans-cubic;
+  min-height: $mbutton-mid-size;
+  width: $mbutton-mid-size;
   z-index: 99;
+  border-radius: 64px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > mi {
+    font-size: $font-size-std-plus;
+  }
+
+  &:not([active]):hover {
+    scale: 1.06;
+    background: $slight-light;
+  }
 
   &[scrolled="true"] {
     // top: -$bruder-height - 48px;
@@ -32,11 +32,6 @@ bruder {
     opacity: 0;
     transition: all 0.1s linear;
     z-index: 0;
-  }
-
-  &:not([active]):hover {
-    background-color: $slight-light;
-    scale: 1.02;
   }
 
   [playlist-current] {
@@ -48,26 +43,28 @@ bruder {
     opacity: 0;
     visibility: hidden;
     display: none;
-    max-width: 600px;
+    width: 600px;
   }
 
   &[active] {
+    position: fixed;
     background: $hover-dark;
-    top: calc($bruder-distance);
+    top: $main-distance-smol;
+    left: calc($header-width + $main-distance-smol);
     align-items: flex-start;
     scale: 1;
     padding: 24px;
     border-radius: 12px;
-    transition:
-      all 0.8s $cubic,
-      width 0.4s $cubic,
-      transform 0s;
     cursor: default;
-    min-height: calc(100vh - $bruder-distance - $main-distance-smol/2);
-    max-height: calc(100vh - $bruder-distance - $main-distance-smol/2);
-    width: calc(100vw - $main-distance/2);
-    max-width: calc(100vw - $main-distance/2);
+    min-height: $fullscreen-height;
+    max-height: $fullscreen-height;
+    width: calc(100vw - $header-width - 2 * $main-distance-smol);
+    max-width: calc(100vw - $main-distance-smol);
     overflow: auto;
+
+    & > mi {
+      display: none;
+    }
 
     input {
       width: 100%;

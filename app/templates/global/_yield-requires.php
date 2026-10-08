@@ -36,6 +36,7 @@
     fullscreen: false,
     lyrics: {
       fullscreen: false,
+      editing: false,
     },
     Track: {
       relation: {

@@ -141,54 +141,44 @@ dot-divider {
 }
 
 main {
-  width: calc($content-width + 2 * $main-distance);
-  margin: 0 auto;
-  padding-top: $bruder-distance;
-  padding-bottom: $main-distance;
+  margin-left: $header-width;
+  padding-block: $main-distance;
+  padding-inline: calc($sidebar-width + $main-distance * 2);
 
   @media screen and (max-width: $laptop-max-width) {
-    width: $content-laptop-width;
-    padding-bottom: $main-distance-smol;
-  }
-
-  @media screen and (min-width: calc($laptop-max-width + 200px)) {
-    width: $content-width;
+    margin-left: $header-width-smol;
+    padding-block: $main-distance-smol calc(2 * $main-distance-smol);
+    padding-inline: calc($sidebar-laptop-width + $main-distance-smol * 2);
   }
 
   @media screen and (max-width: $hide-sidebar-max-width) {
-    width: calc(100vw - 6 * $main-distance);
+    padding-inline: 9 * $main-distance-smol;
   }
 
   @media screen and (max-width: $mobile-max-width) {
-    padding-block: $main-distance-smol
-      calc($player-height + 2 * $main-distance-smol);
-    width: calc(100vw - 2 * $main-distance-smol);
-    height: 100%;
+    padding-inline: $main-distance-smol;
+    margin: 0;
   }
 }
 
 top-banner {
   @extend .window;
 
+  top: $main-distance;
   display: block;
   position: fixed;
   border-radius: 30px;
-  width: calc($content-width + 2 * $main-distance);
+  width: calc(100vw - $sidebar-width * 2 - 4 * $main-distance - $header-width);
   padding: $cover-from-border-padding;
-  top: $bruder-distance;
   z-index: 10;
   transition: $trans-cubic;
 
   @media screen and (max-width: $laptop-max-width) {
-    width: $content-laptop-width;
-  }
-
-  @media screen and (min-width: calc($laptop-max-width + 200px)) {
-    width: $content-width;
-  }
-
-  @media screen and (max-width: $hide-sidebar-max-width) {
-    width: $content-hide-sidebar-width;
+    top: $main-distance-smol;
+    width: calc(
+      100vw - $sidebar-laptop-width * 2 - 4 * $main-distance-smol -
+        $header-width-smol
+    );
   }
 
   &[scrolled="true"] {
@@ -211,6 +201,22 @@ top-banner {
 
 sort {
   position: sticky;
-  top: calc($bruder-distance - 12px);
+  top: $main-distance;
   z-index: 10;
+
+  @media screen and (max-width: $laptop-max-width) {
+    top: $main-distance-smol;
+  }
+
+  mbutton {
+    @media screen and (max-width: $laptop-max-width) {
+      padding-inline: 12px !important;
+    }
+  }
+}
+
+[hide-laptop] {
+  @media screen and (max-width: $laptop-max-width) {
+    display: none;
+  }
 }

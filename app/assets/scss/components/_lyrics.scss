@@ -29,17 +29,13 @@ lyrics {
 
   // fullscreen mode
   &[active] {
-    $fullscreen-height: calc(
-      100svh - $bruder-distance - (2 * $main-distance-smol) / 2 + 6px
-    );
-
     @extend .window;
     background: rgba(0, 0, 0, 0.8);
     position: fixed;
     z-index: 102;
-    top: calc(($bruder-distance - 6px) + $main-distance-smol / 2);
-    left: calc($main-distance-smol / 2);
-    width: calc(100vw - (2 * $main-distance-smol) / 2);
+    top: $main-distance-smol;
+    left: calc($header-width + $main-distance-smol);
+    width: calc(100vw - $header-width - 2 * $main-distance-smol);
     height: $fullscreen-height;
     border-radius: 32px 32px 12px 12px;
     display: flex;
@@ -180,7 +176,7 @@ lyrics {
   }
 
   line {
-    opacity: 0.4;
+    opacity: 0.6;
     position: relative;
     border-color: transparent;
     transition:

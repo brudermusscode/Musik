@@ -52,40 +52,23 @@ time-label {
 }
 
 player-contain {
-  display: block;
   position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 101;
-  top: $main-distance + 4px;
-  right: calc(2 * $main-distance + (1 * ($main-distance/1.2)));
-
-  @media screen and (max-width: $laptop-max-width) {
-    right: calc($main-distance);
-  }
-
-  @media screen and (max-width: $hide-sidebar-max-width) {
-    right: initial;
-    top: initial;
-    left: 50%;
-    bottom: $main-distance-smol;
-    translate: -50% 0;
-    height: $player-height;
-    width: calc(100vw - 2 * $hide-sidebar-sidebar-width);
-    display: flex;
-    justify-content: center;
-    background: $slighter-light;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(10px);
-    border-radius: 12px;
-    padding-bottom: 12px;
-    z-index: 97;
-  }
+  width: calc(100vw - $header-width);
+  bottom: 0;
+  left: $header-width;
+  padding-block: $main-distance-smol calc(2 * $main-distance-smol);
+  padding-inline: $main-distance;
 
   @media screen and (max-width: $mobile-max-width) {
-    width: calc(100vw - 2 * $main-distance-smol);
+    left: 0;
+    width: 100vw;
   }
 
-  dot-divider {
+  dot-divider:first-of-type {
     @media screen and (max-width: $hide-sidebar-max-width) {
       display: none;
     }
@@ -95,21 +78,54 @@ player-contain {
     display: flex;
     align-items: center;
     gap: $gap-smol;
+  }
+}
 
-    @media screen and (max-width: $hide-sidebar-max-width) {
-      display: none;
-    }
+player-overflow {
+  display: block;
+  position: fixed;
+  overflow: hidden;
+  bottom: 0;
+  left: calc($header-width + $main-distance);
+  background: $hover-light;
+  border-radius: 12px 12px 0 0;
+  width: calc(100vw - 2 * $main-distance - $header-width);
+  height: 8px;
+  cursor: pointer;
 
-    &:hover {
-      mbutton {
-        margin-left: 0;
-      }
-    }
+  @media screen and (max-width: $laptop-max-width) {
+    left: calc($header-width-smol + $main-distance-smol);
+    width: calc(100vw - $main-distance-smol * 2 - $header-width-smol);
+  }
 
-    mbutton {
-      margin-left: -28px;
-      box-shadow: var(--mio-theme-elevation-1);
+  @media screen and (max-width: $hide-sidebar-max-width) {
+    width: calc(100vw - 2 * $main-distance-smol - $header-width-smol);
+  }
+
+  @media screen and (max-width: $mobile-max-width) {
+    height: 12px;
+    left: $main-distance-smol;
+    width: calc(100vw - 2 * $main-distance-smol);
+  }
+
+  &:hover {
+    height: 12px;
+
+    @media screen and (max-width: $mobile-max-width) {
+      height: 18px;
     }
+  }
+
+  duration-track {
+    display: block;
+    position: absolute;
+    width: 0%;
+    transition: all 0.1s linear;
+    left: 0;
+    z-index: 0;
+    height: 100%;
+    border-radius: 0 24px 24px 0;
+    background: rgba(231, 17, 88, 0.82);
   }
 }
 
@@ -288,48 +304,6 @@ player {
   player-content {
     $player-border-radius: 20px;
     transition: $trans-cubic;
-
-    player-overflow {
-      display: block;
-      position: fixed;
-      overflow: hidden;
-      top: 0;
-      left: 50%;
-      translate: -50% 0;
-      background: $slight-light;
-      border-radius: 0 0 12px 12px;
-      width: calc(100vw - 4 * $main-distance);
-      height: 8px;
-      cursor: pointer;
-
-      @media screen and (max-width: $laptop-max-width) {
-        width: calc(100vw - $main-distance-smol * 4);
-      }
-
-      @media screen and (max-width: $hide-sidebar-max-width) {
-        top: initial;
-        bottom: 0;
-        border-radius: 12px 12px 0 0;
-        position: absolute;
-        width: calc(100% - 2 * $main-distance-smol);
-      }
-
-      &:hover {
-        height: 12px;
-      }
-    }
-
-    duration-track {
-      display: block;
-      position: absolute;
-      width: 0%;
-      transition: all 0.1s linear;
-      left: 0;
-      z-index: 0;
-      height: 100%;
-      border-radius: 12px;
-      background: rgba(231, 17, 88, 0.82);
-    }
 
     player-actions {
       position: relative;
@@ -547,7 +521,8 @@ volume-controls {
     &[volume="1.0"],
     &[volume="1"] {
       [volume-display] {
-        background: rgba(244, 156, 48, 0.22);
+        background: $green;
+        color: $dark;
       }
     }
   }
@@ -587,7 +562,7 @@ volume-controls {
     flex-direction: column;
     gap: $gap-smoler;
     position: absolute;
-    top: 100%;
+    bottom: 100%;
     left: 50%;
     translate: -50% 0;
     background: white;

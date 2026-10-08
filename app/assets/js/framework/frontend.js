@@ -372,6 +372,14 @@ $(function () {
       return;
     }
 
+    // Focus a track in global search on arrow down/up.
+    else if (
+      e.key.toLowerCase() === "arrowdown" &&
+      document.activeElement?.getAttribute("data-action") === "track:explore"
+    ) {
+      let react = document.find("[data-react='track:explore']");
+    }
+
     // Increase volume.
     else if (
       __control_pressed &&

@@ -12,8 +12,8 @@ $laptop-max-width: 1480px;
 $hide-sidebar-max-width: 1176px;
 
 $collapsed-max-width: 1400px;
-$sidebar-width: 500px;
-$sidebar-laptop-width: 372px;
+$sidebar-width: 400px;
+$sidebar-laptop-width: 342px;
 
 $content-width: calc(100vw - (2 * $sidebar-width + 2 * $main-distance));
 $content-laptop-width: calc(
@@ -21,6 +21,8 @@ $content-laptop-width: calc(
 );
 $content-hide-sidebar-width: calc(100vw - 6 * $main-distance);
 
+$header-width: 100px;
+$header-width-smol: 80px;
 $player-height: 90px;
 $bruder-height: 70px;
 $bruder-distance: calc(2 * 24px + $bruder-height);
@@ -30,3 +32,5 @@ $hide-sidebar-content-width: calc(
 );
 
 $cover-from-border-padding: 2px;
+
+$fullscreen-height: calc(100svh - 3 * $main-distance-smol);

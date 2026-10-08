@@ -176,7 +176,9 @@ $(function () {
 
     if (key === "escape") {
       close_bruder();
-      Lyrics.close_fullscreen();
+
+      if (!__player.lyrics.editing) Lyrics.close_fullscreen();
+      else Lyrics.stop_editing_all_lines(document.find_all("lyrics line"));
     }
 
     /**

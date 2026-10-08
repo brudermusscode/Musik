@@ -32,7 +32,7 @@ include TEMPLATE . "/global/_current-playlist.php";
         style="border-radius:24px 0 0 24px;border-right:1px solid rgba(255,255,255,.08);"
         <?= $sort === "latest" || !$sort ? "active" : "" ?>>
         <mi>hourglass_arrow_down</mi>
-        Neuste
+        <span hide-tablet>Neuste</span>
         <div ttooltip>
           Neuste
         </div>
@@ -43,7 +43,7 @@ include TEMPLATE . "/global/_current-playlist.php";
         style="border-radius:0;border-right:1px solid rgba(255,255,255,.08);"
         <?= $sort === "oldest" ? "active" : "" ?>>
         <mi>hourglass_arrow_up</mi>
-        Älteste
+        <span hide-tablet>Älteste</span>
         <div ttooltip>
           Älteste
         </div>
@@ -54,7 +54,7 @@ include TEMPLATE . "/global/_current-playlist.php";
         style="border-radius:0;border-right:1px solid rgba(255,255,255,.08);"
         <?= $sort === "title" ? "active" : "" ?>>
         <mi>sort_by_alpha</mi>
-        Titel
+        <span hide-tablet>Titel</span>
         <div ttooltip>
           Titel
         </div>
@@ -65,20 +65,20 @@ include TEMPLATE . "/global/_current-playlist.php";
         style="border-radius:0;border-right:1px solid rgba(255,255,255,.08);"
         <?= $sort === "artist" ? "active" : "" ?>>
         <mi>artist</mi>
-        Artist
+        <span hide-tablet>Artist</span>
         <div ttooltip>
           Artist
         </div>
       </mbutton>
     </a>
     <a href="/home/listens" flone>
-      <mbutton material has-icon=left has-tooltip=bottom no-word-wrap
-        style="border-radius:0 24px 24px 0"
+      <mbutton material has-icon=left has-tooltip=bottom
+        style="border-radius:0 24px 24px 0;border-right:1px solid rgba(255,255,255,.08);"
         <?= $sort === "listens" ? "active" : "" ?>>
         <mi>earbud_right</mi>
-        Meist gehört
+        <span hide-tablet>Meist gehört</span>
         <div ttooltip>
-          Meist gehört
+          Deine Liebsten
         </div>
       </mbutton>
     </a>
