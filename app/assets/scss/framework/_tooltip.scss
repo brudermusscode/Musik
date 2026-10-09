@@ -23,6 +23,7 @@
     white-space: nowrap !important;
     background: $light;
     color: $dark;
+    font-weight: 600;
   }
 
   &:active {
@@ -42,7 +43,7 @@
 
     &:not([no-trans-delay]) {
       [ttooltip] {
-        transition-delay: 0.6s;
+        transition-delay: 0.4s;
       }
     }
   }

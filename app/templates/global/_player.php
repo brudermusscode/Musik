@@ -9,7 +9,7 @@ use Bruder\Application\Cookie;
     <duration-track></duration-track>
   </player-overflow>
 
-  <div window fl alic gap=smol+ p12 style="position:static;">
+  <player-outer window fl alic gap=smol+ p12>
     <volume-controls fl alic gap=smol volume="<?= CURRENT_VOLUME ?>">
       <mbutton material icon-only size=midler volume-display volume-mute>
         <div muted></div>
@@ -63,5 +63,5 @@ use Bruder\Application\Cookie;
         </player-actions>
       </player-content>
     </player>
-  </div>
+  </player-outer>
 </player-contain>

@@ -1,3 +1,5 @@
+import * as Frontend from "../framework/frontend";
+
 $(function () {
   $(document).on("click", "[data-action='library:reorder']", function (e) {
     let library = this.closest("library");
@@ -36,6 +38,8 @@ $(function () {
         console.log(data);
         if (data.status) {
           library.removeAttribute("editing");
+
+          Frontend.ajax_response("success");
         }
       },
     });

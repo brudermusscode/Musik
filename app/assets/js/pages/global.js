@@ -260,6 +260,15 @@ $(function () {
   $(window).on("scroll", function (e) {
     bulk_close_contextmenu();
     close_bruder();
+
+    if (
+      document.body.scrollHeight - window.scrollY - window.innerHeight <=
+      60
+    ) {
+      document.find("player-outer").setAttribute("not-showing", true);
+    } else {
+      document.find("player-outer").removeAttribute("not-showing");
+    }
   });
 
   $(document).on("click", function (e) {

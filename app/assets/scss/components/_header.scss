@@ -10,15 +10,10 @@ header {
   width: $header-width;
   height: 100vh;
   z-index: 99;
-  padding-block: $main-distance;
-  // background: rgba(0, 0, 0, 0.42);
-  // backdrop-filter: blur(12px);
-  // border-top: 1px solid rgba(255, 255, 255, 0.12);
-  // padding-right: 2px;
-  // border-radius: 0 26px 0 0;
+  padding-block: calc($main-distance + 2px);
 
   @media screen and (max-width: $laptop-max-width) {
-    padding-block: calc($main-distance-smol);
+    padding-block: calc($main-distance-smol + 2px);
     width: $header-width-smol;
   }
 

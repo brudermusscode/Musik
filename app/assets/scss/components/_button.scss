@@ -39,7 +39,7 @@ mbutton {
     justify-content: center;
     transition: $trans-cubic;
 
-    &:not([window]) {
+    &:not([window], [normal]) {
       @extend .window-light;
 
       &:hover {
@@ -59,6 +59,10 @@ mbutton {
 
       &:not([no-hover-shadow]) {
         box-shadow: var(--mio-theme-elevation-3);
+      }
+
+      &[normal] {
+        background: $slighter-light;
       }
 
       &[icon-only] {

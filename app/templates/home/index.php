@@ -4,10 +4,6 @@
 // TODO: Hide tracks completly.
 // TODO: Different »sort by« options.
 
-/**
- * Simple script to insert first tracks into the database.
- */
-
 $sort = filter_var(global_param("route_param_sort"));
 
 use Illuminate\Support\Collection;
@@ -26,10 +22,9 @@ include TEMPLATE . "/global/_current-playlist.php";
 ?>
 
 <div fl fldircol gap=smol+>
-  <sort fl alic jucsb>
+  <sort fl alic jucsb gap=smoler>
     <a href="/home/latest" flone>
       <mbutton material has-icon=left has-tooltip=bottom
-        style="border-radius:24px 0 0 24px;border-right:1px solid rgba(255,255,255,.08);"
         <?= $sort === "latest" || !$sort ? "active" : "" ?>>
         <mi>hourglass_arrow_down</mi>
         <span hide-tablet>Neuste</span>
@@ -40,7 +35,6 @@ include TEMPLATE . "/global/_current-playlist.php";
     </a>
     <a href="/home/oldest" flone>
       <mbutton material has-icon=left has-tooltip=bottom
-        style="border-radius:0;border-right:1px solid rgba(255,255,255,.08);"
         <?= $sort === "oldest" ? "active" : "" ?>>
         <mi>hourglass_arrow_up</mi>
         <span hide-tablet>Älteste</span>
@@ -51,7 +45,6 @@ include TEMPLATE . "/global/_current-playlist.php";
     </a>
     <a href="/home/title" flone>
       <mbutton material has-icon=left has-tooltip=bottom
-        style="border-radius:0;border-right:1px solid rgba(255,255,255,.08);"
         <?= $sort === "title" ? "active" : "" ?>>
         <mi>sort_by_alpha</mi>
         <span hide-tablet>Titel</span>
@@ -62,7 +55,6 @@ include TEMPLATE . "/global/_current-playlist.php";
     </a>
     <a href="/home/artist" flone>
       <mbutton material has-icon=left has-tooltip=bottom
-        style="border-radius:0;border-right:1px solid rgba(255,255,255,.08);"
         <?= $sort === "artist" ? "active" : "" ?>>
         <mi>artist</mi>
         <span hide-tablet>Artist</span>
@@ -73,7 +65,6 @@ include TEMPLATE . "/global/_current-playlist.php";
     </a>
     <a href="/home/listens" flone>
       <mbutton material has-icon=left has-tooltip=bottom
-        style="border-radius:0 24px 24px 0;border-right:1px solid rgba(255,255,255,.08);"
         <?= $sort === "listens" ? "active" : "" ?>>
         <mi>earbud_right</mi>
         <span hide-tablet>Liebste</span>

@@ -142,12 +142,13 @@ dot-divider {
 
 main {
   margin-left: $header-width;
-  padding-block: $main-distance;
+  padding-top: $main-distance;
+  padding-bottom: calc(3 * $main-distance);
   padding-inline: calc($sidebar-width + $main-distance * 2);
 
   @media screen and (max-width: $laptop-max-width) {
     margin-left: $header-width-smol;
-    padding-block: $main-distance-smol calc(2 * $main-distance-smol);
+    padding-top: $main-distance-smol;
     padding-inline: calc($sidebar-laptop-width + $main-distance-smol * 2);
   }
 

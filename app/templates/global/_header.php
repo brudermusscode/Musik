@@ -6,13 +6,17 @@ use Bruder\Application\Cookie;
 
 <time-label background=light color=dark text smol bold pinline10 pblock6 rounded=smolplus elevated=wide></time-label>
 
-<header fl fldircol jucsb alic gap>
-  <div fl fldircol alic gap=smol>
+<header fl fldircol jucstretch alic gap>
+  <picture mid>
+    <img src="/logo.png" />
+  </picture>
+
+  <div fl fldircol alic jucc gap=smol flone>
     <a circled href="/">
       <mbutton material size=mid icon-only has-tooltip=right
         page=home <?= CURRENT_PAGE === "home" || !CURRENT_PAGE || CURRENT_PAGE === "/" ? "active" : "" ?>>
         <mi>animated_images</mi>
-        <div ttooltip>Alles</div>
+        <div ttooltip>Alle Songs</div>
       </mbutton>
     </a>
 
@@ -20,7 +24,7 @@ use Bruder\Application\Cookie;
       <mbutton material size=mid icon-only has-tooltip=right
         page=albums <?= CURRENT_PAGE === "albums" ? "active" : "" ?>>
         <mi>album</mi>
-        <div ttooltip>Alben</div>
+        <div ttooltip>Releases</div>
       </mbutton>
     </a>
 

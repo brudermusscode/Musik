@@ -92,6 +92,7 @@ player-overflow {
   width: calc(100vw - 2 * $main-distance - $header-width);
   height: 8px;
   cursor: pointer;
+  z-index: 1;
 
   @media screen and (max-width: $laptop-max-width) {
     left: calc($header-width-smol + $main-distance-smol);
@@ -126,6 +127,28 @@ player-overflow {
     height: 100%;
     border-radius: 0 24px 24px 0;
     background: rgba(231, 17, 88, 0.82);
+  }
+}
+
+player-outer {
+  scale: 1;
+  transition: $trans-cubic;
+  position: absolute;
+  bottom: calc(2 * $main-distance-smol);
+  z-index: 0;
+
+  &[not-showing] {
+    scale: 0.96;
+    bottom: -24px;
+    border-radius: 42px 42px 0 0;
+  }
+
+  &:hover {
+    scale: 1.02;
+
+    &[not-showing] {
+      bottom: 6px;
+    }
   }
 }
 
@@ -476,7 +499,7 @@ volume-controls {
     &[volume="0"],
     &[volume="0.0"] {
       [volume-display] {
-        background: rgba(237, 23, 87, 0.62);
+        background: $hover-red;
 
         [muted] {
           visibility: visible;
@@ -521,8 +544,7 @@ volume-controls {
     &[volume="1.0"],
     &[volume="1"] {
       [volume-display] {
-        background: $green;
-        color: $dark;
+        background: $hover-light;
       }
     }
   }
