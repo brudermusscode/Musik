@@ -59,15 +59,14 @@ sidebar {
     section {
       overflow: auto;
       scrollbar-width: none;
-      padding-top: 2px;
+      border-radius: 0;
     }
 
     library {
       position: relative;
       display: flex;
       flex-direction: column;
-      gap: $gap-smoler;
-      padding: 6px;
+      gap: $gap-smol-plus;
 
       &[view="grid"] {
         bookmarks {

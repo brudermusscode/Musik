@@ -11,4 +11,5 @@ use Bruder\Application\Router;
  */
 
 $Router->post("/bookmark/create", "bookmark/create", return: "JSON");
+$Router->post("/bookmark/update", "bookmark/update", return: "JSON");
 $Router->post("/bookmark/delete", "bookmark/delete", return: "JSON");

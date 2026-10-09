@@ -12,26 +12,39 @@ use Bruder\Model\Album;
 ?>
 
 <sidebar left>
-  <section window-light>
-    <library view=list>
+  <section>
+    <form data-form="library:reorder" update-library>
+      <input type=hidden name="reorder" value="1" />
 
-      <div fl alic jucsb p4 dno>
-        <library-view fl alic jucend gap=smoler>
-          <p <?= Cookie::get("__lib_view") === "list" ? "active" : "" ?> view=list hoverable pinline8 pblock6 rounded=smol>
-            <mi midler>view_day</mi>
-          </p>
-          <p <?= Cookie::get("__lib_view") === "grid" ? "active" : "" ?> view=grid hoverable pinline8 pblock6 rounded=smol>
-            <mi midler>grid_view</mi>
-          </p>
-        </library-view>
-      </div>
+      <library view=list>
 
-      <bookmarks p4>
-        <get-content from="/get/library">
-          <?php include TEMPLATE . "/global/_loader.php"; ?>
-        </get-content>
-      </bookmarks>
-    </library>
+        <div fl alic jucsb style=margin-bottom:-2px;>
+          <div fl alic gap=smol>
+            <mbutton data-action="library:reorder" material smol icon-only>
+              <mi>move_selection_down</mi>
+            </mbutton>
+            <mbutton submit-closest reorder-library material smol icon-only>
+              <mi>done_all</mi>
+            </mbutton>
+          </div>
+
+          <library-view fl alic jucend gap=smoler>
+            <p active view=list hoverable pinline8 pblock6 rounded=std>
+              <mi midler>view_day</mi>
+            </p>
+            <p disabled view=grid hoverable pinline8 pblock6 rounded=std>
+              <mi midler>grid_view</mi>
+            </p>
+          </library-view>
+        </div>
+
+        <bookmarks window-light p8 rounded=mid>
+          <get-content from="/get/library">
+            <?php include TEMPLATE . "/global/_loader.php"; ?>
+          </get-content>
+        </bookmarks>
+      </library>
+    </form>
   </section>
 </sidebar>
 

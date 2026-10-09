@@ -1,0 +1,42 @@
+@use "../framework/var.utils" as *;
+@use "../framework/var.sizes" as *;
+@use "../abstract" as *;
+
+library {
+  &[editing] {
+    library-entry {
+      [edit-actions] {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+
+    [data-action="library:reorder"] {
+      display: none;
+    }
+
+    [reorder-library] {
+      display: flex !important;
+      background: $hover-green;
+    }
+  }
+
+  [reorder-library] {
+    display: none !important;
+  }
+
+  library-entry {
+    position: relative;
+
+    [edit-actions] {
+      position: absolute;
+      z-index: 2;
+      right: 4px;
+      top: 50%;
+      translate: 0 -50%;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.1s linear;
+    }
+  }
+}

@@ -44,8 +44,34 @@ class BookmarksController extends Controller
   }
 
   /**
-   * DELETE
-   *
+   * @return string
+   */
+  public function update()
+  {
+
+    $this->validate_params(
+      strict: ["reorder"],
+      optional: ["bookmark_ids"],
+    );
+
+    # ? Reorder
+    if (
+      isset($this->params->reorder)
+      && !empty($this->params->bookmark_ids)
+      && is_array($this->params->bookmark_ids)
+    ) {
+      $index = count($this->params->bookmark_ids);
+
+      foreach ($this->params->bookmark_ids as $key => $id) {
+        $index -= 1;
+        Bookmark::find($id)?->update(["view_index" => $index]);
+      }
+    }
+
+    return success("All good!");
+  }
+
+  /**
    * @return string
    */
   public function delete()
