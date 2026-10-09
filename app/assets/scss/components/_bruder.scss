@@ -3,19 +3,29 @@
 @use "../abstract" as *;
 
 bruder {
-  @extend .window-light;
-
+  @extend .window;
   content: "";
   display: block;
-  transition: $trans-cubic;
-  min-height: $mbutton-mid-size;
-  width: $mbutton-mid-size;
+  position: fixed;
+  top: $main-distance-smol;
+  left: calc($header-width + $main-distance-smol);
+  height: 200px;
+  width: calc(100vw - $header-width - 2 * $main-distance-smol);
   z-index: 99;
-  border-radius: 64px;
+  border-radius: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  scale: 0.99;
+  transition: $trans-cubic;
+
+  @media screen and (max-width: $laptop-max-width) {
+    left: calc($header-width-smol + $main-distance-smol);
+    width: calc(100vw - $header-width-smol - 2 * $main-distance-smol);
+  }
 
   & > mi {
     font-size: $font-size-std-plus;
@@ -26,41 +36,18 @@ bruder {
     background: $slight-light;
   }
 
-  &[scrolled="true"] {
-    // top: -$bruder-height - 48px;
-    scale: 0.92;
-    opacity: 0;
-    transition: all 0.1s linear;
-    z-index: 0;
-  }
-
-  [playlist-current] {
-    width: 280px;
-    text-align: center;
-  }
-
-  search-tools {
-    opacity: 0;
-    visibility: hidden;
-    display: none;
-    width: 600px;
-  }
-
   &[active] {
-    position: fixed;
-    background: $hover-dark;
-    top: $main-distance-smol;
-    left: calc($header-width + $main-distance-smol);
+    background: rgba(0, 0, 0, 0.8);
     align-items: flex-start;
     scale: 1;
     padding: 24px;
-    border-radius: 12px;
+    border-radius: 24px;
     cursor: default;
-    min-height: $fullscreen-height;
-    max-height: $fullscreen-height;
-    width: calc(100vw - $header-width - 2 * $main-distance-smol);
-    max-width: calc(100vw - $main-distance-smol);
+    height: $fullscreen-height;
     overflow: auto;
+    opacity: 1;
+    visibility: visible;
+    scale: 1;
 
     & > mi {
       display: none;
@@ -85,5 +72,17 @@ bruder {
       display: block;
       margin-inline: auto;
     }
+  }
+
+  [playlist-current] {
+    width: 280px;
+    text-align: center;
+  }
+
+  search-tools {
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+    width: 600px;
   }
 }

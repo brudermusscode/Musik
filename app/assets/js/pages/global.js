@@ -253,17 +253,8 @@ $(function () {
     Frontend.ajax_response("success");
   });
 
-  $(document).on("click", "bruder", function (e) {
-    if (
-      !e.target.closest("[previous-playlist]") &&
-      !e.target.closest("[next-playlist]") &&
-      !this.hasAttribute("active")
-    )
-      open_bruder();
-  });
-
-  $(document).on("click", "[open-bruder]", function (e) {
-    open_bruder();
+  $(document).on("click", "[data-action='bruder:open']", function (e) {
+    if (!this.hasAttribute("active")) open_bruder();
   });
 
   $(window).on("scroll", function (e) {
@@ -273,12 +264,12 @@ $(function () {
 
   $(document).on("click", function (e) {
     if (!e.target.closest("[has-menu] menu")) bulk_close_contextmenu();
-    if (
-      (!e.target.closest("bruder") || e.target.closest("[close-bruder]")) &&
-      !e.target.closest("player") &&
-      !e.target.closest("[open-bruder]")
-    )
-      close_bruder();
+    // if (
+    //   (!e.target.closest("bruder") || e.target.closest("[close-bruder]")) &&
+    //   !e.target.closest("player") &&
+    //   !e.target.closest("[open-bruder]")
+    // )
+    //   close_bruder();
   });
 
   $(document).on("contextmenu", function (e) {

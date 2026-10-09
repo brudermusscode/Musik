@@ -33,11 +33,6 @@ use Bruder\Model\Album;
       </bookmarks>
     </library>
   </section>
-
-  <mbutton material size=mid mid has-icon=left bold
-    request-get="playlist:new">
-    <mi>add</mi>
-  </mbutton>
 </sidebar>
 
 <sidebar right>

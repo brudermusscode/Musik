@@ -76,9 +76,9 @@ include TEMPLATE . "/global/_current-playlist.php";
         style="border-radius:0 24px 24px 0;border-right:1px solid rgba(255,255,255,.08);"
         <?= $sort === "listens" ? "active" : "" ?>>
         <mi>earbud_right</mi>
-        <span hide-tablet>Meist gehört</span>
+        <span hide-tablet>Liebste</span>
         <div ttooltip>
-          Deine Liebsten
+          Meist gehört
         </div>
       </mbutton>
     </a>

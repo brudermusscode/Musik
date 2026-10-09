@@ -75,6 +75,27 @@ $canonical = HOME_URL . ($canonical[0] ?? "");
     </div>
   </responder>-->
 
+  <bruder>
+    <?php
+
+    /**
+     * @var string
+     */
+    $track_explore_action = "track:explore";
+
+    ?>
+
+    <search-tools>
+      <input autofocus floating mb24 data-action="<?= $track_explore_action ?>" placeholder="Titel, Playlisten »   « Künstler, Alben" />
+
+      <div fl gap=smol+ alistart jucstretch>
+        <div right-content data-react="<?= $track_explore_action ?>" tracks play-only flone>
+          <p text smol bold ttup tac slight>Tipp was ein, um zu suchen</p>
+        </div>
+      </div>
+    </search-tools>
+  </bruder>
+
   <?php
 
   /**

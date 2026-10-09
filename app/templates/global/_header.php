@@ -16,8 +16,6 @@ use Bruder\Application\Cookie;
       </mbutton>
     </a>
 
-    <dot-divider mt12 mb12></dot-divider>
-
     <a circled href="/albums">
       <mbutton material size=mid icon-only has-tooltip=right
         page=albums <?= CURRENT_PAGE === "albums" ? "active" : "" ?>>
@@ -26,28 +24,24 @@ use Bruder\Application\Cookie;
       </mbutton>
     </a>
 
-    <bruder <?= in_array(CURRENT_PAGE, ["album", "artist"]) ? "scroll-manipulated" : "" ?>>
+    <mbutton data-action="bruder:open" material size=mid icon-only has-tooltip=right style=position:static;>
       <mi>search</mi>
+      <div ttooltip>Alles durchsuchen</div>
+    </mbutton>
 
-      <?php
+    <dot-divider mt12 mb12></dot-divider>
 
-      /**
-       * @var string
-       */
-      $track_explore_action = "track:explore";
+    <mbutton material size=mid mid icon-only bold has-tooltip=right
+      request-get="playlist:new">
+      <mi>splitscreen_add</mi>
+      <div ttooltip>Neue Playlist</div>
+    </mbutton>
 
-      ?>
-
-      <search-tools>
-        <input autofocus floating mb24 data-action="<?= $track_explore_action ?>" placeholder="Titel, Playlisten »   « Künstler, Alben" />
-
-        <div fl gap=smol+ alistart jucstretch>
-          <div right-content data-react="<?= $track_explore_action ?>" tracks play-only flone>
-            <p text smol bold ttup tac slight>Tipp was ein, um zu suchen</p>
-          </div>
-        </div>
-      </search-tools>
-    </bruder>
+    <mbutton material size=mid mid icon-only bold has-tooltip=right
+      request-get="album:new">
+      <mi>sticker_add</mi>
+      <div ttooltip>Neuer Release</div>
+    </mbutton>
   </div>
 
   <div fl fldircol gap=smol>
