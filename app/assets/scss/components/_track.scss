@@ -148,8 +148,13 @@ song {
 
   &[moving] {
     position: fixed;
-    width: 700px;
     pointer-events: none;
+    transition: width 0s;
+    z-index: 10;
+
+    [content] {
+      outline: 4px solid $hover-green;
+    }
   }
 
   &[moving-temporary] {

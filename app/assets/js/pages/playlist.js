@@ -88,6 +88,7 @@ $(function () {
 
     __dragging.object.insertAdjacentElement("afterend", placeholder);
     __dragging.object.setAttribute("moving", true);
+    __dragging.object.style.width = track_size.w + "px";
   });
 
   $(document).on("mouseup", function (e) {

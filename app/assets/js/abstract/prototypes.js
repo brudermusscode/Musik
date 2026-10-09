@@ -11,8 +11,8 @@ Element.prototype.append_loader = function (with_overlay = false) {
 
   if (with_overlay)
     loaderHTML =
-      `<div animation=fade-in background=hover-dark posabs
-        style="z-index:20;height:100%;width:100%;top:0;left:0;backdrop-filter:blur(100px);" fl alic jucc>` +
+      `<div animation=fade-in rounded=midplus window-light posabs
+      style="z-index:20;height:100%;width:100%;top:0;left:0;backdrop-filter:blur(8px);" fl alic jucc>` +
       loaderHTML +
       `</div>`;
   else
