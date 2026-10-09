@@ -47,7 +47,7 @@ class Bookmark extends Bruder
       ->create([
         "type" => strtolower(class_basename($Object)),
         "reference_id" => $Object->id,
-        "view_index" => ($LatestBookmark->view_index ?? 0) + 1,
+        "view_index" => Bookmark::count() + 1,
       ]);
 
     return $this->success(data: $Bookmark);

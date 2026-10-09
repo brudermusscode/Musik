@@ -87,12 +87,16 @@ player-overflow {
   overflow: hidden;
   bottom: 0;
   left: calc($header-width + $main-distance);
-  background: $hover-light;
+  background: $slight-light;
   border-radius: 12px 12px 0 0;
   width: calc(100vw - 2 * $main-distance - $header-width);
   height: 8px;
   cursor: pointer;
   z-index: 1;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.24);
+  }
 
   @media screen and (max-width: $laptop-max-width) {
     left: calc($header-width-smol + $main-distance-smol);
@@ -147,7 +151,7 @@ player-outer {
     scale: 1.02;
 
     &[not-showing] {
-      bottom: 6px;
+      bottom: 10px;
     }
   }
 }

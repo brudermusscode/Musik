@@ -18,6 +18,10 @@ header {
   }
 
   @media screen and (max-width: $hide-sidebar-max-width) {
+    background: $hover-dark;
+    backdrop-filter: blur(12px);
+    border-radius: 0;
+    box-shadow: var(--mio-theme-elevation-3);
   }
 
   @media screen and (max-width: $mobile-max-width) {

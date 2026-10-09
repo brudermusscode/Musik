@@ -2,6 +2,12 @@
 @use "../framework/var.sizes" as *;
 @use "../abstract" as *;
 
+page[playlist] {
+  // we need an invisible <song> at the end of the playlist for when dragging tracks
+  // to a new order which is exactly 60px in height.
+  margin-bottom: -60px;
+}
+
 playlist-action-bar {
   [tag] {
     position: relative;

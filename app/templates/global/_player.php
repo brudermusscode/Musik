@@ -63,5 +63,12 @@ use Bruder\Application\Cookie;
         </player-actions>
       </player-content>
     </player>
+
+    <dot-divider></dot-divider>
+
+    <mbutton material size=midler icon-only has-tooltip=top no-hover-shadow>
+      <mi>music_history</mi>
+      <div ttooltip>History</div>
+    </mbutton>
   </player-outer>
 </player-contain>

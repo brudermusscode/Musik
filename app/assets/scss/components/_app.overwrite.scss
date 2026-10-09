@@ -182,9 +182,21 @@ top-banner {
     );
   }
 
+  @media screen and (max-width: $hide-sidebar-max-width) {
+    width: calc(100% - 294px);
+  }
+
+  @media screen and (max-width: $mobile-max-width) {
+    width: calc(100% - 2 * $main-distance-smol);
+  }
+
   &[scrolled="true"] {
     border-radius: 34px;
   }
+}
+
+track-relation {
+  display: none;
 }
 
 [outlined] {
